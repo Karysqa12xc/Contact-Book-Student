@@ -1,0 +1,80 @@
+{{!-- Trang home của admin --}}
+{{#if (eq account.MaVaiTro '01AD')}}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/PersonalImageMain.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Thông tin cá nhân</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/Calender.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Thời khoá biểu</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Trợ giúp</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+{{/if}}
+
+{{!-- Trang home của giáo viên --}}
+{{#if (eq account.[0].MaVaiTro '01HS')}}
+<h1>Home Of Giáo Viên</h1>
+{{/if}}
+
+{{!-- Trang home của học sinh --}}
+{{#if (eq account.[0].MaVaiTro '01HS')}}
+<h1>Home Of Student</h1>
+{{/if}}
