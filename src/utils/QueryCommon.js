@@ -13,4 +13,5 @@ module.exports = {
     FROM ${tableName} JOIN ${tableJoin} 
     ON ${tableName}.Ma${tableJoin} = ${tableJoin}.Ma${tableJoin}`;
   },
+
 };

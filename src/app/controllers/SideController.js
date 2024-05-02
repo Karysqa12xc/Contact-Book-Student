@@ -16,6 +16,11 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[GET] /about
+  about(req, res, next){
+     res.render("about");
+  }
 }
+
 
 module.exports = new SideController();

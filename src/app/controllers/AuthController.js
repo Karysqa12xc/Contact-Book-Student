@@ -2,7 +2,6 @@ const Account = require("../models/Account");
 class AuthController {
   //[GET] /login
   login(req, res, next) {
-    
     res.render("login");
   }
   //[POST] /login
@@ -26,6 +25,6 @@ class AuthController {
     req.session.isLoggedIn = false;
     delete req.session.account;
     res.redirect("/login"); 
-}
+  }
 }
 module.exports = new AuthController();
