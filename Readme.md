@@ -1,5 +1,6 @@
 # **CHÚ Ý:**
 > * Tải thư thì gõ: `npm i --save-dev`
+> * Tạo branch mới mỗi khi làm một chức năng vào giao diện mới, đặt tên branch "tên người làm - tên chức năng".
 > * Cấu hình các Driver trong ODBC(64 bit)
 > * Thay tên sever và tên database trong connectString
 > * Dùng phiên bản npm version 9.5.1 và node 18.16.1
@@ -18,6 +19,8 @@ xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo g
 ## Các document:
 * [Handlebars](https://handlebarsjs.com/guide/#what-is-handlebars)
 * [Express](https://expressjs.com/)
+* [Sử dụng git](https://youtu.be/-VmX40r5ARI?si=k9KSQ8acmji6Sumi)
+* [Tải node với nvm](https://youtu.be/4b1Z6ezUsT4?si=zUPH3pZzR1mimwtD)
 ## Cơ sở dữ liệu: 
 * Bảng lớp:
 
