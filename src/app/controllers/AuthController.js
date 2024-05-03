@@ -2,6 +2,9 @@ const Account = require("../models/Account");
 class AuthController {
   //[GET] /login
   login(req, res, next) {
+    if(req.session.isLoggedIn){
+      res.redirect("/");
+    }
     res.render("login");
   }
   //[POST] /login

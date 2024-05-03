@@ -6,12 +6,15 @@
 # TỔNG QUAN VỀ PROJECT:
 * Hệ thống webapp sổ liên lạc điện tử giúp cho học sinh và nhà trường có thể dễ theo dõi các thông tin về học phí, môn học, điểm số va thông tin cá nhân. 
 ## CÁC CHỨC NĂNG:
-* **Back-end**: Đọc thông tin lớp học, đọc thông tin học sinh, xem học phí, sửa(cập nhật) thông tin học sinh, sửa(cập nhật) thông tin giáo viên, admin khoá tài
-khoản, admin tạo tài khoản, admin phân lớp, giáo viên nhập điểm.
+* **Back-end**: Đọc thông tin lớp học, đọc thông tin học sinh, xem học phí, sửa(cập nhật) thông tin học sinh, sửa(cập nhật) thông tin giáo viên, giáo viên nhập điểm, admin khoá tài khoản, admin tạo tài khoản, admin phân lớp, admin phân quyền.
 * **Front-end**: Tạo giao diện đăng nhập, tạo giao diện
-xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo giao diện thời khoá biểu, tạo giao diện xem học phí. tạo giao diện sửa thông tin, tạo giao diện nhập điểm.
+xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo giao diện thời khoá biểu, tạo giao diện xem học phí, tạo giao diện sửa thông tin, tạo giao diện nhập điểm, tạo giao diện khoá tài khoản, tạo giao diện trang About, sửa phần footer
 ## Phân công:
-
+* **Nam**: Đọc thông tin lớp học, đọc thông tin học sinh, xem học phí, sửa(cập nhật) thông tin học sinh, sửa(cập nhật) thông tin giáo viên, giáo viên nhập điểm, admin khoá tài khoản, admin tạo tài khoản, admin phân lớp, admin phân quyền, giáo viên gửi yêu cầu sửa điểm
+* **Thắng**: Tạo giao diện đăng nhập, tạo giao diện
+xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo giao diện thời khoá biểu.
+* **Tuấn**: tạo giao diện xem học phí, tạo giao diện sửa thông tin, tạo giao diện nhập điểm, tạo giao diện khoá tài khoản
+* **Việt Anh**: Tạo giao diện trang About, sửa phần , footer, tạo giao diện điểm danh. 
 ## Các document:
 * [Handlebars](https://handlebarsjs.com/guide/#what-is-handlebars)
 * [Express](https://expressjs.com/)
