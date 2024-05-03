@@ -1,6 +1,6 @@
 const sql = require("msnodesqlv8");
 const connectionString =
-  "Driver={ODBC Driver 17 for SQL Server};Server=ADMIN-PC\\SQLEXPRESS;Database=SoLienLac-Test;Trusted_Connection=yes;";
+  "Driver={ODBC Driver 17 for SQL Server};Server=DESKTOP-I6RB0CG;Database=Contact_Book_Student;Trusted_Connection=yes;";
 
 async function connectAndQuerying(query) {
   return new Promise((resolve, reject) => {
