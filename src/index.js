@@ -27,7 +27,7 @@ app.engine(
     helpers: {
       eq(a, b){
         return a === b;
-      }
+      },
     }
   })
 );
