@@ -1,12 +1,15 @@
-<h1>Đăng nhập</h1>
 <form method="post">
+    <h1 class="mb-4">Đăng nhập</h1>
+    {{#if error}}
+        <span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
+    {{/if}}
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">UserName:</label>
+        <label for="exampleInputEmail1" class="form-label h4">Tên tài khoản:</label>
         <input type="text" class="form-control" name="username">
     </div>
     <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password:</label>
+        <label for="exampleInputPassword1" class="form-label h4">Mật khẩu:</label>
         <input type="password" class="form-control" name="password">
     </div>
-    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    <button type="submit" id="signIn" class="btn btn-primary">Đăng nhập</button>
 </form>

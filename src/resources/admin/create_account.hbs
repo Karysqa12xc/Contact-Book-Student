@@ -1,39 +1,62 @@
 {{#if (eq account.MaVaiTro '01AD')}}
 <div class="container">
     <h1>Tạo tài khoản</h1>
-    <form>
+    <form method="post">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Vai trò:</label>
-            <select class="form-select" name="Role">
+            <label class="form-label h4">Vai trò:</label>
+            <select class="form-select" name="role">
                 <option selected>Chọn vai trò</option>
-                <option value="1">Giáo viên</option>
-                <option value="1">Học sinh</option>
+                {{#each roles}}
+                <option value="{{MaVaiTro}}">{{TenVaiTro}}</option>
+                {{/each}}
             </select>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Tên tài khoản: </label>
+            <input type="text" name="username" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Mật khẩu: </label>
+            <input type="password" name="password" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Nhập lại mật khẩu: </label>
+            <input type="password" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Họ và Tên: </label>
+            <input type="text" name="fNameAndlName" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Số điện thoại</label>
+            <input type="tel" name="telephone" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label h4">Địa chỉ:</label>
+            <input type="text" name="address" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label h4">Năm sinh</label>
+            <input type="date" name="birth" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label h4">Giới tính:</label> <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="true">
+                <label class="form-check-label" for="inlineRadio1">Nam</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="false">
+                <label class="form-check-label" for="inlineRadio1">Nữ</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Lớp:</label>
+            <select class="form-select" name="classroom">
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Tạo</button>
     </form>
