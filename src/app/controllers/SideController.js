@@ -1,8 +1,6 @@
-const Account = require("../models/Account");
-
 class SideController {
   //[GET] /home or /
-  async index(req, res, next) {
+  async index(req, res) {
     try {
       if (!req.session.isLoggedIn) {
         return res.redirect("login");
@@ -15,7 +13,7 @@ class SideController {
     }
   }
   //[GET] /about
-  about(req, res, next){
+  about(req, res){
     if (!req.session.isLoggedIn) {
       return res.redirect("login");
     }else{

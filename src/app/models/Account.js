@@ -3,7 +3,9 @@ const {
   queryGetAll,
   queryGetById,
   queryGetByOuterTableTaiKhoan,
-  queryAddNewDateTableTaiKhoan,
+  queryGetNullMaLopInTaiKhoan,
+  queryCountQuantityAccountInClass,
+  queryAddNewDataTableTaiKhoan,
 } = require("../../utils/QueryCommon");
 const tableName = "TaiKhoan";
 const tableJoin = "VaiTro";
@@ -52,7 +54,7 @@ class AccountModel {
   ) {
     try {
       const result = await db.connectAndQuerying(
-        queryAddNewDateTableTaiKhoan(
+        queryAddNewDataTableTaiKhoan(
           tableName,
           MaTaiKhoan,
           TenTaiKhoan,
@@ -70,6 +72,24 @@ class AccountModel {
       return result;
     } catch (error) {
       console.log("Failed to add a new account:", error);
+      throw error;
+    }
+  }
+  async CountAccountInClass(id){
+    try {
+      const result = await db.connectAndQuerying(queryCountQuantityAccountInClass(tableName, id));
+      return result;
+    } catch (error) {
+      console.log("Failed to count account in class:", error);
+      throw error;
+    }
+  }
+  async getDataIdClassNull(){
+    try {
+      const result = await db.connectAndQuerying(queryGetNullMaLopInTaiKhoan(tableName));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account id class null:", error);
       throw error;
     }
   }

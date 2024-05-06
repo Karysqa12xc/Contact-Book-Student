@@ -1,7 +1,7 @@
 const Account = require("../models/Account");
 class AuthController {
   //[GET] /login
-  login(req, res, next) {
+  login(req, res) {
     if(req.session.isLoggedIn){
       res.redirect("/");
     }else{
@@ -9,7 +9,7 @@ class AuthController {
     }
   }
   //[POST] /login
-  async postLogin(req, res, next) {
+  async postLogin(req, res) {
     const accountInfo = await Account.getAttributeOutTable();
     const {username, password} = req.body;
     for (const account of accountInfo) { 
@@ -24,7 +24,7 @@ class AuthController {
       }
     } 
   }
-  logout(req, res, next) {
+  logout(req, res) {
     req.session.isLoggedIn = false;
     delete req.session.account;
     res.redirect("/login"); 

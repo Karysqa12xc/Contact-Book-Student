@@ -2,8 +2,14 @@ module.exports = {
   queryGetAll: function (tableName) {
     return `SELECT * FROM ${tableName}`;
   },
+  queryGetAllReverse: function (tableName) {
+    return `SELECT * FROM ${tableName} ORDER BY Ten${tableName}`;
+  },
   queryGetById: function (tableName, id) {
     return `SELECT * FROM ${tableName} Where Ma${tableName} = '${id}'`;
+  },
+  queryGetNullMaLopInTaiKhoan: function(tableName){
+    return `SELECT * FROM ${tableName} Where MaLop IS NULL AND MaVaiTro = '01HS'`;
   },
   queryGetByOuterTableTaiKhoan: function (tableName, tableJoin) {
     return `SELECT MaTaiKhoan, TenTaiKhoan, 
@@ -13,7 +19,7 @@ module.exports = {
     FROM ${tableName} JOIN ${tableJoin} 
     ON ${tableName}.Ma${tableJoin} = ${tableJoin}.Ma${tableJoin}`;
   },
-  queryAddNewDateTableTaiKhoan: function (
+  queryAddNewDataTableTaiKhoan: function (
     tableName,
     MaTaiKhoan,
     TenTaiKhoan,
@@ -33,4 +39,11 @@ module.exports = {
         '${SoDienThoai}', N'${DiaChi}', '${NamSinh}', 
         '${GioiTinh}', '${KhoaTaiKhoan}', ${MaLop}, '${MaVaiTro}')`;
   },
+  queryCountQuantityAccountInClass: function(tableName, id){
+      return `SELECT COUNT(*) AS "HocSinhTrongLop" FROM ${tableName} Where MaLop = ${id};`;
+  },
+  queryAddNewDataTableLop: function(tableName, TenLop, SiSo){
+    return `INSERT INTO ${tableName}(TenLop, SiSo)
+            VALUES('${TenLop}', ${SiSo})`;
+  }
 };
