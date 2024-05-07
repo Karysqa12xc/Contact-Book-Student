@@ -86,7 +86,7 @@
                             Chọn tất cả
                         </label>
                     </div>
-                    <form method="post" action="/admin/:id/add-student-into-class?_method=PUT" name="AddStudentToClass">
+                    <form method="post" id="AddStudentToClass">
                         <table style="text-align: center;" class="table table-hover">
                             <thead>
                                 <th>Tên tài khoản</th>
@@ -111,28 +111,47 @@
                                     <td>Đã bị khoá</td>
                                     {{else}}
                                     <td>Bình thường</td>
+                                    <td>
+                                        <input type="hidden" name="idClass" id="idClass">
+                                        <input type="checkbox" name="AccountAddIntoClass[]" value="{{MaTaiKhoan}}">
+                                    </td>
                                     {{/if}}
-                                    <td><input type="checkbox" name="AccountAddIntoClass[]" value="{{MaTaiKhoan}}"></td>
                                 </tr>
                                 {{/each}}
                             </tbody>
                         </table>
+                        </form>
                         <div class="modal-footer">
                             <button id="ButtonAddStuIntoClass" class="btn btn-success disabled">Thêm</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
+
 <script>
     document.addEventListener("DOMContentLoaded",
         function () {
+            //Khai báo
             var checkBoxAll = $("#select-all");
             var checkBoxAccountToAddClass = $("input[name = 'AccountAddIntoClass[]']");
             var buttonAddStudentIntoClass = $("#ButtonAddStuIntoClass")
+            var idClass;
+            var formAddStudentToClass = $("#AddStudentToClass")
+            //Lấy id của class và của những sinh viên được chọn để thêm vào class đó
+            $("#addMoreStudent").on("show.bs.modal", function(event){
+                var button = $(event.relatedTarget);
+                idClass = button.data('id');
+                $("#idClass").val(idClass);
+            });    
+            buttonAddStudentIntoClass.click(function(event){
+                event.preventDefault();
+                formAddStudentToClass.prop("action","/admin/" + idClass + "/add-student-into-class" + "?_method=PUT");
+                formAddStudentToClass.submit();
+            })        
             //Khi checkbox all click
             checkBoxAll.change(function () {
                 var isCheckedAll = $(this).prop("checked")
@@ -155,7 +174,7 @@
                     buttonAddStudentIntoClass.addClass("disabled");
                 }
             }
+            
         }
-
     );
 </script>

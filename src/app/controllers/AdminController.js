@@ -91,8 +91,22 @@ class AdminController {
   //[PUT] /admin/:id/add-student-into-class
   async add_student_into_class(req, res) {
     try {
+      const {idClass, AccountAddIntoClass} = req.body;
+      const classId = idClass[0];
+      const classGetById = await Class.getById(classId);
+
+      for (const accountId of AccountAddIntoClass) {
+        const quantityAccount = await Account.CountAccountInClass(classId);
+        if (quantityAccount[0].HocSinhTrongLop < classGetById[0].SiSo) {
+          await Account.updateDateIdClass(classId, accountId);
+        } else {
+          break;
+        }
+      }
       res.redirect("back");
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
   }
 }
 module.exports = new AdminController();

@@ -6,6 +6,7 @@ const {
   queryGetNullMaLopInTaiKhoan,
   queryCountQuantityAccountInClass,
   queryAddNewDataTableTaiKhoan,
+  queryUpdateClassOfAccount,
 } = require("../../utils/QueryCommon");
 const tableName = "TaiKhoan";
 const tableJoin = "VaiTro";
@@ -90,6 +91,14 @@ class AccountModel {
       return result;
     } catch (error) {
       console.log("Failed to get account id class null:", error);
+      throw error;
+    }
+  }
+  async updateDateIdClass(idClass, idAccount){
+    try {
+      const result = await db.connectAndQuerying(queryUpdateClassOfAccount(tableName, idClass, idAccount))
+    } catch (error) {
+      console.log("Failed to update account id class:", error);
       throw error;
     }
   }
