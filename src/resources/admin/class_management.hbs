@@ -1,4 +1,19 @@
 <div class="container">
+    {{#if displayNotice}}
+    <div class="notice-group">
+        {{#if checkedAdd}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            Thêm thành công!!!
+        </div>
+        {{else}}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            Sĩ số đã đủ!!!
+        </div>
+        {{/if}}
+    </div>
+    {{/if}}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClass">Tạo lớp
         học</button>
     {{!-- Phần pop-up tạo lớp học --}}
@@ -55,9 +70,14 @@
                         {{/each}}
                         {{/with}}/{{SiSo}}</td>
                     <td>
-                        <button class="btn btn-primary">
-                            Danh sách học sinh
-                        </button>
+                        <form method="post" action="/admin/{{MaLop}}/class-details">
+                            <input type="hidden" name="id" value="{{MaLop}}">
+                            <input type="hidden" name="name_class" value="{{TenLop}}">
+                            <button type="submit" class="btn btn-primary">
+                                Danh sách học sinh
+                            </button>
+                        </form>
+
                     </td>
                     <td>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMoreStudent"
@@ -120,16 +140,15 @@
                                 {{/each}}
                             </tbody>
                         </table>
-                        </form>
-                        <div class="modal-footer">
-                            <button id="ButtonAddStuIntoClass" class="btn btn-success disabled">Thêm</button>
-                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button id="ButtonAddStuIntoClass" class="btn btn-success disabled">Thêm</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <script>
@@ -140,18 +159,19 @@
             var checkBoxAccountToAddClass = $("input[name = 'AccountAddIntoClass[]']");
             var buttonAddStudentIntoClass = $("#ButtonAddStuIntoClass")
             var idClass;
-            var formAddStudentToClass = $("#AddStudentToClass")
+            var formAddStudentToClass = $("#AddStudentToClass");
+            var notice_group = $("#notice-group")
             //Lấy id của class và của những sinh viên được chọn để thêm vào class đó
-            $("#addMoreStudent").on("show.bs.modal", function(event){
+            $("#addMoreStudent").on("show.bs.modal", function (event) {
                 var button = $(event.relatedTarget);
                 idClass = button.data('id');
                 $("#idClass").val(idClass);
-            });    
-            buttonAddStudentIntoClass.click(function(event){
+            });
+            buttonAddStudentIntoClass.click(function (event) {
                 event.preventDefault();
-                formAddStudentToClass.prop("action","/admin/" + idClass + "/add-student-into-class" + "?_method=PUT");
+                formAddStudentToClass.prop("action", "/admin/" + idClass + "/add-student-into-class" + "?_method=PUT");
                 formAddStudentToClass.submit();
-            })        
+            });
             //Khi checkbox all click
             checkBoxAll.change(function () {
                 var isCheckedAll = $(this).prop("checked")
@@ -168,13 +188,12 @@
             //Hiển thị lại nút thêm trong phần model thêm sinh viên
             function renderButtonSubmit() {
                 var checkedCount = $("input[name = 'AccountAddIntoClass[]']:checked").length
-                if(checkedCount > 0){
+                if (checkedCount > 0) {
                     buttonAddStudentIntoClass.removeClass("disabled");
-                }else{
+                } else {
                     buttonAddStudentIntoClass.addClass("disabled");
                 }
             }
-            
         }
     );
 </script>

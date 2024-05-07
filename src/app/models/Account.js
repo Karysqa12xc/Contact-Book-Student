@@ -7,6 +7,8 @@ const {
   queryCountQuantityAccountInClass,
   queryAddNewDataTableTaiKhoan,
   queryUpdateClassOfAccount,
+  queryGetTaiKhoanByMaLop,
+  queryUpdateIdClassOfAccount,
 } = require("../../utils/QueryCommon");
 const tableName = "TaiKhoan";
 const tableJoin = "VaiTro";
@@ -94,11 +96,21 @@ class AccountModel {
       throw error;
     }
   }
-  async updateDateIdClass(idClass, idAccount){
+  async updateDataIdClass(value, idAccount){
     try {
-      const result = await db.connectAndQuerying(queryUpdateClassOfAccount(tableName, idClass, idAccount))
+      const result = await db.connectAndQuerying(queryUpdateClassOfAccount(tableName, value, idAccount))
+      return result;
     } catch (error) {
       console.log("Failed to update account id class:", error);
+      throw error;
+    }
+  }
+  async getByIdClass(id){
+    try {
+      const result = await db.connectAndQuerying(queryGetTaiKhoanByMaLop(tableName, id));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account by id class:", error);
       throw error;
     }
   }

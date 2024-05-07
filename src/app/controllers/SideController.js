@@ -6,6 +6,9 @@ class SideController {
         return res.redirect("login");
       } else {
         console.log(req.session.account);
+        if(req.session.displayNotice){
+          req.session.displayNotice = false;
+        }
         res.render("home", {account: req.session.account, logged: req.session.isLoggedIn});
       }
     } catch (error) {

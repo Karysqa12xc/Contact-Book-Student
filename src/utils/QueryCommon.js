@@ -12,10 +12,13 @@ module.exports = {
     FROM ${tableName} 
     Where Ma${tableName} = '${id}'`;
   },
-  queryUpdateClassOfAccount: function(tableName, idClass, idTaiKhoan){
+  queryUpdateClassOfAccount: function(tableName, value, idTaiKhoan){
       return `UPDATE TaiKhoan 
-      SET MaLop = ${idClass}
+      SET MaLop = ${value}
       WHERE MaTaiKhoan = '${idTaiKhoan}'`;
+  },
+  queryGetTaiKhoanByMaLop: function(tableName, idClass){
+    return `SELECT * FROM ${tableName} Where MaLop = ${idClass}`;
   },
   queryGetNullMaLopInTaiKhoan: function(tableName){
     return `SELECT * 

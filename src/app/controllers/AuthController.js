@@ -27,6 +27,8 @@ class AuthController {
   logout(req, res) {
     req.session.isLoggedIn = false;
     delete req.session.account;
+    delete req.session.checkedAdd;
+    delete req.session.displayNotice;
     res.redirect("/login"); 
   }
 }

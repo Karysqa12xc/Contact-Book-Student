@@ -1,5 +1,45 @@
 {{#if (eq account.MaVaiTro '01AD')}}
 <div class="container">
+    <button type="button" 
+    class="btn btn-primary" 
+    data-bs-toggle="modal" 
+    data-bs-target="#createAccount">
+        Tạo Tài Khoản
+    </button>
+    {{!-- Popup tạo tài khoản --}}
+    <div class="modal fade" id="createAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo lớp học</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/admin/class-management">
+                        <div class="mb-3">
+                            <label for="class-name" class="col-form-label">Tên lớp:</label>
+                            <input type="text" name="className" class="form-control" id="class-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" for="selected-id">Sĩ số:</label>
+                            <select class="form-select" name="quantityClass" id="selected-id">
+                                <option selected>Chọn số lượng học sinh</option>
+                                <option value="35">35 học sinh</option>
+                                <option value="40">40 học sinh</option>
+                                <option value="45">45 học sinh</option>
+                                <option value="50">50 học sinh</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Tạo</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- Phần cần sửa --}}
     <h1>Tạo tài khoản</h1>
     <form method="post">
         <div class="mb-3">

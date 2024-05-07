@@ -2,7 +2,6 @@ const express = require("express");
 const session = require("express-session");
 const morgan = require("morgan");
 const handlebars = require("express-handlebars");
-
 const methodOverride = require("method-override");
 const path = require("path");
 const route = require("./routes");
@@ -10,6 +9,7 @@ const route = require("./routes");
 const app = express();
 const port = 3000;
 app.use(morgan("combined"));
+
 app.use(
   session({
     secret: "secret",
@@ -19,7 +19,7 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded());
-app.use(methodOverride("_method"));
+app.use(methodOverride('_method'));
 app.engine(
   "hbs",
   handlebars.engine({
@@ -28,6 +28,9 @@ app.engine(
       eq(a, b){
         return a === b;
       },
+      sum(a, b){
+        return a + b;
+      }
     }
   })
 );
