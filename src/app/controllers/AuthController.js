@@ -1,4 +1,5 @@
 const Account = require("../models/Account");
+
 class AuthController {
   //[GET] /login
   login(req, res) {
@@ -15,17 +16,19 @@ class AuthController {
     for (const account of accountInfo) { 
       if (username === account.TenTaiKhoan &&
         password === account.MatKhau && 
-        account.KhoaTaiKhoan !== true) {
+        account.KhoaTaiKhoan === false)
+      {
         req.session.isLoggedIn = true;
         req.session.account = account;
         res.redirect("/");
         return;
-        
-      }else if(account.KhoaTaiKhoan === true){
-        res.render("login", {lock: true});
       }
       else{
-        res.render("login", {error: true});
+        if(account.KhoaTaiKhoan === true){
+          res.render("login", {lock: true});
+        }else{
+          res.render("login", {error: true});
+        }
       }
     } 
   }

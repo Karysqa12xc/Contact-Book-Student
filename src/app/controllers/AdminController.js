@@ -164,5 +164,9 @@ class AdminController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[GET] /admin/course
+  course_view(req, res){
+    
+  }
 }
 module.exports = new AdminController();

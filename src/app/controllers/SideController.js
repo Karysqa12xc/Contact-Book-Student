@@ -8,7 +8,7 @@ class SideController {
         res.render("home", 
         {
           account: req.session.account,
-          isLoggedIn: req.session.isLoggedIn
+          logged: req.session.isLoggedIn
         });
       }
     } catch (error) {
@@ -20,7 +20,7 @@ class SideController {
     res.render("about",  
     {
       account: req.session.account, 
-      isLoggedIn: req.session.isLoggedIn
+      logged: req.session.isLoggedIn
     });
   }
 }
