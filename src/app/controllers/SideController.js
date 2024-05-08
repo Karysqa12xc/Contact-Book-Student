@@ -7,10 +7,11 @@ class SideController {
       if (!req.session.isLoggedIn) {
         return res.redirect("login");
       } else {
-        const account = req.session.account;
-        let isLoggedIn = req.session.isLoggedIn;
-        console.log(account);
-        res.render("home", {account: account, isLoggedIn: isLoggedIn});
+        res.render("home", 
+        {
+          account: req.session.account,
+          isLoggedIn: req.session.isLoggedIn
+        });
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
@@ -18,7 +19,11 @@ class SideController {
   }
   //[GET] /about
   about(req, res, next){
-     res.render("about");
+    res.render("about",  
+    {
+      account: req.session.account, 
+      isLoggedIn: req.session.isLoggedIn
+    });
   }
 }
 
