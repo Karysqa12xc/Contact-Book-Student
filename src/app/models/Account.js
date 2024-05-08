@@ -1,17 +1,18 @@
 const db = require("../../config/database");
+const {queryGetAll, queryGetById} = require("../../utils/QueryCommon");
 const {
-  queryGetAll,
-  queryGetById,
   queryGetByOuterTableTaiKhoan,
   queryGetNullMaLopInTaiKhoan,
   queryCountQuantityAccountInClass,
   queryAddNewDataTableTaiKhoan,
   queryUpdateClassOfAccount,
   queryGetTaiKhoanByMaLop,
-  queryUpdateIdClassOfAccount,
-} = require("../../utils/QueryCommon");
+  queryGetDataAccountRefClassAndRole,
+  queryUpdateLockedOfAccount,
+} = require("../../utils/QueryTaiKhoan");
 const tableName = "TaiKhoan";
-const tableJoin = "VaiTro";
+const tableJoinRole = "VaiTro";
+const tableJoinClass = "Lop";
 class AccountModel {
   async getAll() {
     try {
@@ -34,7 +35,7 @@ class AccountModel {
   async getAttributeOutTable() {
     try {
       const result = await db.connectAndQuerying(
-        queryGetByOuterTableTaiKhoan(tableName, tableJoin)
+        queryGetByOuterTableTaiKhoan(tableName, tableJoinRole)
       );
       return result;
     } catch (error) {
@@ -111,6 +112,24 @@ class AccountModel {
       return result;
     } catch (error) {
       console.log("Failed to get account by id class:", error);
+      throw error;
+    }
+  }
+  async getDataAccountRefRoleAndClass(){
+    try {
+      const result = await db.connectAndQuerying(queryGetDataAccountRefClassAndRole(tableName, tableJoinRole, tableJoinClass));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account reference by class and role:", error);
+      throw error;
+    }
+  }
+  async updateDataLockAccount(value, idAccount){
+    try {
+      const result = await db.connectAndQuerying(queryUpdateLockedOfAccount(tableName, value, idAccount))
+      return result;
+    } catch (error) {
+      console.log("Failed to update account id class:", error);
       throw error;
     }
   }

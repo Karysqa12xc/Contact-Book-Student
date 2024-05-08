@@ -1,3 +1,4 @@
+{{#if (eq account.MaVaiTro '01AD')}}
 <div class="container">
     {{#if displayNotice}}
     <div class="notice-group">
@@ -128,7 +129,12 @@
                                     {{/if}}
                                     <td>{{NamSinh}}</td>
                                     {{#if KhoaTaiKhoan}}
-                                    <td>Đã bị khoá</td>
+                                    <td>
+                                        Đã bị khoá
+                                    </td>
+                                    <td>
+                                        <input disabled type="checkbox" value="{{MaTaiKhoan}}">
+                                    </td>
                                     {{else}}
                                     <td>Bình thường</td>
                                     <td>
@@ -149,7 +155,9 @@
         </div>
     </div>
 </div>
-
+{{else}}
+<h1 style="color: red;">Bạn không có quyền truy cập!!!!</h1>
+{{/if}}
 
 <script>
     document.addEventListener("DOMContentLoaded",

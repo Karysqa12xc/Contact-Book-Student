@@ -8,10 +8,11 @@ class AdminController {
     if (!req.session.isLoggedIn) {
       res.redirect("/");
     } else {
-      const RoleInfo = await Role.getAll();
-      console.log(RoleInfo);
+      const RoleInfo = await Role.getDataDifAdmin();
+      const AccountInfo = await Account.getDataAccountRefRoleAndClass();
       res.render("../../resources/admin/account_management.hbs", {
         roles: RoleInfo,
+        accountInfo: AccountInfo,
         account: req.session.account,
         logged: req.session.isLoggedIn,
       });
@@ -45,7 +46,7 @@ class AdminController {
         null,
         role
       );
-      res.redirect("/");
+      res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
@@ -124,7 +125,7 @@ class AdminController {
       } else {
         const {id, name_class} = req.body;
         const AccountInThisClass = await Account.getByIdClass(id);
-        if(req.session.displayNotice){
+        if (req.session.displayNotice) {
           req.session.displayNotice = false;
         }
         res.render("../../resources/admin/class_details.hbs", {
@@ -139,11 +140,26 @@ class AdminController {
     }
   }
   //[PUT] /admin/:id/class-details
-  async delete_account_in_class(req, res){
+  async delete_account_in_class(req, res) {
     try {
-      const { id } = req.body;
+      const {id} = req.body;
       await Account.updateDataIdClass(null, id);
       res.redirect("/admin/class-management");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[PUT /admin/:id/lock-account
+  async lock_account(req, res) {
+    try {
+      let {idAccount, isLocked } = req.body;
+      if(isLocked === "true" || isLocked === true){
+        isLocked = 0;
+      }else{
+        isLocked = 1;
+      }
+      await Account.updateDataLockAccount(isLocked, idAccount);
+      res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }

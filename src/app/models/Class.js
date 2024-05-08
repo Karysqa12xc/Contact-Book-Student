@@ -1,9 +1,9 @@
 const db = require("../../config/database");
+const {queryAddNewDataTableLop} = require("../../utils/QueryClass");
 const {
   queryGetAll,
   queryGetAllReverse,
-  queryGetById,
-  queryAddNewDataTableLop,
+  queryGetById
 } = require("../../utils/QueryCommon");
 const tableName = "Lop";
 class ClassModel {
@@ -18,7 +18,9 @@ class ClassModel {
   }
   async getAllReverse() {
     try {
-      const results = await db.connectAndQuerying(queryGetAllReverse(tableName));
+      const results = await db.connectAndQuerying(
+        queryGetAllReverse(tableName)
+      );
       return results;
     } catch (error) {
       console.log("Failed to get all account:", error);
@@ -36,7 +38,9 @@ class ClassModel {
   }
   async addNewData(TenLop, SiSo) {
     try {
-      const result = await db.connectAndQuerying(queryAddNewDataTableLop(tableName, TenLop, SiSo));
+      const result = await db.connectAndQuerying(
+        queryAddNewDataTableLop(tableName, TenLop, SiSo)
+      );
       return result;
     } catch (error) {
       console.log("Failed to add data class:", error);

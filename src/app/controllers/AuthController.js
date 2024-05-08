@@ -14,12 +14,17 @@ class AuthController {
     const {username, password} = req.body;
     for (const account of accountInfo) { 
       if (username === account.TenTaiKhoan &&
-        password === account.MatKhau) {
+        password === account.MatKhau && 
+        account.KhoaTaiKhoan !== true) {
         req.session.isLoggedIn = true;
         req.session.account = account;
         res.redirect("/");
         return;
-      }else{
+        
+      }else if(account.KhoaTaiKhoan === true){
+        res.render("login", {lock: true});
+      }
+      else{
         res.render("login", {error: true});
       }
     } 

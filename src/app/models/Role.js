@@ -1,5 +1,6 @@
 const db = require("../../config/database");
 const {queryGetAll, queryGetById} = require("../../utils/QueryCommon");
+const {queryGetDifAdmin} = require("../../utils/QueryRole");
 const tableName = "VaiTro";
 class RolesModel {
   async getAll() {
@@ -17,6 +18,15 @@ class RolesModel {
       return result;
     } catch (error) {
       console.log("Failed to get role by id:", error);
+      throw error;
+    }
+  }
+  async getDataDifAdmin(){
+    try {
+      const result = await db.connectAndQuerying(queryGetDifAdmin(tableName));
+      return result;
+    } catch (error) {
+      console.log("Failed to get role dif id admin:", error);
       throw error;
     }
   }
