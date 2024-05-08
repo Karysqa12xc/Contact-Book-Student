@@ -5,7 +5,7 @@ class AuthController {
     if(req.session.isLoggedIn){
       res.redirect("/");
     }
-    res.render("login");
+    res.render("../../resources/views/login.hbs");
   }
   //[POST] /login
   async postLogin(req, res, next) {

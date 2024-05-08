@@ -18,7 +18,7 @@ class SideController {
   }
   //[GET] /about
   about(req, res, next){
-     res.render("about");
+     res.render("../../resources/views/login.hbs");
   }
 }
 
