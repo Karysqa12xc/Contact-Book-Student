@@ -1,0 +1,207 @@
+{{#if (eq account.MaVaiTro '01AD')}}
+<div class="container">
+    {{#if displayNotice}}
+    <div class="notice-group">
+        {{#if checkedAdd}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            Thêm thành công!!!
+        </div>
+        {{else}}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            Sĩ số đã đủ!!!
+        </div>
+        {{/if}}
+    </div>
+    {{/if}}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClass">Tạo lớp
+        học</button>
+    {{!-- Phần pop-up tạo lớp học --}}
+    <div class="modal fade" id="createClass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo lớp học</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/admin/class-management">
+                        <div class="mb-3">
+                            <label for="class-name" class="col-form-label">Tên lớp:</label>
+                            <input type="text" name="className" class="form-control" id="class-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" for="selected-id">Sĩ số:</label>
+                            <select class="form-select" name="quantityClass" id="selected-id">
+                                <option selected>Chọn số lượng học sinh</option>
+                                <option value="35">35 học sinh</option>
+                                <option value="40">40 học sinh</option>
+                                <option value="45">45 học sinh</option>
+                                <option value="50">50 học sinh</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Tạo</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <h2>Thông tin lớp học</h2>
+        <table class="table table-hover table-dark" style="text-align: center;">
+            <thead>
+                <th scope="col">Tên lớp học:</th>
+                <th scope="col">Sĩ số:</th>
+                <th scope="col">Lớp học chi tiết</th>
+                <th scope="col">Tuỳ chỉnh</th>
+            </thead>
+            <tbody>
+                {{#each classes}}
+                <tr>
+
+                    <td>{{TenLop}}</td>
+                    <td>
+                        {{#with (lookup ../AccountInClass @index) }}
+                        {{#each this}}
+                        {{HocSinhTrongLop}}
+                        {{/each}}
+                        {{/with}}/{{SiSo}}</td>
+                    <td>
+                        <form method="post" action="/admin/{{MaLop}}/class-details">
+                            <input type="hidden" name="id" value="{{MaLop}}">
+                            <input type="hidden" name="name_class" value="{{TenLop}}">
+                            <button type="submit" class="btn btn-primary">
+                                Danh sách học sinh
+                            </button>
+                        </form>
+
+                    </td>
+                    <td>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMoreStudent"
+                            data-id="{{MaLop}}">
+                            Thêm học sinh
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    {{!-- Pop-up nút Thêm học sinh --}}
+    <div class="modal fade" id="addMoreStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Thêm học sinh</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="select-all">
+                        <label class="form-check-label" for="select-all">
+                            Chọn tất cả
+                        </label>
+                    </div>
+                    <form method="post" id="AddStudentToClass">
+                        <table style="text-align: center;" class="table table-hover">
+                            <thead>
+                                <th>Tên tài khoản</th>
+                                <th>Tên học sinh</th>
+                                <th>Giới tính</th>
+                                <th>Năm sinh</th>
+                                <th>Trạng thái</th>
+                                <th>Chọn</th>
+                            </thead>
+                            <tbody>
+                                {{#each AccountHadIdClassNull}}
+                                <tr>
+                                    <td>{{TenTaiKhoan}}</td>
+                                    <td>{{HoVaTen}}</td>
+                                    {{#if GioiTinh}}
+                                    <td>Nam</td>
+                                    {{else}}
+                                    <td>Nữ</td>
+                                    {{/if}}
+                                    <td>{{NamSinh}}</td>
+                                    {{#if KhoaTaiKhoan}}
+                                    <td>
+                                        Đã bị khoá
+                                    </td>
+                                    <td>
+                                        <input disabled type="checkbox" value="{{MaTaiKhoan}}">
+                                    </td>
+                                    {{else}}
+                                    <td>Bình thường</td>
+                                    <td>
+                                        <input type="hidden" name="idClass" id="idClass">
+                                        <input type="checkbox" name="AccountAddIntoClass[]" value="{{MaTaiKhoan}}">
+                                    </td>
+                                    {{/if}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </form>
+                    <div class="modal-footer">
+                        <button id="ButtonAddStuIntoClass" class="btn btn-success disabled">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{else}}
+<h1 style="color: red;">Bạn không có quyền truy cập!!!!</h1>
+{{/if}}
+
+<script>
+    document.addEventListener("DOMContentLoaded",
+        function () {
+            //Khai báo
+            var checkBoxAll = $("#select-all");
+            var checkBoxAccountToAddClass = $("input[name = 'AccountAddIntoClass[]']");
+            var buttonAddStudentIntoClass = $("#ButtonAddStuIntoClass")
+            var idClass;
+            var formAddStudentToClass = $("#AddStudentToClass");
+            var notice_group = $("#notice-group")
+            //Lấy id của class và của những sinh viên được chọn để thêm vào class đó
+            $("#addMoreStudent").on("show.bs.modal", function (event) {
+                var button = $(event.relatedTarget);
+                idClass = button.data('id');
+                $("#idClass").val(idClass);
+            });
+            buttonAddStudentIntoClass.click(function (event) {
+                event.preventDefault();
+                formAddStudentToClass.prop("action", "/admin/" + idClass + "/add-student-into-class" + "?_method=PUT");
+                formAddStudentToClass.submit();
+            });
+            //Khi checkbox all click
+            checkBoxAll.change(function () {
+                var isCheckedAll = $(this).prop("checked")
+                checkBoxAccountToAddClass.prop("checked", isCheckedAll);
+                renderButtonSubmit();
+            });
+            //Khi checkbox item change
+            checkBoxAccountToAddClass.change(function () {
+                var isCheckedAll = checkBoxAccountToAddClass.length ===
+                    $("input[name = 'AccountAddIntoClass[]']:checked").length;
+                checkBoxAll.prop("checked", isCheckedAll);
+                renderButtonSubmit();
+            });
+            //Hiển thị lại nút thêm trong phần model thêm sinh viên
+            function renderButtonSubmit() {
+                var checkedCount = $("input[name = 'AccountAddIntoClass[]']:checked").length
+                if (checkedCount > 0) {
+                    buttonAddStudentIntoClass.removeClass("disabled");
+                } else {
+                    buttonAddStudentIntoClass.addClass("disabled");
+                }
+            }
+        }
+    );
+</script>

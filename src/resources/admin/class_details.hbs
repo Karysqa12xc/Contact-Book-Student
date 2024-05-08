@@ -1,0 +1,49 @@
+<div class="container">
+    <a href="/admin/class-management">
+        <button class="btn btn-primary">Quay lại</button>
+    </a>
+    <div class="table-responsive-sm">
+    <h1>Danh sách học sinh của lớp {{NameClass}}</h1>
+    <table class="table table-hover table-dark">
+        <thead>
+            <th>STT</th>
+            <th>Tên tài khoản</th>
+            <th>Tên học sinh</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Năm sinh</th>
+            <th>Giới tính</th>
+            <th>Trạng thái</th>
+            <th>Lựa chọn</th>
+        </thead>
+        <tbody>
+            {{#each accountInThisClass}}
+            <tr>    
+                <th>{{sum @index 1}}</th>
+                <td>{{TenTaiKhoan}}</td>
+                <td>{{HoVaTen}}</td>
+                <td>{{SoDienThoai}}</td>
+                <td>{{DiaChi}}</td>
+                <td>{{NamSinh}}</td>
+                {{#if GioiTinh}}
+                    <td>Nam</td>
+                {{else}}
+                    <td>Nữ</td>
+                {{/if}}
+                {{#if KhoaTaiKhoan}}
+                    <td>Đã bị khoá</td>
+                {{else}}
+                    <td>Bình thường</td>
+                {{/if}}
+                <td>
+                    <form method="post" action="/admin/:id/class-details?_method=PUT">
+                        <input type="hidden" name="id" value="{{MaTaiKhoan}}">
+                        <button class="btn btn-danger">Xoá khỏi lớp</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+     </div>
+</div>

@@ -1,0 +1,147 @@
+{{#if (eq account.MaVaiTro '01AD')}}
+<div class="container">
+    <h1 class="mb-3">Quản lý tài khoản</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAccount">
+        Tạo Tài Khoản
+    </button>
+    {{!-- Popup tạo tài khoản --}}
+    <div class="modal fade" id="createAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo tài khoản</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label h4">Vai trò:</label>
+                            <select class="form-select" name="role">
+                                <option selected>Chọn vai trò</option>
+                                {{#each roles}}
+                                <option value="{{MaVaiTro}}">{{TenVaiTro}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Tên tài khoản: </label>
+                            <input type="text" name="username" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Mật khẩu: </label>
+                            <input type="password" name="password" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label h4">Nhập lại mật khẩu: </label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Họ và Tên: </label>
+                            <input type="text" name="fNameAndlName" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Số điện thoại</label>
+                            <input type="tel" name="telephone" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Địa chỉ:</label>
+                            <input type="text" name="address" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Năm sinh</label>
+                            <input type="date" name="birth" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label h4">Giới tính:</label> <br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="true">
+                                <label class="form-check-label" for="inlineRadio1">Nam</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="false">
+                                <label class="form-check-label" for="inlineRadio1">Nữ</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive mt-3">
+       
+        <table class="table table-hover w-auto table-dark" 
+        style="text-align: center;">
+            <thead>
+                <th>Mã tài khoản</th>
+                <th>Tên tài khoản</th>
+                <th>Họ và tên</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Năm sinh</th>
+                <th>Giới tính</th>
+                <th>Trạng thái</th>
+                <th>Tên lớp</th>
+                <th>Vai trò</th>
+                <th>Lựa chọn</th>
+            </thead>
+            <tbody>
+                 {{#each accountInfo}}
+                <tr>
+                    <td>{{MaTaiKhoan}}</td>
+                    <td>{{TenTaiKhoan}}</td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{SoDienThoai}}</td>
+                    <td>{{DiaChi}}</td>
+                    <td>{{NamSinh}}</td>
+                    {{#if GioiTinh}}
+                    <td>Nam</td>
+                    {{else}}
+                    <td>Nữ</td>
+                    {{/if}}
+                    {{#if KhoaTaiKhoan}}
+                        <td>Đang bị khoá</td>
+                    {{else}}
+                        <td>Bình thường</td>
+                    {{/if}}
+                    {{#if (eq MaLop null)}}
+                        <td>Chưa phân lớp</td>       
+                    {{else}}     
+                        <td>{{TenLop}}</td>
+                    {{/if}}
+                    <td>{{TenVaiTro}}</td>
+                    <td>
+                        <form method="post" action="/admin/{{MaTaiKhoan}}/lock-account?_method=PUT">
+                            <input type="hidden" name="idAccount" value="{{MaTaiKhoan}}">
+                            <input type="hidden" name="isLocked" value="{{KhoaTaiKhoan}}">
+                        {{#if KhoaTaiKhoan}}
+                            <button type="submit" class="btn btn-success">
+                                Mở khoá
+                            </button>
+                            {{else}}
+                            <button type="submit" class="btn btn-danger">
+                                Khoá tải khoản
+                            </button>
+                        {{/if}}
+                        </form>
+                    </td>
+                    
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+{{else}}
+<h1 style="color: red;">Bạn không có quyền truy cập!!!!</h1>
+{{/if}}
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+
+    });
+</script>
