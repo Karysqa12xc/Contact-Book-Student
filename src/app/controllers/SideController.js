@@ -18,7 +18,11 @@ class SideController {
   }
   //[GET] /about
   about(req, res, next){
-     res.render("about");
+    const account = req.session.account;
+    let isLoggedIn = req.session.isLoggedIn;
+     res.render("../../resources/views/Student/money.hbs",{account: account, isLoggedIn: isLoggedIn});
+
+     
   }
 }
 
