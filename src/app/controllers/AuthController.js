@@ -5,7 +5,7 @@ class AuthController {
     if(req.session.isLoggedIn){
       res.redirect("/");
     }else{
-      res.render("login");
+      res.render("../../resources/views/login.hbs");
     }
   }
   //[POST] /login

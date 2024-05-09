@@ -12,36 +12,85 @@
 	<button type="submit" class="btn btn-primary">Đăng nhập</button>
 </form> --}}
 {{!-- Code của thắng --}}
-<div class="header">
-	<div class="header-main">
-		<h1>Đăng Nhập</h1>
-		<div class="header-bottom">
-			<div class="header-right w3agile">
-				<div class="header-left-bottom agileinfo">
-					<form method="post">
-						<input type="text" value="Tên Đăng Nhập" name="username" onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Tên Đăng Nhập';}" />
-						<input type="password" value="Mật Khẩu" name="password" onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Mật Khẩu';}" />
-						<div class="remember">
-							<span class="checkbox1">
-								<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>Nhớ Mật
-									Khẩu</label>
-							</span>
-							<div class="forgot">
-								<h6><a href="#">Quên Mật Khẩu?</a></h6>
-							</div>
-							<div class="clear"> </div>
-						</div>
-
-						<input type="submit" value="Đăng Nhập">
-					</form>
-
-
-				</div>
-
-
-			</div>
+<div class="center">
+	<h1>ĐĂNG NHẬP</h1>
+	<form action="" method="post" id="form-1">
+		<div class="txt_field">
+			<input type="text" required name="username" id="fullname">
+			<label>Tên tài khoản</label>
+			<span class="form-message"></span>
 		</div>
+		<div class="txt_field">
+			<span class="form-message"></span>
+			<input type="password" required name="password" id="password">
+			<label>Mật khẩu</label>
+			
+		</div>
+		<div class="pass">
+			Quên mật khẩu
+		</div>
+		<input type="submit" value="Đăng Nhập">
+	</form>
+</div>
 
-	</div>
+<script>
+
+	document.addEventListener("DOMContentLoaded", function () {
+		function Validator(options) {
+			var formElement = document.querySelector(options.form);
+			if (formElement) {
+				options.rules.forEach(function (rules) {
+					var inputElement = formElement.querySelector(rules.selector);
+					var errorElement = inputElement.parentElement.querySelector('.form-message');
+					if (inputElement) {
+						inputElement.onblur = function () {
+							var errorMessage = rules.test(inputElement.value);
+
+							if(errorMessage){
+								errorElement.innerText = errorMessage;
+								
+							}
+							else{
+								errorElement.innerText = '';
+								
+							}
+						
+						}
+					}
+
+				});
+			}
+		}
+		Validator.isRequired = function (selector) {
+			return {
+				selector: selector,
+				test: function (value) {
+					return value ? undefined :  'Vui lòng nhập trường này'|| 'chính xác'
+				}
+			};
+		};
+		Validator.minLength = function (selector, min) {
+    return {
+        selector: selector,
+        test: function (value) {
+            return value.length >= min ? undefined :  `Vui lòng nhập tối thiểu ${min} kí tự`;
+        }
+    };
+}
+
+
+
+		Validator({
+			form: '#form-1',
+
+			rules: [
+				Validator.isRequired('#fullname'),
+				Validator.minLength('#password',6)
+
+			]
+
+		});
+	});
+
+
+</script>
