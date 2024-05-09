@@ -8,6 +8,9 @@
                 <th>Tổng tiền</th>
             </tr>
             <tr>
+                {{#each name}}
+                    <td>{{this.TenHocKi}}</td>
+                {{/each}}
                 <td>{{HocKy}}</td>
                 <td>{{HanDong}}</td>
                 <td>{{TongTien}}</td>

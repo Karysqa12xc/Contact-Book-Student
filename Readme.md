@@ -26,7 +26,7 @@ xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo g
 
 `   CREATE TABLE Lop (
 	MaLop int IDENTITY(1,1),
-	TenLop nvarchar(255) NOT NULL,
+	TenLop nvarchar(255) NOT NULL UNIQUE,
 	SiSo int NOT NULL,
 	PRIMARY KEY(MaLop),
 );
@@ -71,7 +71,7 @@ GO`
 
 `  CREATE TABLE MonHoc (
 	MaMonHoc INT IDENTITY(1,1),
-	TenMonHoc nvarchar(255) NOT NULL,
+	TenMonHoc nvarchar(255) NOT NULL UNIQUE,
 	ThoiGianBatDau TIME,
 	ThoiGianKetThuc TIME,
 	SoTien float(10) NOT NULL,

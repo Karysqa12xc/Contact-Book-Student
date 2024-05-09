@@ -9,6 +9,7 @@ const {
   queryGetTaiKhoanByMaLop,
   queryGetDataAccountRefClassAndRole,
   queryUpdateLockedOfAccount,
+  queryGetTeacherInTaiKhoan,
 } = require("../../utils/QueryTaiKhoan");
 const tableName = "TaiKhoan";
 const tableJoinRole = "VaiTro";
@@ -79,57 +80,84 @@ class AccountModel {
       throw error;
     }
   }
-  async CountAccountInClass(id){
+  async CountAccountInClass(id) {
     try {
-      const result = await db.connectAndQuerying(queryCountQuantityAccountInClass(tableName, id));
+      const result = await db.connectAndQuerying(
+        queryCountQuantityAccountInClass(tableName, id)
+      );
       return result;
     } catch (error) {
       console.log("Failed to count account in class:", error);
       throw error;
     }
   }
-  async getDataIdClassNull(){
+  async getDataIdClassNull() {
     try {
-      const result = await db.connectAndQuerying(queryGetNullMaLopInTaiKhoan(tableName));
+      const result = await db.connectAndQuerying(
+        queryGetNullMaLopInTaiKhoan(tableName)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get account id class null:", error);
       throw error;
     }
   }
-  async updateDataIdClass(value, idAccount){
+  async updateDataIdClass(value, idAccount) {
     try {
-      const result = await db.connectAndQuerying(queryUpdateClassOfAccount(tableName, value, idAccount))
+      const result = await db.connectAndQuerying(
+        queryUpdateClassOfAccount(tableName, value, idAccount)
+      );
       return result;
     } catch (error) {
       console.log("Failed to update account id class:", error);
       throw error;
     }
   }
-  async getByIdClass(id){
+  async getByIdClass(id) {
     try {
-      const result = await db.connectAndQuerying(queryGetTaiKhoanByMaLop(tableName, id));
+      const result = await db.connectAndQuerying(
+        queryGetTaiKhoanByMaLop(tableName, id)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get account by id class:", error);
       throw error;
     }
   }
-  async getDataAccountRefRoleAndClass(){
+  async getDataAccountRefRoleAndClass() {
     try {
-      const result = await db.connectAndQuerying(queryGetDataAccountRefClassAndRole(tableName, tableJoinRole, tableJoinClass));
+      const result = await db.connectAndQuerying(
+        queryGetDataAccountRefClassAndRole(
+          tableName,
+          tableJoinRole,
+          tableJoinClass
+        )
+      );
       return result;
     } catch (error) {
       console.log("Failed to get account reference by class and role:", error);
       throw error;
     }
   }
-  async updateDataLockAccount(value, idAccount){
+  async updateDataLockAccount(value, idAccount) {
     try {
-      const result = await db.connectAndQuerying(queryUpdateLockedOfAccount(tableName, value, idAccount))
+      const result = await db.connectAndQuerying(
+        queryUpdateLockedOfAccount(tableName, value, idAccount)
+      );
       return result;
     } catch (error) {
       console.log("Failed to update account id class:", error);
+      throw error;
+    }
+  }
+  async getDataTeacherInAccount() {
+    try {
+      const result = await db.connectAndQuerying(
+        queryGetTeacherInTaiKhoan(tableName)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to get account have id teacher:", error);
       throw error;
     }
   }

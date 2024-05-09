@@ -1,11 +1,11 @@
 {{!-- Code của Nam --}}
 {{!-- <h1>Đăng nhập</h1>
 {{#if error}}
-		<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
-		{{/if}}
-		{{#if lock}}
-		<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
-		{{/if}}
+<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
+{{/if}}
+{{#if lock}}
+<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
+{{/if}}
 <form method="post">
 	<div class="mb-3">
 		<label for="exampleInputEmail1" class="form-label">UserName:</label>
@@ -21,26 +21,23 @@
 <div class="header">
 	<div class="header-main">
 		<h1>Đăng Nhập</h1>
-		{{#if error}}
-		<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
-		{{/if}}
 		{{#if lock}}
 		<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
 		{{/if}}
+		{{#if error}}
+		<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
+		{{/if}}
+
 		<div class="header-bottom">
 			<div class="header-right w3agile">
 				<div class="header-left-bottom agileinfo">
 					<form method="post">
-						<input type="text" name="username" placeholder="Tên đăng nhập"/>
-						<input type="password" name="password" placeholder="Mật khẩu"/>
+						<input type="text" name="username" placeholder="Tên đăng nhập" />
+						<input type="password" name="password" placeholder="Mật khẩu" />
 						<input type="submit" value="Đăng Nhập">
 					</form>
-
-
 				</div>
-
-
-			</div>
 		</div>
-
 	</div>
+
+</div>

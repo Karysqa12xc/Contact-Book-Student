@@ -23,7 +23,7 @@
             </a>
         </div>
         <div class="col-sm-4">
-            <a href="" class="text-dark text-decoration-none">
+            <a href="/admin/course" class="text-dark text-decoration-none">
                 <div class="card">
                     <img src="imgs/CourseMain.png" class="card-img-top">
                     <div class="card-body">
@@ -65,7 +65,6 @@
             </a>
         </div>
     </div>
-
 </div>
 {{/if}}
 
@@ -76,5 +75,70 @@
 
 {{!-- Trang home của học sinh --}}
 {{#if (eq account.MaVaiTro '01HS')}}
-<h1>Home Of Student</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-4">
+            <a href="/admin/account-management" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/CreateAccountAdmin.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Quản lý tài khoản</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/admin/class-management" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/ClassRoomAdmin.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Quản lý lớp học</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/admin/course" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/CourseMain.png" class="card-img-top">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Quản lý môn học</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Trợ giúp</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 {{/if}}

@@ -1,6 +1,7 @@
 const Class = require("../models/Class");
 const Account = require("../models/Account");
 const Role = require("../models/Role");
+const Course = require("../models/Course");
 const {uuid} = require("uuidv4");
 class AdminController {
   //[GET] /admin/account-management
@@ -152,10 +153,10 @@ class AdminController {
   //[PUT /admin/:id/lock-account
   async lock_account(req, res) {
     try {
-      let {idAccount, isLocked } = req.body;
-      if(isLocked === "true" || isLocked === true){
+      let {idAccount, isLocked} = req.body;
+      if (isLocked === "true" || isLocked === true) {
         isLocked = 0;
-      }else{
+      } else {
         isLocked = 1;
       }
       await Account.updateDataLockAccount(isLocked, idAccount);
@@ -165,8 +166,58 @@ class AdminController {
     }
   }
   //[GET] /admin/course
-  course_view(req, res){
-    
+  async course_view(req, res) {
+    try {
+      if (!req.session.isLoggedIn) {
+        res.redirect("/");
+      } else {
+        const course = await Course.getDataOuterTable();
+        const accountTeacher = await Account.getDataTeacherInAccount();
+        res.render("../../resources/admin/course_management.hbs", {
+          course: course,
+          accountTeacher: accountTeacher,
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[POST] /admin/course-create
+  async course_create(req, res) {
+    try {
+      const {course_name, start_time, end_time, money_course} = req.body;
+      let courseRename = `${course_name} - (${start_time}, ${end_time})`;
+      await Course.addNewData(courseRename, start_time, end_time, money_course);
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[PUT] /admin/course-update-teacher
+  async course_update_teacher(req, res) {
+    try {
+      const {charge_teacher, idTeacher} = req.body;
+
+      await Course.updateMaTaiKhoanOfCourse(idTeacher, charge_teacher);
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[DELETE] /admin/delete-course
+  async delete_course(req, res) {
+    try {
+      const {IdCourse} = req.body;
+      for (let index = 0; index < IdCourse.length; index++) {
+        const element = IdCourse[index];
+        await Course.deleteCourse(element);
+      }
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
   }
 }
 module.exports = new AdminController();
