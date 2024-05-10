@@ -901,7 +901,7 @@ tr:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.h2-title {
   text-align: center;
 }
 
@@ -909,20 +909,24 @@ h2 {
   margin-bottom: 20px;
 }
 
-label {
+.label1 {
   display: block;
   font-weight: bold;
 }
 
-select,
+select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
-button {
+.button1 {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
@@ -932,7 +936,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.button1:hover {
   background-color: #0056b3;
 }
  /* login */
