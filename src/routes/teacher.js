@@ -1,5 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const enterScoreController = require("../app/controllers/TeacherController");
-router.get("/NhapDiem", enterScoreController.enterScore);
+const teacherController = require("../app/controllers/TeacherController");
+router.get("/NhapDiem", teacherController.enterScore);
 module.exports = router;

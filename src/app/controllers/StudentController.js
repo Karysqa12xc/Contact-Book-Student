@@ -9,7 +9,7 @@ class StudentController {
             res.status(500).json({message: `Internal server error + ${error}`});
         }
     }
-    async fixInfor(req, res) {
+    async editInfo(req, res) {
         try {
             res.render("../../resources/student/suathongtin.hbs")
         } catch (error) {
