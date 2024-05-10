@@ -4,7 +4,7 @@ class StudentController {
     async viewFee(req, res) {
         try {
             const result = await ViewFee.getAll();
-            res.render("../../resources/student/money.hbs", {FeeInfor:result});
+            res.render("../../resources/user/student/money.hbs", {FeeInfor:result});
             return result;
         } catch (error) {
             res.status(500).json({message: `Internal server error + ${error}`});
@@ -13,8 +13,8 @@ class StudentController {
     async editInfo(req, res) {
         try {
             const result = await ViewFee.getAll();
+            res.render("../../resources/user/student/suathongtin.hbs")
             return result;
-            res.render("../../resources/student/suathongtin.hbs")
         } catch (error) {
             res.status(500).json({message: `Internal server error + ${error}`}); 
         }
