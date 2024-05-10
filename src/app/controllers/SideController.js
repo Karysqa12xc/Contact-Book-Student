@@ -17,7 +17,7 @@ class SideController {
   }
   //[GET] /about
   about(req, res, next){
-    res.render("about",  
+    res.render("../../resources/user/userinfo.hbs",  
     {
       account: req.session.account, 
       isLoggedIn: req.session.isLoggedIn
