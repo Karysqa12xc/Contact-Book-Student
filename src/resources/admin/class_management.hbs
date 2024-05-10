@@ -33,13 +33,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label" for="selected-id">Sĩ số:</label>
-                            <select class="form-select" name="quantityClass" id="selected-id">
-                                <option selected>Chọn số lượng học sinh</option>
-                                <option value="35">35 học sinh</option>
-                                <option value="40">40 học sinh</option>
-                                <option value="45">45 học sinh</option>
-                                <option value="50">50 học sinh</option>
-                            </select>
+                            <input class="form-control" type="number" name="quantityClass">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Tạo</button>
@@ -127,7 +121,7 @@
                                     {{else}}
                                     <td>Nữ</td>
                                     {{/if}}
-                                    <td>{{NamSinh}}</td>
+                                    <td>{{format_date NamSinh}}</td>
                                     {{#if KhoaTaiKhoan}}
                                     <td>
                                         Đã bị khoá
@@ -182,7 +176,7 @@
             });
             //Khi checkbox all click
             checkBoxAll.change(function () {
-                var isCheckedAll = $(this).prop("checked")
+                var isCheckedAll = $(this).prop("checked");
                 checkBoxAccountToAddClass.prop("checked", isCheckedAll);
                 renderButtonSubmit();
             });

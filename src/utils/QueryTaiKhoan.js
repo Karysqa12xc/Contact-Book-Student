@@ -17,6 +17,11 @@ module.exports = {
       FROM ${tableName} 
       Where MaLop IS NULL AND MaVaiTro = '01HS'`;
   },
+  queryGetTeacherInTaiKhoan: function (tableName) {
+    return `SELECT * 
+      FROM ${tableName} 
+      Where MaVaiTro = '01GV'`;
+  },
   queryGetByOuterTableTaiKhoan: function (tableName, tableJoin) {
     return `SELECT MaTaiKhoan, TenTaiKhoan, 
       MatKhau, HoVaTen, SoDienThoai, 

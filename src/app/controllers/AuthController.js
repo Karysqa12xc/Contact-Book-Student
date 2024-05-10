@@ -1,40 +1,46 @@
 const Account = require("../models/Account");
+
 class AuthController {
   //[GET] /login
   login(req, res) {
-    if(req.session.isLoggedIn){
+    if (req.session.isLoggedIn) {
       res.redirect("/");
-    }else{
-      res.render("../../resources/views/login.hbs");
+    } else {
+      res.render("login");
     }
   }
   //[POST] /login
   async postLogin(req, res) {
-    const accountInfo = await Account.getAttributeOutTable();
-    const {username, password} = req.body;
-    for (const account of accountInfo) { 
-      if (username === account.TenTaiKhoan &&
-        password === account.MatKhau && 
-        account.KhoaTaiKhoan !== true) {
-        req.session.isLoggedIn = true;
-        req.session.account = account;
-        res.redirect("/");
-        return;
-        
-      }else if(account.KhoaTaiKhoan === true){
-        res.render("login", {lock: true});
+    try {
+      const accountInfo = await Account.getAttributeOutTable();
+      const {username, password} = req.body;
+      let foundValidAccount = false;
+      for (const account of accountInfo) {
+        if (username === account.TenTaiKhoan && password === account.MatKhau) {
+          if (account.KhoaTaiKhoan) {
+            res.render("login", {lock: true});
+          } else {
+            req.session.isLoggedIn = true;
+            req.session.account = account;
+            foundValidAccount = true;
+            res.redirect("/");
+          }
+          break;
+        }
       }
-      else{
+      if (!foundValidAccount) {
         res.render("login", {error: true});
       }
-    } 
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
   }
   logout(req, res) {
     req.session.isLoggedIn = false;
     delete req.session.account;
     delete req.session.checkedAdd;
     delete req.session.displayNotice;
-    res.redirect("/login"); 
+    res.redirect("/login");
   }
 }
 module.exports = new AuthController();
