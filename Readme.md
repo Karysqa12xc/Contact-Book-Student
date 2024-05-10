@@ -15,7 +15,7 @@ xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo g
 * **Thắng**: Tạo giao diện đăng nhập, tạo giao diện
 xem thông tin học sinh, tạo giao diện xem thông tin giáo viên, tạo giao diện thời khoá biểu.
 * **Tuấn**: tạo giao diện xem học phí, tạo giao diện sửa thông tin, tạo giao diện nhập điểm, tạo giao diện khoá tài khoản
-* **Việt Anh**: Tạo giao diện trang About, sửa phần , footer, tạo giao diện điểm danh. 
+* **Việt Anh**: Tạo giao diện trang About, sửa phần , footer, tạo giao diện điểm danh.
 ## Các document:
 * [Handlebars](https://handlebarsjs.com/guide/#what-is-handlebars)
 * [Express](https://expressjs.com/)
