@@ -3,7 +3,8 @@ const {queryAddNewDataTableLop} = require("../../utils/QueryClass");
 const {
   queryGetAll,
   queryGetAllReverse,
-  queryGetById
+  queryGetById,
+  queryGetOnlyIdAndName,
 } = require("../../utils/QueryCommon");
 const tableName = "Lop";
 class ClassModel {
@@ -30,6 +31,15 @@ class ClassModel {
   async getById(id) {
     try {
       const result = await db.connectAndQuerying(queryGetById(tableName, id));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account by id:", error);
+      throw error;
+    }
+  }
+  async getOnlyIdAndName() {
+    try {
+      const result = await db.connectAndQuerying(queryGetOnlyIdAndName(tableName));
       return result;
     } catch (error) {
       console.log("Failed to get account by id:", error);

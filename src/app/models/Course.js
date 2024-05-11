@@ -29,6 +29,15 @@ class CourseModel {
       throw error;
     }
   }
+  async getOnlyIdAndName() {
+    try {
+      const result = await db.connectAndQuerying(queryGetOnlyIdAndName(tableName));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account by id:", error);
+      throw error;
+    }
+  }
   async getDataOuterTable() {
     try {
       const result = await db.connectAndQuerying(

@@ -2,6 +2,7 @@ const Class = require("../models/Class");
 const Account = require("../models/Account");
 const Role = require("../models/Role");
 const Course = require("../models/Course");
+const Semester = require("../models/Semester");
 const {uuid} = require("uuidv4");
 class AdminController {
   //[GET] /admin/account-management
@@ -214,6 +215,45 @@ class AdminController {
         const element = IdCourse[index];
         await Course.deleteCourse(element);
       }
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[GET] /admin/management-timetable
+  async viewTKB(req, res) {
+    try {
+      if (!req.session.isLoggedIn) {
+        res.redirect("/");
+      } else {
+        const IdAndNameOfClass = await Class.getAll();
+        const IdAndNameOfCourse = await Course.getAll();
+        const SemesterInfo = await Semester.getAll();
+        const semesterID = await req.query.semester;
+        res.render("../../resources/admin/timetable_management.hbs", {
+          Classes: IdAndNameOfClass,
+          Courses: IdAndNameOfCourse,
+          SemesterInfo: SemesterInfo,
+          semesterID: semesterID,
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[POST] /admin/create-semester
+  async createSemester(req, res) {
+    try {
+      const {idSemester, nameSemester, StartTimeSemester, EndTimeSemester} =
+        req.body;
+      await Semester.addNewDataInHocKi(
+        idSemester,
+        nameSemester,
+        StartTimeSemester,
+        EndTimeSemester
+      );
       res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
