@@ -37,8 +37,8 @@
                 <select id="weekSelected" class="form-select me-3">
                     <option></option>
                 </select>
-                <select class="form-select me-3">
-                    <option value="">Chọn ngày</option>
+                <select id="daySelected" class="form-select me-3">
+                    <option></option>
                 </select>
             </div>
         </form>
@@ -111,132 +111,61 @@
             <tbody>
                 <tr>
                     <td>Tiết 1</td>
-                    <td valign="middle" rowspan="2">Toán</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td></td>
+                    
+                   
                     <td>06:45</td>
                 </tr>
                 <tr>
                     <td>Tiết 2</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+                    
                     <td>07:45</td>
                 </tr>
                 <tr>
                     <td>Tiết 3</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+                    
                     <td>08:45</td>
                 </tr>
                 <tr>
                     <td>Tiết 4</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+                   
                     <td>09:45</td>
                 </tr>
                 <tr>
                     <td>Tiết 5</td>
-                    <td valign="middle"></td>
-                    <td valign="middle" rowspan="3">Sinh Học</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+                  
                     <td>10:45</td>
                 </tr>
                 <tr>
                     <td>Tiết 6</td>
-                    <td valign="middle"></td>
-
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+              
                     <td>11:45</td>
                 </tr>
                 <tr>
-                    <td valign="middle">Tiết 7</td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
-                    <td valign="middle"></td>
+                    <td>Tiết 7</td>
+                    
                     <td>12:30</td>
                 </tr>
                 <tr>
                     <td>Tiết 8</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    
                     <td>13:30</td>
                 </tr>
                 <tr>
                     <td>Tiết 9</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    
                     <td>14:30</td>
                 </tr>
                 <tr>
                     <td>Tiết 10</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    
                     <td>15:30</td>
                 </tr>
                 <tr>
                     <td>Tiết 11</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                     <td>16:30</td>
                 </tr>
                 <tr>
                     <td>Tiết 12</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                     <td>17:30</td>
                 </tr>
             </tbody>
@@ -249,6 +178,8 @@
         var endTimeSemester = $("#EndTimeSemester");
         var semesterSelectId = $("#semesterSelectId");
         var weekSelectId = $("#weekSelect");
+        var weekSelected = $("#weekSelected");
+        var daySelected = $("#daySelected");
         startTimeSemester.change(function () {
             var value = $(this).val();
             var date = new Date(value);
@@ -262,14 +193,37 @@
             $('#weekSelect option').each(function () {
                 var weekValue = $(this).val(); // Lấy giá trị của mỗi option trong #weekSelect
 
-                // So sánh giá trị của #semesterSelectId với giá trị của mỗi option trong #weekSelect
                 if (value === weekValue) {
-                    // Nếu giá trị trùng khớp, in ra giá trị của option đó
-                    options += '<option value="' + $(this).val() + '">' + $(this).text() + '</option>';
+                    options += '<option value="' + $(this).text() + '">' + $(this).text() + '</option>';
                 }
             });
-            $('#weekSelected').html(options);
+            weekSelected.html(options);
+            getDayInWeekSelected(weekSelected.val());
         });
+        weekSelected.change(function () {
+            getDayInWeekSelected(weekSelected.val());
+        });
+        function getDayInWeekSelected(value) {
+            var options = "";
+            var fromDateIndex = value.indexOf("Từ ngày") + 7;
+            var toDateIndex = value.indexOf("đến ngày") + 8;
+            var fromDateStr = convertDateString(value.substring(fromDateIndex, fromDateIndex + 12));
+            
+            var toDateStr = convertDateString(value.substring(toDateIndex, toDateIndex + 11));
+            var fromDate = new Date(fromDateStr);
+            var toDate = new Date(toDateStr);
+            var daysName = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+            for (var date = fromDate; date <= toDate; date.setDate(date.getDate() + 1)) {
+                let formatDate = daysName[date.getDay()] + " - "+ date.getDate() + " - " + (date.getMonth() + 1) + " - " + date.getFullYear();
+                options += '<option value="' + formatDate + '">' + formatDate + '</option>';
+            }   
+            daySelected.html(options);
+        }
+        function convertDateString(dateString) {
+            var parts = dateString.split('-');
+            return parts[1] + '/' + parts[0] + '/' + parts[2];
+        }
+        
 
     })
 </script>

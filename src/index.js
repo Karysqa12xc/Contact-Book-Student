@@ -31,13 +31,17 @@ app.engine(
       sum(a, b) {
         return a + b;
       },
-      format_date(str) {
-        const date = new Date(str);
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        const formattedDate = `${day}/${month}/${year}`;
-        return formattedDate;
+      format_date(date) {
+        // const date = new Date(str);
+        // const day = date.getDate();
+        // const month = date.getMonth() + 1;
+        // const year = date.getFullYear();
+        // const formattedDate = `${day}/${month}/${year}`;
+        // return formattedDate;
+        var day = date.getDate().toString().padStart(2, "0");
+        var month = (date.getMonth() + 1).toString().padStart(2, "0");
+        var year = date.getFullYear();
+        return day + "-" + month + "-" + year;
       },
       formatPhone(str) {
         const id = "+084";
@@ -55,7 +59,7 @@ app.engine(
         var weeks = [];
         var currentDate = new Date(startDate);
         while (currentDate <= endDate) {
-          var weekStartDate = new Date(currentDate);          
+          var weekStartDate = new Date(currentDate);
           var weekEndDate = new Date(currentDate);
           weekEndDate.setDate(weekEndDate.getDate() + 5);
           weeks.push({

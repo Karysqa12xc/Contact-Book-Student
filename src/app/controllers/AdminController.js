@@ -229,12 +229,10 @@ class AdminController {
         const IdAndNameOfClass = await Class.getAll();
         const IdAndNameOfCourse = await Course.getAll();
         const SemesterInfo = await Semester.getAll();
-        const semesterID = await req.query.semester;
         res.render("../../resources/admin/timetable_management.hbs", {
           Classes: IdAndNameOfClass,
           Courses: IdAndNameOfCourse,
           SemesterInfo: SemesterInfo,
-          semesterID: semesterID,
           account: req.session.account,
           logged: req.session.isLoggedIn,
         });
