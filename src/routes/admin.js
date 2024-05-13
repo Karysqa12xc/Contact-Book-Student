@@ -9,6 +9,7 @@ router.post("/course-create", adminController.course_create);
 router.put("/course-update-teacher", adminController.course_update_teacher);
 router.delete("/delete-course", adminController.delete_course);
 router.get("/management-timetable", adminController.viewTKB)
+router.post("/create-time-table", adminController.courseTimeTable);
 router.post("/create-semester", adminController.createSemester);
 router.get("/course", adminController.course_view);
 router.post("/:id/class-details", adminController.class_details);

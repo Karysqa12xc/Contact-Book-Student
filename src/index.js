@@ -28,16 +28,16 @@ app.engine(
       eq(a, b) {
         return a === b;
       },
+      more(a, b) {
+        return a > b;
+      },
       sum(a, b) {
-        return a + b;
+        return parseInt(a) + parseInt(b);
+      },
+      minus(a, b) {
+        return parseInt(a) - parseInt(b);
       },
       format_date(date) {
-        // const date = new Date(str);
-        // const day = date.getDate();
-        // const month = date.getMonth() + 1;
-        // const year = date.getFullYear();
-        // const formattedDate = `${day}/${month}/${year}`;
-        // return formattedDate;
         var day = date.getDate().toString().padStart(2, "0");
         var month = (date.getMonth() + 1).toString().padStart(2, "0");
         var year = date.getFullYear();
@@ -69,6 +69,17 @@ app.engine(
           currentDate.setDate(currentDate.getDate() + 7);
         }
         return weeks;
+      },
+      sliceTimeOfTimeTable(str) {
+        return str.split(" - ")[0];
+      },
+      hasLessonAtTime(TimeTableInfo, day, time) {
+        return TimeTableInfo.some(function (item) {
+          return (
+            item.ThoiGian.split(" - ")[0] === day &&
+            item.ThoiGianBatDauMonHoc === time
+          );
+        });
       },
     },
   })
