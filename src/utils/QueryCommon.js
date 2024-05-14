@@ -12,4 +12,8 @@ module.exports = {
     FROM ${tableName} 
     Where Ma${tableName} = '${id}'`;
   },
+  queryGetOnlyIdAndName: function (tableName) {
+    return `SELECT Ma${tableName} ,Ten${tableName}
+            FROM ${tableName}`;
+  },
 };

@@ -20,6 +20,12 @@
 {{!-- Code của thắng --}}
 <div class="center">
 	<h1>ĐĂNG NHẬP</h1>
+	{{#if error}}
+	<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
+	{{/if}}
+	{{#if lock}}
+	<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
+	{{/if}}
 	<form action="" method="post" id="form-1">
 		<div class="txt_field">
 			<input type="text" required name="username" id="fullname">
@@ -30,7 +36,7 @@
 			<span class="form-message"></span>
 			<input type="password" required name="password" id="password">
 			<label>Mật khẩu</label>
-			
+
 		</div>
 		<div class="pass">
 			Quên mật khẩu
@@ -52,15 +58,15 @@
 						inputElement.onblur = function () {
 							var errorMessage = rules.test(inputElement.value);
 
-							if(errorMessage){
+							if (errorMessage) {
 								errorElement.innerText = errorMessage;
-								
+
 							}
-							else{
+							else {
 								errorElement.innerText = '';
-								
+
 							}
-						
+
 						}
 					}
 
@@ -71,18 +77,18 @@
 			return {
 				selector: selector,
 				test: function (value) {
-					return value ? undefined :  'Vui lòng nhập trường này'|| 'chính xác'
+					return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
 				}
 			};
 		};
 		Validator.minLength = function (selector, min) {
-    return {
-        selector: selector,
-        test: function (value) {
-            return value.length >= min ? undefined :  `Vui lòng nhập tối thiểu ${min} kí tự`;
-        }
-    };
-}
+			return {
+				selector: selector,
+				test: function (value) {
+					return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+				}
+			};
+		}
 
 
 
@@ -91,7 +97,7 @@
 
 			rules: [
 				Validator.isRequired('#fullname'),
-				Validator.minLength('#password',6)
+				Validator.minLength('#password', 6)
 
 			]
 

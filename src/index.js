@@ -19,27 +19,69 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded());
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.engine(
   "hbs",
   handlebars.engine({
     extname: ".hbs",
     helpers: {
-      eq(a, b){
+      eq(a, b) {
         return a === b;
       },
-      sum(a, b){
-        return a + b;
+      more(a, b) {
+        return a > b;
       },
-      format_date(str){
-        const date = new Date(str);
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        const formattedDate = `${day}/${month}/${year}`;
-        return formattedDate;
-      }
-    }
+      sum(a, b) {
+        return parseInt(a) + parseInt(b);
+      },
+      minus(a, b) {
+        return parseInt(a) - parseInt(b);
+      },
+      format_date(date) {
+        var day = date.getDate().toString().padStart(2, "0");
+        var month = (date.getMonth() + 1).toString().padStart(2, "0");
+        var year = date.getFullYear();
+        return day + "-" + month + "-" + year;
+      },
+      formatPhone(str) {
+        const id = "+084";
+        const result = id + str;
+        return result;
+      },
+      formatNameCourse(str) {
+        var dashIndex = str.indexOf("-");
+        if (dashIndex !== -1) {
+          var subjectName = str.substring(0, dashIndex).trim();
+          return subjectName;
+        }
+      },
+      renderWeeks(startDate, endDate) {
+        var weeks = [];
+        var currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+          var weekStartDate = new Date(currentDate);
+          var weekEndDate = new Date(currentDate);
+          weekEndDate.setDate(weekEndDate.getDate() + 5);
+          weeks.push({
+            start: weekStartDate,
+            end: weekEndDate,
+          });
+          currentDate.setDate(currentDate.getDate() + 7);
+        }
+        return weeks;
+      },
+      sliceTimeOfTimeTable(str) {
+        return str.split(" - ")[0];
+      },
+      hasLessonAtTime(TimeTableInfo, day, time) {
+        return TimeTableInfo.some(function (item) {
+          return (
+            item.ThoiGian.split(" - ")[0] === day &&
+            item.ThoiGianBatDauMonHoc === time
+          );
+        });
+      },
+    },
   })
 );
 
