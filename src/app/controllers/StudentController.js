@@ -56,7 +56,7 @@ async  updateStudentInfo(req, res) {
   const MaTaiKhoan = req.params.id;
   const updatedInfo = req.body;
   try {
-    await Student.updateInfo(MaTaiKhoan, updatedInfo);
+    await StudentModel.updateInfo(MaTaiKhoan, updatedInfo);
     res.redirect('/students'); // Chuyển hướng sau khi cập nhật thành công
   } catch (error) {
     res.status(500).send('Failed to update student information');
