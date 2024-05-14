@@ -1,26 +1,29 @@
-
-    <div class="contact-details">
+<div class="container">
     <h2>Sửa thông tin học sinh</h2>
-    <form id="contact-form">
-        <label for="name">Họ tên:</label>
-        <input type="text" id="name" name="name" value="{{name}}">
-        
-        <label for="phone">Điện thoại:</label>
-        <input type="text" id="phone" name="phone" value="{{phone}}">
-        
-        <label for="address">Địa chỉ:</label>
-        <input type="text" id="address" name="address" value="{{address}}">
-        
-        <label for="gender">Giới tính:</label>
-        <select id="gender" name="gender">
-            <option value="male" {{#if (eq gender 'male')}}selected{{/if}}>Nam</option>
-            <option value="female" {{#if (eq gender 'female')}}selected{{/if}}>Nữ</option>
-        </select>
-
-        <label for="classCode">Mã lớp:</label>
-        <input type="text" id="classCode" name="classCode" value="{{classCode}}">
-        
-        <button type="submit">Lưu</button>
+    <form id="update-form" method="post" action="/students/update/{{student.MaTaiKhoan}}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ tên:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{HoVaTen}}">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Điện thoại:</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{SoDienThoai}}">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{DiaChi}}">
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Giới tính:</label>
+            <select class="form-select" id="gender" name="gender">
+                <option value="male" {{#if (eq gender 'male')}}selected{{/if}}>Nam</option>
+                <option value="female" {{#if (eq gender 'female')}}selected{{/if}}>Nữ</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="classCode" class="form-label">Mã lớp:</label>
+            <input type="text" class="form-control" id="classCode" name="classCode" value="{{MaLop}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 </div>
-

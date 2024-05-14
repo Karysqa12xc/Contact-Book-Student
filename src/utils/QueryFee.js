@@ -1,6 +1,7 @@
 module.exports = {
-    queryDocHocPHi: function(tableName, TenLop, SiSo){
-        return ` Select TongTien, HanDong, MaHocKi
-                From ${tableName}`;
-    },
-}
+    queryDocHocPHi: function(tableName, MaTaiKhoan) {
+        return `SELECT TongTien, HanDong, MaHocKi 
+                FROM ${tableName} 
+                WHERE MaTaiKhoan = '${MaTaiKhoan}'`; 
+    }
+};

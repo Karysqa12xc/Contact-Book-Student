@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Karysqa12xc/Contact-Book-Student#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "express": "^4.19.2"
   },
   "devDependencies": {

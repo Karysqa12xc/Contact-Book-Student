@@ -1,19 +1,23 @@
 module.exports = {
-    queryFixInfor: function (
-        tableName,
-        HoVaTen,
-        SoDienThoai,
-        DiaChi,
-        NamSinh,
-        GioiTinh,
-        MaLop,
-      ) {
-        return `INSERT INTO ${tableName}(
-            HoVaTen, SoDienThoai, DiaChi,
-            NamSinh, GioiTinh,MaLop)
-            VALUES('${HoVaTen}', 
-            '${SoDienThoai}', N'${DiaChi}', '${NamSinh}', 
-            '${GioiTinh}', ${MaLop}, 
-            )`;
-      },
+  queryFixInfor: function (
+      tableName,
+      HoVaTen,
+      SoDienThoai,
+      DiaChi,
+      NamSinh,
+      GioiTinh,
+      MaLop,
+      MaTaiKhoan
+    ) {
+      return `UPDATE ${tableName} 
+              SET 
+                  HoVaTen = '${HoVaTen}', 
+                  SoDienThoai = '${SoDienThoai}', 
+                  DiaChi = N'${DiaChi}', 
+                  NamSinh = '${NamSinh}', 
+                  GioiTinh = '${GioiTinh}', 
+                  MaLop = ${MaLop} 
+              WHERE 
+                  MaTaiKhoan = ${MaTaiKhoan}`;
+    },
 }

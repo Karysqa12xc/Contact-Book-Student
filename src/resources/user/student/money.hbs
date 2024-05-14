@@ -5,29 +5,15 @@
             <th>Học kỳ</th>
             <th>Hạn đóng</th>
             <th>Tổng tiền</th>
-
         </thead>
         <tbody>
+            {{#each FeeInfor}}
             <tr>
-
-                <td>
-
-                    {{MaHocKi}}
-
-                </td>
-                <td>
-
-                    {{HanDong}}
-
-                </td>
-                <td>
-
-                    {{TongTien}}
-                </td>
-
+                <td>{{this.MaHocKi}}</td>
+                <td>{{this.HanDong}}</td>
+                <td>{{this.TongTien}}</td>
             </tr>
+            {{/each}}
         </tbody>
-
-
     </table>
 </div>

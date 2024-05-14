@@ -1,15 +1,36 @@
-const db = require("../../config/database");
-const {queryFixInfor} = require("../../utils/QueryFixInfor");
+const  { connectAndQuerying }  = require("../../config/database");
+// const { queryFixInfor } = require("../../utils/QueryFixInfor");
+// const { queryGetAll } = require("../../utils/QueryCommon");
 const tableName = "TaiKhoan";
-class fixInforModel {
-    async getAll() {
+class StudentModel {
+    static async getStudentById(MaTaiKhoan) {
+        const query = `SELECT * FROM TaiKhoan WHERE MaTaiKhoan = ${MaTaiKhoan}`;
         try {
-            const results = await db.connectAndQuerying(queryGetAll(tableName));
-            return results;
+          const result = await connectAndQuerying(query);
+          return result[0]; // Assuming result is an array and we need the first item
         } catch (error) {
-            console.log("Failed to get all account:", error);
-            throw error;
+          console.error('Error retrieving student information:', error);
+          throw error;
+        }
+    }
+    static async updateInfo(MaTaiKhoan, updatedInfo) {
+        const query = `
+          UPDATE TaiKhoan
+          SET
+            HoVaTen = '${updatedInfo.HoVaTen}',
+            SoDienThoai = '${updatedInfo.SoDienThoai}',
+            DiaChi = '${updatedInfo.DiaChi}',
+            GioiTinh = '${updatedInfo.GioiTinh}',
+            MaLop = '${updatedInfo.MaLop}'
+          WHERE MaTaiKhoan = ${MaTaiKhoan}
+        `;
+        try {
+          await connectAndQuerying(query);
+        } catch (error) {
+          console.error('Error updating student information:', error);
+          throw error;
         }
     }
 }
-module.exports = new fixInforModel();
+module.exports = StudentModel;
+
