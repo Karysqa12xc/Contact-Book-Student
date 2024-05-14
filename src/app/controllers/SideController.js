@@ -1,3 +1,5 @@
+const Account = require("../models/Account");
+const Request = require("../models/Request");
 class SideController {
   //[GET] /home or /
   async index(req, res) {
@@ -5,10 +7,9 @@ class SideController {
       if (!req.session.isLoggedIn) {
         return res.redirect("login");
       } else {
-        res.render("home", 
-        {
+        res.render("home", {
           account: req.session.account,
-          logged: req.session.isLoggedIn
+          logged: req.session.isLoggedIn,
         });
       }
     } catch (error) {
@@ -16,14 +17,23 @@ class SideController {
     }
   }
   //[GET] /about
-  about(req, res, next){
-    res.render("about",  
-    {
-      account: req.session.account, 
-      logged: req.session.isLoggedIn
+  about(req, res, next) {
+    res.render("about", {
+      account: req.session.account,
+      logged: req.session.isLoggedIn,
     });
   }
+  //[GET] /request
+  request(req, res) {
+    if (!req.session.isLoggedIn) {
+      return res.redirect("login");
+    } else {
+      res.render("../../resources/user/request.hbs", {
+        account: req.session.account,
+        logged: req.session.isLoggedIn,
+      });
+    }
+  }
 }
-
 
 module.exports = new SideController();

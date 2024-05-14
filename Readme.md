@@ -58,15 +58,18 @@ GO`
 );`
 * Bảng Yêu cầu:
 
-`   CREATE TABLE Yeu_Cau (
-	MaYeuCau int IDENTITY(1,1),
-	TenYeuCau nvarchar(255) NOT NULL,
-	TinhTrangXuLy BIT NOT NULL,
-	MaTaiKhoan varchar(255),
-	PRIMARY KEY(MaYeuCau),
-    FOREIGN KEY(MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan)
-);
-GO`
+`   CREATE TABLE Yeu_Cau
+( 
+MaYeuCau int IDENTITY(1,1), 
+TenYeuCau nvarchar(255) NOT NULL, 
+NoiDung nvarchar(255) NOT NULL,
+MaTaiKhoanGui varchar(255), 
+MaTaiKhoanNhan varchar(255),
+FOREIGN KEY(MaTaiKhoanGui) 
+REFERENCES TaiKhoan(MaTaiKhoan), 
+FOREIGN KEY(MaTaiKhoanNhan) 
+REFERENCES TaiKhoan(MaTaiKhoan),
+);`
 * Bảng Môn học:
 
 `  CREATE TABLE MonHoc (
