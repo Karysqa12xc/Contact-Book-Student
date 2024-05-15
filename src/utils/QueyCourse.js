@@ -9,7 +9,7 @@ module.exports = {
     queryAddNewDataMonHoc: function(tableName, 
         courseName, startTime, endTime, moneyCourse
     ){
-        return `INSERT INTO ${tableName}(TenMonHoc, ThoiGianBatDau, ThoiGianKetThuc, SoTien)
+        return `INSERT INTO ${tableName}(TenMonHoc, ThoiGianBatDauMonHoc, ThoiGianKetThucMonHoc, SoTien)
                 VALUES(N'${courseName}', 
                     '${startTime}', '${endTime}', ${moneyCourse})`;
     },

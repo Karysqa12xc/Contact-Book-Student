@@ -1,5 +1,9 @@
 const db = require("../../config/database");
-const {queryGetAll, queryGetById} = require("../../utils/QueryCommon");
+const {
+  queryGetAll,
+  queryGetById,
+  queryGetOnlyIdAndName,
+} = require("../../utils/QueryCommon");
 const {
   queryGetByOuterTableTaiKhoan,
   queryGetNullMaLopInTaiKhoan,
@@ -27,6 +31,17 @@ class AccountModel {
   async getById(id) {
     try {
       const result = await db.connectAndQuerying(queryGetById(tableName, id));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account by id:", error);
+      throw error;
+    }
+  }
+  async getOnlyIdAndName() {
+    try {
+      const result = await db.connectAndQuerying(
+        queryGetOnlyIdAndName(tableName)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get account by id:", error);

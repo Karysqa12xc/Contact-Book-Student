@@ -2,6 +2,8 @@ const Class = require("../models/Class");
 const Account = require("../models/Account");
 const Role = require("../models/Role");
 const Course = require("../models/Course");
+const Semester = require("../models/Semester");
+const CourseDetails = require("../models/CourseDetails");
 const {uuid} = require("uuidv4");
 class AdminController {
   //[GET] /admin/account-management
@@ -214,6 +216,64 @@ class AdminController {
         const element = IdCourse[index];
         await Course.deleteCourse(element);
       }
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[GET] /admin/management-timetable
+  async viewTKB(req, res) {
+    try {
+      if (!req.session.isLoggedIn) {
+        res.redirect("/");
+      } else {
+        const IdAndNameOfClass = await Class.getAll();
+        const IdAndNameOfCourse = await Course.getAll();
+        const SemesterInfo = await Semester.getAll();
+        const TimeTableInfo = await CourseDetails.getAllValueJoinOtherTable();
+        const periods =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        const days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
+        res.render("../../resources/admin/timetable_management.hbs", {
+          Classes: IdAndNameOfClass,
+          Courses: IdAndNameOfCourse,
+          SemesterInfo: SemesterInfo,
+          periods: periods,
+          days: days,
+          TimeTableInfo: TimeTableInfo,
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[POST] /admin/create-semester
+  async createSemester(req, res) {
+    try {
+      const {idSemester, nameSemester, StartTimeSemester, EndTimeSemester} =
+        req.body;
+      await Semester.addNewDataInHocKi(
+        idSemester,
+        nameSemester,
+        StartTimeSemester,
+        EndTimeSemester
+      );
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[POST] /admin/create-time-table
+  async courseTimeTable(req, res) {
+    try {
+      const {idSemesTer, idClass, idCourse, dayValue} = req.body;
+      await CourseDetails.addNewDataToCourseDetails(
+        idSemesTer,
+        idClass,
+        idCourse,
+        dayValue
+      );
       res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
