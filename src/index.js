@@ -28,6 +28,9 @@ app.engine(
       eq(a, b) {
         return a === b;
       },
+      or(a, b){
+        return a || b;
+      },
       more(a, b) {
         return a > b;
       },
