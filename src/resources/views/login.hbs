@@ -18,18 +18,27 @@
 	<button type="submit" class="btn btn-primary">Đăng nhập</button>
 </form> --}}
 {{!-- Code của thắng --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="center">
 	<h1>ĐĂNG NHẬP</h1>
 	<form action="" method="post" id="form-1">
 		<div class="txt_field">
 			<input type="text" required name="username" id="fullname">
-			<label>Tên tài khoản</label>
+			<label id="user"> <i class="fa fa-user" aria-hidden="true"></i> Tên tài khoản</label>
 			<span class="form-message"></span>
 		</div>
 		<div class="txt_field">
-			<span class="form-message"></span>
 			<input type="password" required name="password" id="password">
-			<label>Mật khẩu</label>
+			<span class="form-message"></span>
+		
+			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu
+			</label>
+				<div id="eye">
+					<i class="fa fa-eye" aria-hidden="true"></i>
+				
+			</div>
+			
 			
 		</div>
 		<div class="pass">
@@ -41,7 +50,18 @@
 
 <script>
 
+{{!-- $(document).ready(function(){
+	$('#eye').click(function(){
+			$(this).toggleClass('open');
+			$(this).children('i').toggleClass("<i class="fa fa-eye" aria-hidden="true"></i>");
+			if($(this).hasClass('open')){
+				$(this).prev().attr("type","text");
+			}
+	});
+});  --}}
 	document.addEventListener("DOMContentLoaded", function () {
+		
+		
 		function Validator(options) {
 			var formElement = document.querySelector(options.form);
 			if (formElement) {
