@@ -18,7 +18,7 @@ class SideController {
   }
   //[GET] /about
   about(req, res, next) {
-    res.render("../../resources/user/userinfo.hbs", {
+    res.render("about", {
       account: req.session.account,
       logged: req.session.isLoggedIn,
     });
@@ -74,6 +74,13 @@ class SideController {
       });
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  async forgetPass(req,res){
+    try {
+      res.render("forget")
+    } catch (error) {
+      
     }
   }
 }
