@@ -3,17 +3,17 @@ const  { connectAndQuerying }  = require("../../config/database");
 // const { queryGetAll } = require("../../utils/QueryCommon");
 const tableName = "TaiKhoan";
 class StudentModel {
-    static async getStudentById(MaTaiKhoan) {
+     async getStudentById(MaTaiKhoan) {
         const query = `SELECT * FROM TaiKhoan WHERE MaTaiKhoan = ${MaTaiKhoan}`;
         try {
-          const result = await connectAndQuerying(query);
+          const result = await db.connectAndQuerying(queryGetAll(query));
           return result; // Assuming result is an array and we need the first item
         } catch (error) {
           console.error('Error retrieving student information:', error);
           throw error;
         }
     }
-    static async updateInfo(MaTaiKhoan, updatedInfo) {
+     async updateInfo(MaTaiKhoan, updatedInfo) {
         const query = `
           UPDATE TaiKhoan
           SET
