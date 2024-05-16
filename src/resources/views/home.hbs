@@ -71,17 +71,12 @@
 
 {{!-- Trang home của giáo viên --}}
 {{#if (eq account.MaVaiTro '01GV')}}
-<h1>Home Of Teacher</h1>
-{{/if}}
-
-{{!-- Trang home của học sinh --}}
-{{#if (eq account.MaVaiTro '01HS')}}
 <div class="container mt-4">
     <div class="row">
         <div class="col-sm-4">
-            <a href="/student/fee-info/{{MaTaiKhoan}}" class="text-dark text-decoration-none">
+            <a href="" class="text-dark text-decoration-none">
                 <div class="card">
-                    <img src="imgs/fee.png" class="card-img-top" alt="...">
+                    <img src="" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h3 class="card-text text-center">Xem Học Phí</h3>
                     </div>
@@ -89,7 +84,7 @@
             </a>
         </div>
         <div class="col-sm-4">
-            <a href="/student/students/edit" class="text-dark text-decoration-none">
+            <a href="/user/edit" class="text-dark text-decoration-none">
                 <div class="card">
                     <img src="imgs/editProfile.png" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -121,11 +116,81 @@
             </a>
         </div>
         <div class="col-sm-4">
+            <a href="/teacher/DiemDanh" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/fee.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Điểm danh</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/request" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/RequestMain.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text text-center">Trợ giúp</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{!-- Trang home của học sinh --}}
+{{#if (eq account.MaVaiTro '01HS')}}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-4">
+            <a href="" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Xem Học Phí</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/user/edit" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/editProfile.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Sửa Thông Tin</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/admin/course" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/CourseMain.png" class="card-img-top">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Quản lý môn học</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-4">
             <a href="" class="text-dark text-decoration-none">
                 <div class="card">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text text-center">Quản lý tài khoản</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <a href="/student/fee-info/{{MaTaiKhoan}}" class="text-dark text-decoration-none">
+                <div class="card">
+                    <img src="imgs/fee.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-text text-center">Xem học phí</h3>
                     </div>
                 </div>
             </a>

@@ -1,0 +1,22 @@
+<div class="container">
+    <h2>Sửa thông tin học sinh</h2>
+    <form id="update-form" method="post" action="/user/edit/">
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ tên:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{account.HoVaTen}}">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Điện thoại:</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{account.SoDienThoai}}">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{account.DiaChi}}">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Mật khẩu:</label>
+            <input type="text" class="form-control" id="address" name="password" value="{{account.MatKhau}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>

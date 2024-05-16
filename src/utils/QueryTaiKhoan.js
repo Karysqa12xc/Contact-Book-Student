@@ -75,4 +75,13 @@ module.exports = {
         FROM ${tableName} 
         Where MaLop = ${id};`;
   },
+  queryUpdateAccount: function (tableName, HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan) {
+    return ` UPDATE ${tableName}
+    SET
+      HoVaTen = N'${HoVaTen}',
+      SoDienThoai = '${SoDienThoai}',
+      DiaChi = N'${DiaChi}',
+      MatKhau = '${MatKhau}'
+    WHERE MaTaiKhoan = '${MaTaiKhoan}'`
+  }
 };
