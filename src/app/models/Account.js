@@ -14,6 +14,7 @@ const {
   queryGetDataAccountRefClassAndRole,
   queryUpdateLockedOfAccount,
   queryGetTeacherInTaiKhoan,
+  queryUpdateAccount,
 } = require("../../utils/QueryTaiKhoan");
 const tableName = "TaiKhoan";
 const tableJoinRole = "VaiTro";
@@ -170,6 +171,15 @@ class AccountModel {
       const result = await db.connectAndQuerying(
         queryGetTeacherInTaiKhoan(tableName)
       );
+      return result;
+    } catch (error) {
+      console.log("Failed to get account have id teacher:", error);
+      throw error;
+    }
+  }
+  async updateDataAccount(HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan) {
+    try {
+      const result = await db.connectAndQuerying(queryUpdateAccount(tableName,HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan));
       return result;
     } catch (error) {
       console.log("Failed to get account have id teacher:", error);

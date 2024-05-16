@@ -2,7 +2,7 @@ class TeacherController {
   async enterScore(req, res) {
     try {
       if (!req.session.isLoggedIn) {
-        return res.redirect("login");
+        return res.redirect("/");
       } else {
         res.render("../../resources/user/teacher/enterscore.hbs");
       }
@@ -10,16 +10,18 @@ class TeacherController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
-  async editInfo(req, res) {
+  async attendance(req, res) {
     try {
       if (!req.session.isLoggedIn) {
-        return res.redirect("login");
+        // console.log("adadfd");
+        return res.redirect("/");
       } else {
-        res.render("../../resources/user/student/suathongtin.hbs");
+        res.render("../../resources/user/teacher/attendance.hbs", {account: req.session.account,
+        logged: req.session.isLoggedIn});
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
-  }
+  } 
 }
 module.exports = new TeacherController();
