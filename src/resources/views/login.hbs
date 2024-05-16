@@ -37,18 +37,18 @@
 		<div class="txt_field">
 			<input type="password" required name="password" id="password">
 			<span class="form-message"></span>
-		
-			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu
-			</label>
-				<div id="eye">
-					<i class="fa fa-eye" aria-hidden="true"></i>
 				
-			</div>
+		
+			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu</label>
+				<div id="eye" class="">
+					<i id="eye-open" class="fa fa-eye" aria-hidden="true"></i>
+					<i id="eye-close" class="fa fa-eye fa-eye-slash d-none" aria-hidden="true"></i>
+				</div> 
 			
 			
 		</div>
 		<div class="pass">
-			Quên mật khẩu
+			<a href="forget.hbs" class="pass">Quên mật khẩu</a>
 		</div>
 		<input type="submit" value="Đăng Nhập">
 	</form>
@@ -56,17 +56,23 @@
 
 <script>
 
-{{!-- $(document).ready(function(){
-	$('#eye').click(function(){
-			$(this).toggleClass('open');
-			$(this).children('i').toggleClass("<i class="fa fa-eye" aria-hidden="true"></i>");
-			if($(this).hasClass('open')){
-				$(this).prev().attr("type","text");
-			}
-	});
-});  --}}
+
 	document.addEventListener("DOMContentLoaded", function () {
-		
+		var openeye = $('#eye-open');
+		var closeeye = $('#eye-close');
+		let password = document.getElementById('password');
+       
+		openeye.click(function(){
+			openeye.addClass("d-none");
+			closeeye.removeClass('d-none');
+			password.type = 'text';
+			
+		});
+		closeeye.click(function(){
+			closeeye.addClass("d-none");
+			openeye.removeClass('d-none');
+		     password.type = 'password';
+		});
 		
 		function Validator(options) {
 			var formElement = document.querySelector(options.form);
