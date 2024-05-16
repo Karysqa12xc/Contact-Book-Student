@@ -125,18 +125,15 @@
 			if (formElement) {
 				options.rules.forEach(function (rules) {
 					var inputElement = formElement.querySelector(rules.selector);
-					var errorElement = inputElement.parentElement.querySelector('.form-message');
+					var errorElement = $(".form-message");
 					if (inputElement) {
 						inputElement.onblur = function () {
 							var errorMessage = rules.test(inputElement.value);
-
 							if (errorMessage) {
-								errorElement.innerText = errorMessage;
-
+								errorElement.text(`${errorMessage}`);
 							}
 							else {
-								errorElement.innerText = '';
-
+								errorElement.text("");
 							}
 
 						}
@@ -165,12 +162,10 @@
 
 
 		Validator({
-			form: '#login',
-
+			form: "#login",
 			rules: [
 				Validator.isRequired('#username'),
 				Validator.minLength('#password', 6)
-
 			]
 
 		});
