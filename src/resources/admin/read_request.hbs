@@ -1,0 +1,23 @@
+<div class="container">
+    <h1>Chi tiết yêu cầu</h1>
+    <div class="card" style="">
+        <div class="card-body">
+            <h5 class="card-title">{{requestInfoSuperUltra.[0].TenYeuCau}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Người gửi: {{requestInfoSuperUltra.[0].HoVaTen}} 
+                - Vai trò: {{requestInfoSuperUltra.[0].TenVaiTro}}
+                - Lớp: 
+                {{#if (eq requestInfoSuperUltra.[0].MaLop null)}}
+                        Chưa phân lớp
+                    {{else}}
+                    requestInfoSuperUltra.[0].TenLop
+                {{/if}}
+                </h6>
+            <h6>Nội dung:</h6>
+            <p class="card-text">
+                {{requestInfoSuperUltra.[0].NoiDung}}
+            </p>
+            <a href="/request" class="card-link"> <- Quay lại</a>
+
+        </div>
+    </div>
+</div>

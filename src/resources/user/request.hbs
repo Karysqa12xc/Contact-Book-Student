@@ -1,0 +1,84 @@
+{{#if (eq account.MaVaiTro '01AD')}}
+<div class="container">
+    <h1>Quản lý yêu cầu</h1>
+    <table class="table table-hover table-dark">
+        <thead>
+            <td>#</td>
+            <td>Người gửi</td>
+            <td>Vai trò</td>
+            <td>Tiêu đề</td>
+            <td>Chi tiết</td>
+        </thead>
+        <tbody>
+            {{#each requestInfoUltra}}
+            <form method="get" action="/request/{{MaYeuCau}}/Content">
+                <tr>
+                    <td>
+                        {{sum @index 1}}
+                    </td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{TenVaiTro}}</td>
+                    <td>{{TenYeuCau}}</td>
+                    <td>
+                        <input  hidden type="text" name="idRequest" value="{{MaYeuCau}}">
+                        <button class="btn btn-primary">Chi tiết</button>
+                    </td>
+                </tr>
+            </form>
+
+
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{/if}}
+
+{{#if (or (eq account.MaVaiTro '01GV') (eq account.MaVaiTro '01HS'))}}
+<div class="container">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Gửi yêu câu</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Gửi yêu cầu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/request">
+                        <div class="mb-3">
+                            <label for="tieuDe" class="col-form-label">Tiêu đề:</label>
+                            <input required type="text" class="form-control" name="TieuDe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Nội dung:</label>
+                            <textarea required class="form-control" name="NoiDung"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <h3 class="mt-3">Các yêu cầu đã gửi</h3>
+    <table class="table table-hover table-dark">
+        <thead>
+            <td>#</td>
+            <td>Tiêu đề</td>
+            <td>Nội dung</td>
+        </thead>
+        <tbody>
+            {{#each requestInfo}}
+            <tr>
+                <td>{{sum @index 1}}</td>
+                <td>{{TenYeuCau}}</td>
+                <td>{{NoiDung}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{/if}}
