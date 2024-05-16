@@ -1,33 +1,28 @@
-{{!-- Code của Nam --}}
-{{!-- <h1>Đăng nhập</h1>
-<form method="post">
-	<div class="mb-3">
-		<label for="exampleInputEmail1" class="form-label">UserName:</label>
-		<input type="text" class="form-control" name="username">
-	</div>
-	<div class="mb-3">
-		<label for="exampleInputPassword1" class="form-label">Password:</label>
-		<input type="password" class="form-control" name="password">
-	</div>
-	<button type="submit" class="btn btn-primary">Đăng nhập</button>
-</form> --}}
-{{!-- Code của thắng --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="center">
 	<h1>ĐĂNG NHẬP</h1>
 	<form action="" method="post" id="form-1">
 		<div class="txt_field">
 			<input type="text" required name="username" id="fullname">
-			<label>Tên tài khoản</label>
+			<label id="user"> <i class="fa fa-user" aria-hidden="true"></i> Tên tài khoản</label>
 			<span class="form-message"></span>
 		</div>
 		<div class="txt_field">
-			<span class="form-message"></span>
 			<input type="password" required name="password" id="password">
-			<label>Mật khẩu</label>
+			<span class="form-message"></span>
+				
+		
+			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu</label>
+				<div id="eye" class="">
+					<i id="eye-open" class="fa fa-eye" aria-hidden="true"></i>
+					<i id="eye-close" class="fa fa-eye fa-eye-slash d-none" aria-hidden="true"></i>
+				</div> 
+			
 			
 		</div>
 		<div class="pass">
-			Quên mật khẩu
+			<a href="forget.hbs" class="pass">Quên mật khẩu</a>
 		</div>
 		<input type="submit" value="Đăng Nhập">
 	</form>
@@ -35,7 +30,24 @@
 
 <script>
 
+
 	document.addEventListener("DOMContentLoaded", function () {
+		var openeye = $('#eye-open');
+		var closeeye = $('#eye-close');
+		let password = document.getElementById('password');
+       
+		openeye.click(function(){
+			openeye.addClass("d-none");
+			closeeye.removeClass('d-none');
+			password.type = 'text';
+			
+		});
+		closeeye.click(function(){
+			closeeye.addClass("d-none");
+			openeye.removeClass('d-none');
+		     password.type = 'password';
+		});
+		
 		function Validator(options) {
 			var formElement = document.querySelector(options.form);
 			if (formElement) {
