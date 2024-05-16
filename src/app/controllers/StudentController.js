@@ -3,18 +3,10 @@ const fixInforModel = require("../models/fixInfor");
 class StudentController {
   async viewFee(req, res) {
     try {
-      const result = await ViewFee.getAll();
-      if (!result || !Array.isArray(result)) {
-        throw new Error("Invalid data received from database");
-      }
-      res.render("../../resources/user/student/money.hbs", { FeeInfor: result }, (err, html) => {
-        if (err) {
-          console.error("Error rendering template:", err);
-          res.status(500).json({ message: "Error rendering template" });
-          return;
-        }
-        res.send(html);
-      });
+      const account  = req.session.account;
+      const result = await ViewFee.getByMaTaiKhoan(req.session.account.MaTaiKhoan);
+      //res.json(result);
+      res.render("../../resources/user/student/money.hbs", {account:  account,FeeInfor:  result});
     } catch (error) {
       console.error("Error in viewFee:", error);
       res.status(500).json({ message: `Internal server error: ${error.message}` });
@@ -45,7 +37,14 @@ class StudentController {
   const MaTaiKhoan = req.params.id;
   try {
     const studentData = await fixInforModel.getStudentById(MaTaiKhoan);
-    res.render('../../resources/user/student/suathongtin.hbs', { student: studentData });
+    res.render('../../resources/user/student/suathongtin.hbs', { student: studentData }, (err, html) => {
+      if (err) {
+        console.error("Error rendering template:", err);
+        res.status(500).json({ message: "Error rendering template" });
+        return;
+      }
+      res.send(html);
+    });
   } catch (error) {
     res.status(500).send('Error retrieving student information');
   }
@@ -62,6 +61,6 @@ async  updateStudentInfo(req, res) {
     res.status(500).send('Failed to update student information');
   }
 }
-}
+ }
 
 module.exports = new StudentController();

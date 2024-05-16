@@ -1,6 +1,6 @@
 const db = require("../../config/database");
-const { queryDocHocPhi } = require("../../utils/QueryFee");
-const { queryGetAll } = require("../../utils/QueryCommon");
+const { queryDocHocPHi } = require("../../utils/QueryFee");
+const { queryGetAll, queryGetById} = require("../../utils/QueryCommon");
 const tableName = "HocPhi";
 
 class ViewFeeModel {
@@ -13,12 +13,19 @@ class ViewFeeModel {
       throw error;
     }
   }
+  async getById(id) {
+    try {
+      const result = await db.connectAndQuerying(queryGetById(tableName, id));
+      return result;
+    } catch (error) {
+      console.log("Failed to get role by id:", error);
+      throw error;
+    }
+  }
 
   async getByMaTaiKhoan(MaTaiKhoan) {
     try {
-      const query = queryDocHocPhi();
-      const finalQuery = query.replace('@MaTaiKhoan', `'${MaTaiKhoan}'`);
-      const result = await db.connectAndQuerying(finalQuery);
+      const result = await db.connectAndQuerying(queryDocHocPHi(tableName, MaTaiKhoan));
       return result;
     } catch (error) {
       console.log("Failed to get fee info by MaTaiKhoan:", error);

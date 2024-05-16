@@ -7,7 +7,7 @@ class StudentModel {
         const query = `SELECT * FROM TaiKhoan WHERE MaTaiKhoan = ${MaTaiKhoan}`;
         try {
           const result = await connectAndQuerying(query);
-          return result[0]; // Assuming result is an array and we need the first item
+          return result; // Assuming result is an array and we need the first item
         } catch (error) {
           console.error('Error retrieving student information:', error);
           throw error;
