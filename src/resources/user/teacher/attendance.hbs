@@ -1,1 +1,49 @@
-<h1>Điểm danh</h1>
+<div class="container mt-5">
+        <h1 class="mb-4">Danh sách học sinh và điểm danh</h1>
+        <form action="/students" method="get" class="mb-4">
+            <div class="form-group">
+                <label for="classDropdown">Chọn lớp:</label>
+                <select class="form-control" id="classDropdown" name="class">
+                    <option value="">Chọn lớp</option>
+                    {{#each classes}}
+                        <option value="{{this.MaLop}}" {{#if (eq ../selectedClassId this.MaLop)}}selected{{/if}}>{{this.TenLop}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Hiển thị danh sách</button>
+        </form>
+        {{#if students}}
+        <form action="/attendance" method="post">
+            <input type="hidden" name="classId" value="{{selectedClassId}}">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Ngày sinh</th>
+                        <th scope="col">Điểm danh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each students}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{this.HoTen}}</td>
+                        <td>{{formatDate this.NgaySinh}}</td>
+                        <td>
+                            <input type="checkbox" name="attendance[{{this.MaHocSinh}}]" value="1" {{#if this.TrangThai}}checked{{/if}}>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success">Lưu điểm danh</button>
+        </form>
+        {{else}}
+        <p>Chọn lớp để hiển thị danh sách học sinh</p>
+        {{/if}}
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

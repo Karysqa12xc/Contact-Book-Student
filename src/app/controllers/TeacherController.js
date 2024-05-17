@@ -16,8 +16,9 @@ class TeacherController {
         // console.log("adadfd");
         return res.redirect("/");
       } else {
-        res.render("../../resources/user/teacher/attendance.hbs", {account: req.session.account,
-        logged: req.session.isLoggedIn});
+        res.render("../../resources/user/teacher/attendance.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn});
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
