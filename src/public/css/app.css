@@ -89,7 +89,6 @@ form .txt_field{
   border-bottom: 2px solid #adadad;
   margin: 30px 0;
 }
-
 .txt_field input{
   width: 100%;
   padding: 0 5px;
@@ -133,8 +132,10 @@ form .txt_field{
   top: -5px;
   color: white;
 }
+
 .txt_field input:focus ~ span::before,
-.txt_field input:valid ~ span::before{
+.txt_field input:valid ~ span::before
+{
   width: 100%;
 }
 .pass{
@@ -148,58 +149,16 @@ form .txt_field{
   line-height: 1.6rem;
   padding: 4px 0 0;
   text-align: left;
-
-label {
-  display: block;
-  font-weight: bold;
 }
 
+.login_oueter {
+  width: 360px;
+  max-width: 100%;
 }
-/* css cua enterScore */
-/* .container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f7f7f7;
-} */
-
-.h2-title {
+.logo_outer{
   text-align: center;
-  margin-bottom: 20px;
 }
-
-.form-group {
-  margin-bottom: 20px;
+.logo_outer img{
+  width:120px;
+  margin-bottom: 40px;
 }
-
-.label1 {
-  font-weight: bold;
-}
-
-/* .form-select,
-.form-control {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-} */
-
-/* .btn-primary {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-} */

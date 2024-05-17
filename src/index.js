@@ -41,9 +41,10 @@ app.engine(
         return parseInt(a) - parseInt(b);
       },
       format_date(date) {
-        var day = date.getDate().toString().padStart(2, "0");
-        var month = (date.getMonth() + 1).toString().padStart(2, "0");
-        var year = date.getFullYear();
+        var newDate = new Date(date);
+        var day = newDate.getDate().toString().padStart(2, "0");
+        var month = (newDate.getMonth() + 1).toString().padStart(2, "0");
+        var year = newDate.getFullYear();
         return day + "-" + month + "-" + year;
       },
       formatPhone(str) {

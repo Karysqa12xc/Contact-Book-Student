@@ -76,6 +76,13 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  async forgetPass(req,res){
+    try {
+      res.render("forget")
+    } catch (error) {
+      
+    }
+  }
 }
 
 module.exports = new SideController();
