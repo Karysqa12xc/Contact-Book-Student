@@ -18,9 +18,10 @@
 	<button type="submit" class="btn btn-primary">Đăng nhập</button>
 </form> --}}
 {{!-- Code của thắng --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{{!--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 
-<div class="center">
+{{!-- <div class="center">
 	<h1>ĐĂNG NHẬP</h1>
 	{{#if error}}
 	<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
@@ -37,54 +38,111 @@
 		<div class="txt_field">
 			<input type="password" required name="password" id="password">
 			<span class="form-message"></span>
-		
-			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu
-			</label>
-				<div id="eye">
-					<i class="fa fa-eye" aria-hidden="true"></i>
-				
+
+
+			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu</label>
+
+			<div id="eye" class="">
+				<i id="eye-open" class="fa fa-eye d-none" aria-hidden="true"></i>
+				<i id="eye-close" class="fa fa-eye fa-eye-slash " aria-hidden="true"></i>
 			</div>
-			
-			
+
 		</div>
 		<div class="pass">
-			Quên mật khẩu
+			<a href="forget.hbs" class="pass">Quên mật khẩu</a>
 		</div>
 		<input type="submit" value="Đăng Nhập">
 	</form>
+</div> --}}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+<div class="container-fluid">
+	<div class="row d-flex justify-content-center align-items-center m-0" style="height: 100vh;">
+		<div class="login_oueter">
+			<div class="col-md-12 logo_outer">
+
+			</div>
+			<form action="" method="post" id="login" autocomplete="off" class="bg-light border p-3">
+				<div class="form-row">
+					<h4 class="title my-3">Đăng Nhập</h4>
+					<div class="col-12">
+						<div class="input-group mb-3">
+							<label class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></label>
+							<input name="username" type="text" value="" class=" form-control" id="username"
+								placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+
+						</div>
+						<span class="form-message"></span>
+					</div>
+					<div class="col-12">
+						<div class="input-group mb-3">
+
+							<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+							<input name="password" type="password" value="" class=" form-control" id="password"
+								placeholder="password" required="true" aria-label="password"
+								aria-describedby="basic-addon1" />
+							<span class="input-group-text">
+								<i class="fas fa-eye d-none" id="show_eye"></i>
+								<i class="fas fa-eye-slash " id="hide_eye"></i>
+							</span>
+
+						</div>
+						<span class="form-message"></span>
+						{{#if error}}
+						<span class="form-message">Tài khoản hoặc mật khẩu sai!!!</span>
+						{{/if}}
+						{{#if lock}}
+						<span class="form-message">Tài khoản của bạn đã bị khoá!!!</span>
+						{{/if}}
+					</div>
+
+
+					<div class="col-sm-12 pt-3 text-right">
+						<a href="/forget"> Quên mật khẩu </a>
+					</div>
+					<div class="col-12">
+						<button class="btn btn-primary" type="submit" name="signin">Login</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-
-{{!-- $(document).ready(function(){
-	$('#eye').click(function(){
-			$(this).toggleClass('open');
-			$(this).children('i').toggleClass("<i class="fa fa-eye" aria-hidden="true"></i>");
-			if($(this).hasClass('open')){
-				$(this).prev().attr("type","text");
-			}
-	});
-});  --}}
 	document.addEventListener("DOMContentLoaded", function () {
-		
-		
+		var openeye = $('#show_eye');
+		var closeeye = $('#hide_eye');
+		let password = document.getElementById('password');
+
+		openeye.click(function () {
+			openeye.addClass("d-none");
+			closeeye.removeClass('d-none');
+			password.type = 'password';
+
+		});
+		closeeye.click(function () {
+			closeeye.addClass("d-none");
+			openeye.removeClass('d-none');
+			password.type = 'text';
+		});
+
 		function Validator(options) {
 			var formElement = document.querySelector(options.form);
 			if (formElement) {
 				options.rules.forEach(function (rules) {
 					var inputElement = formElement.querySelector(rules.selector);
-					var errorElement = inputElement.parentElement.querySelector('.form-message');
+
 					if (inputElement) {
+						var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
+						console.log(errorElement);
 						inputElement.onblur = function () {
 							var errorMessage = rules.test(inputElement.value);
-
 							if (errorMessage) {
-								errorElement.innerText = errorMessage;
-
+								errorElement.innerHTML = errorMessage;
 							}
 							else {
-								errorElement.innerText = '';
-
+								errorElement.innerHTML = "";
 							}
 
 						}
@@ -113,12 +171,10 @@
 
 
 		Validator({
-			form: '#form-1',
-
+			form: "#login",
 			rules: [
-				Validator.isRequired('#fullname'),
+				Validator.isRequired('#username'),
 				Validator.minLength('#password', 6)
-
 			]
 
 		});
