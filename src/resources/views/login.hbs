@@ -70,9 +70,9 @@
 							<label class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></label>
 							<input name="username" type="text" value="" class=" form-control" id="username"
 								placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-					
+
 						</div>
-							<span class="form-message"></span>
+						<span class="form-message"></span>
 					</div>
 					<div class="col-12">
 						<div class="input-group mb-3">
@@ -85,11 +85,17 @@
 								<i class="fas fa-eye d-none" id="show_eye"></i>
 								<i class="fas fa-eye-slash " id="hide_eye"></i>
 							</span>
-				
+
 						</div>
-								<span class="form-message"></span>
+						<span class="form-message"></span>
+						{{#if error}}
+						<span class="form-message">Tài khoản hoặc mật khẩu sai!!!</span>
+						{{/if}}
+						{{#if lock}}
+						<span class="form-message">Tài khoản của bạn đã bị khoá!!!</span>
+						{{/if}}
 					</div>
-					
+
 
 					<div class="col-sm-12 pt-3 text-right">
 						<a href="/forget"> Quên mật khẩu </a>
@@ -126,7 +132,7 @@
 			if (formElement) {
 				options.rules.forEach(function (rules) {
 					var inputElement = formElement.querySelector(rules.selector);
-					
+
 					if (inputElement) {
 						var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
 						console.log(errorElement);
