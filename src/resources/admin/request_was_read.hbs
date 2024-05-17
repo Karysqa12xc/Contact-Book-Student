@@ -1,0 +1,38 @@
+{{#if (eq account.MaVaiTro '01AD')}}
+<div class="container">
+    <h1>Quản lý yêu cầu</h1>
+    <div class="mb-3 d-flex justify-content-between">
+        <a href="/request">Yêu cầu chưa đọc</a>
+        <a href="/request/was-read">Yêu cầu đã đọc</a>
+    </div>
+    <table class="table table-hover table-dark">
+        <thead>
+            <td>#</td>
+            <td>Người gửi</td>
+            <td>Vai trò</td>
+            <td>Tiêu đề</td>
+            <td>Chi tiết</td>
+        </thead>
+        <tbody>
+            {{#each requestInfoUltra}}
+            <form method="get" action="/request/{{MaYeuCau}}/Content">
+                <tr>
+                    <td>
+                        {{sum @index 1}}
+                    </td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{TenVaiTro}}</td>
+                    <td>{{TenYeuCau}}</td>
+                    <td>
+                        <input hidden type="text" name="idRequest" value="{{MaYeuCau}}">
+                        <input hidden type="checkbox" name="DaDoc" value="false">
+                        <button class="btn btn-primary">Chi tiết</button>
+                    </td>
+                </tr>
+            </form>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{/if}}
+
