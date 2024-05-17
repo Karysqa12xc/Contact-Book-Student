@@ -87,11 +87,7 @@ class SideController {
       const requestInfoSuperUltra = await Request.GetOuterDataTableYeuCau(
         idRequest
       );
-      const checkBox = req.query.DaDoc;
-      let wasRead ;
-      if(checkBox){
-        wasRead = 1
-      }
+      let wasRead = 1;
       await Request.requestWasRead(idRequest, wasRead);
       res.render("../../resources/admin/read_request.hbs", {
         requestInfoSuperUltra: requestInfoSuperUltra,
