@@ -16,7 +16,6 @@ class userController {
     }
   }
     async renderEditForm(req, res) {
-        const MaTaiKhoan = req.params.id;
         try {
             if (!req.session.isLoggedIn) {
                 res.redirect("/");

@@ -4,6 +4,8 @@ const {
   queryAddNewDataRequest,
   queryGetRequestByIdNguoiGuiOrNhan,
   queryGetOuterDataTableYeuCau,
+  queryGetRequestIsRead,
+  queryUpdateWasRead
 } = require("../../utils/QueryRequest");
 const tableName = "Yeu_Cau";
 class RequestModel {
@@ -25,19 +27,28 @@ class RequestModel {
       throw error;
     }
   }
-  async GetRequestByIdNguoiGuiOrNhan(id){
+  async GetRequestByIdNguoiGuiOrNhan(id, value) {
     try {
-      const result = await db.connectAndQuerying(queryGetRequestByIdNguoiGuiOrNhan(tableName, id))
+      const result = await db.connectAndQuerying(
+        queryGetRequestByIdNguoiGuiOrNhan(tableName, id, value)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get request by id nguoi gui or nhan:", error);
       throw error;
     }
   }
-  async addNewData(TieuDe, NoiDung, NguoiGui, NguoiNhan) {
+  async addNewData(TieuDe, NoiDung, NguoiGui, NguoiNhan, DaDoc) {
     try {
       const result = await db.connectAndQuerying(
-        queryAddNewDataRequest(tableName, TieuDe, NoiDung, NguoiGui, NguoiNhan)
+        queryAddNewDataRequest(
+          tableName,
+          TieuDe,
+          NoiDung,
+          NguoiGui,
+          NguoiNhan,
+          DaDoc
+        )
       );
       return result;
     } catch (error) {
@@ -45,9 +56,33 @@ class RequestModel {
       throw error;
     }
   }
-  async GetOuterDataTableYeuCau(id){
+  async GetOuterDataTableYeuCau(id) {
     try {
-      const result = await db.connectAndQuerying(queryGetOuterDataTableYeuCau(tableName, id));
+      const result = await db.connectAndQuerying(
+        queryGetOuterDataTableYeuCau(tableName, id)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to get request outer table:", error);
+      throw error;
+    }
+  }
+  async getRequestIsRead(value) {
+    try {
+      const result = await db.connectAndQuerying(
+        queryGetRequestIsRead(tableName, value)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to get request outer table:", error);
+      throw error;
+    }
+  }
+  async requestWasRead(id, value) {
+    try {
+      const result = await db.connectAndQuerying(
+        queryUpdateWasRead(tableName, id ,value)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get request outer table:", error);
