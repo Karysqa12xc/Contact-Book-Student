@@ -95,27 +95,33 @@
                 </div>
             </div>
         </div>
-        
-        <table class="mt-3 table table-info border-primary table-bordered" style="text-align: center;">
+
+        <table id="timeTable" class="mt-3 table table-info border-primary table-bordered" style="text-align: center;">
             <thead>
-                <td>Trước</td>
+                <td><button class="btn btn-primary" id="previousWeek">Trước</button></td>
                 {{#each days}}
-                <th>{{this}}</th>
+                    <th>{{this}}</th>
                 {{/each}}
-                <td>Sau</td>
+                <td><button class="btn btn-primary" id="nextWeek">Sau</button></td>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>Tiết 1</td>
+                    <th>Tiết 1</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '06:45')}}
 
                     {{#each ../TimeTableInfo}}
                     {{#if (eq ThoiGianBatDauMonHoc '06:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                    <td valign="middle" rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -125,18 +131,25 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>06:45</th>
                 </tr>
                 <tr>
-                   <td>Tiết 2</td>
-                     {{#each days}}
+                    <th>Tiết 2</th>
+                    {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '07:45')}}
 
                     {{#each ../TimeTableInfo}}
                     {{#if (eq ThoiGianBatDauMonHoc '07:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
+
                     </td>
                     {{/if}}
                     {{/if}}
@@ -145,10 +158,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>07:45</th>
                 </tr>
                 <tr>
-                    <td>Tiết 3</td>
+                    <th>Tiết 3</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '08:45')}}
 
@@ -156,7 +169,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '08:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -165,10 +184,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>08:45</th>
                 </tr>
                 <tr>
-                    <td>Tiết 4</td>
+                    <th>Tiết 4</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '09:45')}}
 
@@ -176,7 +195,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '09:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -185,10 +210,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <td><b>09:45</b></td>
                 </tr>
                 <tr>
-                    <td>Tiết 5</td>
+                    <th>Tiết 5</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '10:45')}}
 
@@ -196,7 +221,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '10:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -206,10 +237,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>10:45</th>
                 </tr>
                 <tr>
-                    <td>Tiết 6</td>
+                    <th>Tiết 6</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '11:45')}}
 
@@ -217,7 +248,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '11:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -227,10 +264,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>11:45</th>
                 </tr>
                 <tr>
-                    <td>Tiết 7</td>
+                    <th>Tiết 7</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '12:30')}}
 
@@ -238,7 +275,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '12:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -248,10 +291,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>12:30</th>
                 </tr>
                 <tr>
-                    <td>Tiết 8</td>
+                    <th>Tiết 8</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '13:30')}}
 
@@ -259,7 +302,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '13:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -268,11 +317,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
-                
+                    <th>13:30</th>
                 </tr>
                 <tr>
-                    <td>Tiết 9</td>
+                    <th>Tiết 9</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '14:30')}}
 
@@ -280,7 +328,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '14:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -290,10 +344,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>14:30</th>
                 </tr>
                 <tr>
-                    <td>Tiết 10</td>
+                    <th>Tiết 10</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '15:30')}}
 
@@ -301,7 +355,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '15:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -311,10 +371,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>15:30</th>
                 </tr>
                 <tr>
-                    <td>Tiết 11</td>
+                    <th>Tiết 11</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '16:30')}}
 
@@ -322,7 +382,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '16:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -331,10 +397,10 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>16:30</th>
                 </tr>
                 <tr>
-                    <td>Tiết 12</td>
+                    <th>Tiết 12</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '17:30')}}
 
@@ -342,7 +408,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '17:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        {{TenMonHoc}}
+                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                            <b>
+                                <p>{{TenMonHoc}}</p>
+                                <p>{{HoVaTen}}</p>
+                                <p>{{ThoiGian}}</p>
+                            </b>
+                        </div>
                     </td>
                     {{/if}}
                     {{/if}}
@@ -352,7 +424,7 @@
                     <td></td>
                     {{/if}}
                     {{/each}}
-                    
+                    <th>17:30</th>
                 </tr>
             </tbody>
 
@@ -362,14 +434,33 @@
 </div>
 <script>
     $(document).ready(function () {
+        //Khai báo biến
         var startTimeSemester = $("#startTimeSemester");
         var endTimeSemester = $("#EndTimeSemester");
         var semesterSelectId = $("#semesterSelectId");
         var weekSelectId = $("#weekSelect");
         var weekSelected = $("#weekSelected");
+        var previousWeekBtn = $("#previousWeek");
+        var nextWeekBtn = $("#nextWeek");
         var daySelected = $("#daySelected");
         var buttonSaveTimeTable = $("#buttonSaveTimeTable");
         var formTimeTable = $("#formTimeTable");
+        //Các sự kiện của các thẻ
+        previousWeekBtn.click(function () {
+            let currentWeek = parseInt(weekSelected.val());
+            if (currentWeek > 1) {
+                weekSelected.val(currentWeek - 1);
+            }
+            updateTimeTable();
+        });
+        nextWeekBtn.click(function () {
+            let currentWeek = parseInt(weekSelected.val());
+            if (currentWeek < 13) {
+                weekSelected.val(currentWeek + 1);
+            }
+            updateTimeTable();
+        });
+
         buttonSaveTimeTable.click(function () {
             formTimeTable.submit();
         });
@@ -383,19 +474,22 @@
         semesterSelectId.change(function () {
             var value = $(this).val();
             var options = "";
+            var index = 1;
             $('#weekSelect option').each(function () {
-                var weekValue = $(this).val(); // Lấy giá trị của mỗi option trong #weekSelect
-
+                var weekValue = $(this).val();
                 if (value === weekValue) {
-                    options += '<option value="' + $(this).text() + '">' + $(this).text() + '</option>';
+                    options += '<option value="' + (index) + '">' + $(this).text() + '</option>';
                 }
+                index++;
             });
             weekSelected.html(options);
-            getDayInWeekSelected(weekSelected.val());
+            getDayInWeekSelected(weekSelected.text());
         });
         weekSelected.change(function () {
-            getDayInWeekSelected(weekSelected.val());
+            getDayInWeekSelected(weekSelected.find("option:selected").text());
+            updateTimeTable();
         });
+        //Các hàm mở rộng để xử lý
         function getDayInWeekSelected(value) {
             var options = "<option>Chọn ngày</option>";
             var fromDateIndex = value.indexOf("Từ ngày") + 7;
@@ -406,9 +500,11 @@
             var fromDate = new Date(fromDateStr);
             var toDate = new Date(toDateStr);
             const daysName = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+            var days = [];
             for (var date = fromDate; date <= toDate; date.setDate(date.getDate() + 1)) {
                 let formatDate = daysName[date.getDay()] + " - " + date.getDate() + " - " + (date.getMonth() + 1) + " - " + date.getFullYear();
                 options += '<option value="' + formatDate + '">' + formatDate + '</option>';
+                days.push(formatDate);
             }
             daySelected.html(options);
         }
@@ -416,6 +512,10 @@
             var parts = dateString.split('-');
             return parts[1] + '/' + parts[0] + '/' + parts[2];
         }
-
+        function updateTimeTable() {
+            const selectedWeekText = weekSelected.find("option:selected").text();
+            getDayInWeekSelected(selectedWeekText);
+        }
+        updateTimeTable();
     })
 </script>

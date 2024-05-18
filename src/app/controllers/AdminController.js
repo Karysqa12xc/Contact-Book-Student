@@ -189,7 +189,14 @@ class AdminController {
   //[POST] /admin/course-create
   async course_create(req, res) {
     try {
-      const {course_name, start_time, end_time, money_course} = req.body;
+      const {course_name, start_time, money_course} = req.body;
+      let endTimeValue = parseInt(start_time) + 1; 
+      let end_time;
+      if(endTimeValue < 12){
+        end_time = endTimeValue + ":45";
+      }else{
+        end_time = endTimeValue + ":30";
+      }
       let courseRename = `${course_name} - (${start_time}, ${end_time})`;
       await Course.addNewData(courseRename, start_time, end_time, money_course);
       res.redirect("back");

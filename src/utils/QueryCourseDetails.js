@@ -8,10 +8,11 @@ module.exports = {
     },
     queryGetAllValueJoinOtherTable: function(){
         return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
-        Lop.*, HocKi.*, MonHoc.* 
+        Lop.*, HocKi.*, MonHoc.*, TaiKhoan.* 
         FROM MonHocChiTiet 
-        join HocKi on MonHocChiTiet.MaHocKi = HocKi.MaHocKi
-        join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
-        join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc`;
+        left join HocKi on MonHocChiTiet.MaHocKi = HocKi.MaHocKi
+        left join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
+        left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
+		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan`;
     }
 }
