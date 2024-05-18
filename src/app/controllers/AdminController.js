@@ -238,13 +238,11 @@ class AdminController {
         const IdAndNameOfCourse = await Course.getAll();
         const SemesterInfo = await Semester.getAll();
         const TimeTableInfo = await CourseDetails.getAllValueJoinOtherTable();
-        const periods =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         const days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
         res.render("../../resources/admin/timetable_management.hbs", {
           Classes: IdAndNameOfClass,
           Courses: IdAndNameOfCourse,
           SemesterInfo: SemesterInfo,
-          periods: periods,
           days: days,
           TimeTableInfo: TimeTableInfo,
           account: req.session.account,

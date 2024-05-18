@@ -100,7 +100,7 @@
             <thead>
                 <td><button class="btn btn-primary" id="previousWeek">Trước</button></td>
                 {{#each days}}
-                    <th>{{this}}</th>
+                <th class="days"></th>
                 {{/each}}
                 <td><button class="btn btn-primary" id="nextWeek">Sau</button></td>
             </thead>
@@ -115,7 +115,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '06:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td valign="middle" rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -126,7 +126,6 @@
                     {{/if}}
                     {{/if}}
                     {{/each}}
-
                     {{else}}
                     <td></td>
                     {{/if}}
@@ -142,14 +141,13 @@
                     {{#if (eq ThoiGianBatDauMonHoc '07:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
                                 <p>{{ThoiGian}}</p>
                             </b>
                         </div>
-
                     </td>
                     {{/if}}
                     {{/if}}
@@ -169,7 +167,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '08:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -195,7 +193,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '09:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -221,7 +219,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '10:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -248,7 +246,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '11:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -275,7 +273,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '12:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -302,7 +300,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '13:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -328,7 +326,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '14:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -355,7 +353,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '15:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -382,7 +380,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '16:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -408,7 +406,7 @@
                     {{#if (eq ThoiGianBatDauMonHoc '17:30')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
                     <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark" style="text-align: center; font-size: 14px;">
+                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
                             <b>
                                 <p>{{TenMonHoc}}</p>
                                 <p>{{HoVaTen}}</p>
@@ -443,8 +441,17 @@
         var previousWeekBtn = $("#previousWeek");
         var nextWeekBtn = $("#nextWeek");
         var daySelected = $("#daySelected");
+        var daysFollowWeek = $(".days");
         var buttonSaveTimeTable = $("#buttonSaveTimeTable");
         var formTimeTable = $("#formTimeTable");
+        var timeTableInfo = $("#timeTable").data("timeTable");
+        console.log(timeTableInfo);
+        var semesterWeeks = {
+            "semester1": 12,
+            "semester2": 13,
+            "semester3": 14
+        };
+
         //Các sự kiện của các thẻ
         previousWeekBtn.click(function () {
             let currentWeek = parseInt(weekSelected.val());
@@ -455,7 +462,9 @@
         });
         nextWeekBtn.click(function () {
             let currentWeek = parseInt(weekSelected.val());
-            if (currentWeek < 13) {
+            let selectedSemester = semesterSelectId.val();
+            let maxWeeks = semesterWeeks[selectedSemester] || 13;
+            if (currentWeek < maxWeeks) {
                 weekSelected.val(currentWeek + 1);
             }
             updateTimeTable();
@@ -475,15 +484,21 @@
             var value = $(this).val();
             var options = "";
             var index = 1;
+            var maxWeek = semesterWeeks[value] || 13;
             $('#weekSelect option').each(function () {
                 var weekValue = $(this).val();
                 if (value === weekValue) {
                     options += '<option value="' + (index) + '">' + $(this).text() + '</option>';
+                    index++;
+                    if (index > maxWeek) {
+                        index = 1;
+                    }
                 }
-                index++;
+
             });
             weekSelected.html(options);
             getDayInWeekSelected(weekSelected.text());
+            updateTimeTable();
         });
         weekSelected.change(function () {
             getDayInWeekSelected(weekSelected.find("option:selected").text());
@@ -507,6 +522,8 @@
                 days.push(formatDate);
             }
             daySelected.html(options);
+            return days;
+
         }
         function convertDateString(dateString) {
             var parts = dateString.split('-');
@@ -514,8 +531,41 @@
         }
         function updateTimeTable() {
             const selectedWeekText = weekSelected.find("option:selected").text();
-            getDayInWeekSelected(selectedWeekText);
+            const days = getDayInWeekSelected(selectedWeekText);
+            updateDaysHeader(days);
         }
-        updateTimeTable();
+        function updateDaysHeader(days) {
+            daysFollowWeek.each(function (index) {
+                if (index < days.length) {
+                    $(this).text(days[index]);
+                } else {
+                    var sunDate = days[index - 1].split("-");
+                    var daySunDateIncreased = parseInt(sunDate[1]) + 1;
+                    $(this).text(`Chủ Nhật - ${daySunDateIncreased} - ${sunDate[2]} - ${sunDate[3]}`);
+                }
+            });
+            $(".lesson-cell").hide();
+            days.forEach(function (day) {
+                console.log(day);
+                $(".lesson-cell").each(function () {
+                    if ($(this).data('date').trim() === day.trim()) {
+                        $(this).show();
+                    }
+                })
+            });
+        }
+
+        function displayDefaultWeekDays() {
+            const daysName = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
+            daysFollowWeek.each(function (index) {
+                $(this).text(daysName[index]);
+            });
+        }
+        if (weekSelected.val()) {
+            updateTimeTable();
+            displayDefaultWeekDays();
+        } else {
+            displayDefaultWeekDays();
+        }
     })
 </script>
