@@ -19,7 +19,13 @@
                 <select name="idCourse" class="form-select me-3">
                     <option value="">Chọn môn học</option>
                     {{#each Courses}}
-                    <option value="{{MaMonHoc}}">{{TenMonHoc}}</option>
+                    <option value="{{MaMonHoc}}">{{TenMonHoc}} - 
+                        {{#if (eq HoVaTen null)}}
+                        Chưa có giáo viên
+                        {{else}}
+                        {{HoVaTen}}
+                        {{/if}}
+                    </option>
                     {{/each}}
                 </select>
             </div>
@@ -48,8 +54,9 @@
             <button id="buttonSaveTimeTable" type="button" class="me-3 btn btn-warning">
                 Lưu thông tin
             </button>
-            <button type="button" class="me-3 btn btn-success">
-                Xem TKB
+            <button data-bs-toggle="modal" data-bs-target="#deleteCourseDetails" type="button"
+                id="buttonDeleteCourseDetails" class="me-3 btn btn-danger disabled">
+                Xoá thông tin
             </button>
         </div>
         <div id="semesterId"></div>
@@ -95,339 +102,64 @@
                 </div>
             </div>
         </div>
-
-        <table id="timeTable" class="mt-3 table table-info border-primary table-bordered" style="text-align: center;">
-            <thead>
-                <td><button class="btn btn-primary" id="previousWeek">Trước</button></td>
-                {{#each days}}
-                <th class="days"></th>
-                {{/each}}
-                <td><button class="btn btn-primary" id="nextWeek">Sau</button></td>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <th>Tiết 1</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '06:45')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '06:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td valign="middle" rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
+        {{!-- Pop up xác nhận lại xem có xoá không --}}
+        <div class="modal fade" id="deleteCourseDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc chắn không?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <h2>Khi bạn xoá thì tất cả thông tin sẽ bị xoá vĩnh viễn.</h2>
                         </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>06:45</th>
-                </tr>
-                <tr>
-                    <th>Tiết 2</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '07:45')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '07:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">Chắc chắn</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>07:45</th>
-                </tr>
-                <tr>
-                    <th>Tiết 3</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '08:45')}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <div class="mb-3 d-flex align-items-center">
+                <input type="checkbox" id="checkAll">
+                <div class="ms-3 text-light">Chọn tất cả</div>
+            </div>
+            <form action="">
+                <table class="table table-info border-primary table-bordered">
+                    <thead>
+                        <th></th>
+                        <th>#</th>
+                        <th>Tên lớp</th>
+                        <th>Tên giáo viên</th>
+                        <th>Tên môn học</th>
+                        <th>Dạy vào ngày</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
+                        <th>Học kì</th>
+                    </thead>
+                    <tbody>
+                        {{#each TimeTableInfo}}
+                        <tr>
+                            <td><input type="checkbox" name="CourseDetails[]" id=""> </td>
+                            <td>{{sum @index 1}}</td>
+                            <td>{{TenLop}}</td>
+                            <td>{{TenTaiKhoan}}</td>
+                            <td>{{formatNameCourse TenMonHoc}}</td>
+                            <td>{{ThoiGian}}</td>
+                            <td>{{ThoiGianBatDauMonHoc}}</td>
+                            <td>{{ThoiGianKetThucMonHoc}}</td>
+                            <td>{{TenHocKi}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </form>
 
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '08:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>08:45</th>
-                </tr>
-                <tr>
-                    <th>Tiết 4</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '09:45')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '09:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <td><b>09:45</b></td>
-                </tr>
-                <tr>
-                    <th>Tiết 5</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '10:45')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '10:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>10:45</th>
-                </tr>
-                <tr>
-                    <th>Tiết 6</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '11:45')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '11:45')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>11:45</th>
-                </tr>
-                <tr>
-                    <th>Tiết 7</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '12:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '12:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>12:30</th>
-                </tr>
-                <tr>
-                    <th>Tiết 8</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '13:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '13:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>13:30</th>
-                </tr>
-                <tr>
-                    <th>Tiết 9</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '14:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '14:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>14:30</th>
-                </tr>
-                <tr>
-                    <th>Tiết 10</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '15:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '15:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>15:30</th>
-                </tr>
-                <tr>
-                    <th>Tiết 11</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '16:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '16:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>16:30</th>
-                </tr>
-                <tr>
-                    <th>Tiết 12</th>
-                    {{#each days}}
-                    {{#if (hasLessonAtTime ../TimeTableInfo this '17:30')}}
-
-                    {{#each ../TimeTableInfo}}
-                    {{#if (eq ThoiGianBatDauMonHoc '17:30')}}
-                    {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
-                    <td rowspan="{{minus ThoiGianKetThucMonHoc ThoiGianBatDauMonHoc}}">
-                        <div class="text-dark lesson-cell" data-date="{{ThoiGian}}" style="text-align: center; font-size: 14px;">
-                            <b>
-                                <p>{{TenMonHoc}}</p>
-                                <p>{{HoVaTen}}</p>
-                                <p>{{ThoiGian}}</p>
-                            </b>
-                        </div>
-                    </td>
-                    {{/if}}
-                    {{/if}}
-                    {{/each}}
-
-                    {{else}}
-                    <td></td>
-                    {{/if}}
-                    {{/each}}
-                    <th>17:30</th>
-                </tr>
-            </tbody>
-
-        </table>
-
+        </div>
     </div>
 </div>
 <script>
@@ -442,34 +174,24 @@
         var nextWeekBtn = $("#nextWeek");
         var daySelected = $("#daySelected");
         var daysFollowWeek = $(".days");
+        var checkAll = $("#checkAll");
+        var buttonDelete = $("#buttonDeleteCourseDetails");
+        var checkBoxCourseDetailsToDelete = $("input[name = 'CourseDetails[]']");
         var buttonSaveTimeTable = $("#buttonSaveTimeTable");
         var formTimeTable = $("#formTimeTable");
-        var timeTableInfo = $("#timeTable").data("timeTable");
-        console.log(timeTableInfo);
-        var semesterWeeks = {
-            "semester1": 12,
-            "semester2": 13,
-            "semester3": 14
-        };
-
-        //Các sự kiện của các thẻ
-        previousWeekBtn.click(function () {
-            let currentWeek = parseInt(weekSelected.val());
-            if (currentWeek > 1) {
-                weekSelected.val(currentWeek - 1);
-            }
-            updateTimeTable();
+        console.log(checkAll);
+        console.log(checkBoxCourseDetailsToDelete);
+        checkAll.change(function () {
+            var isCheckAll = $(this).prop("checked");
+            checkBoxCourseDetailsToDelete.prop("checked", isCheckAll);
+            renderButtonSubmit();
         });
-        nextWeekBtn.click(function () {
-            let currentWeek = parseInt(weekSelected.val());
-            let selectedSemester = semesterSelectId.val();
-            let maxWeeks = semesterWeeks[selectedSemester] || 13;
-            if (currentWeek < maxWeeks) {
-                weekSelected.val(currentWeek + 1);
-            }
-            updateTimeTable();
+        checkBoxCourseDetailsToDelete.change(function () {
+            var isCheckedAll = checkBoxCourseDetailsToDelete.length ===
+                $("input[name = 'CourseDetails[]']:checked").length;
+            checkAll.prop("checked", isCheckedAll);
+            renderButtonSubmit();
         });
-
         buttonSaveTimeTable.click(function () {
             formTimeTable.submit();
         });
@@ -483,16 +205,12 @@
         semesterSelectId.change(function () {
             var value = $(this).val();
             var options = "";
-            var index = 1;
-            var maxWeek = semesterWeeks[value] || 13;
             $('#weekSelect option').each(function () {
                 var weekValue = $(this).val();
                 if (value === weekValue) {
-                    options += '<option value="' + (index) + '">' + $(this).text() + '</option>';
-                    index++;
-                    if (index > maxWeek) {
-                        index = 1;
-                    }
+                    options += '<option value="' + '">' + $(this).text() + '</option>';
+
+
                 }
 
             });
@@ -505,6 +223,14 @@
             updateTimeTable();
         });
         //Các hàm mở rộng để xử lý
+        function renderButtonSubmit() {
+            var checkedCount = $("input[name = 'CourseDetails[]']:checked").length
+            if (checkedCount > 0) {
+                buttonDelete.removeClass("disabled");
+            } else {
+                buttonDelete.addClass("disabled");
+            }
+        }
         function getDayInWeekSelected(value) {
             var options = "<option>Chọn ngày</option>";
             var fromDateIndex = value.indexOf("Từ ngày") + 7;
@@ -543,15 +269,6 @@
                     var daySunDateIncreased = parseInt(sunDate[1]) + 1;
                     $(this).text(`Chủ Nhật - ${daySunDateIncreased} - ${sunDate[2]} - ${sunDate[3]}`);
                 }
-            });
-            $(".lesson-cell").hide();
-            days.forEach(function (day) {
-                console.log(day);
-                $(".lesson-cell").each(function () {
-                    if ($(this).data('date').trim() === day.trim()) {
-                        $(this).show();
-                    }
-                })
             });
         }
 

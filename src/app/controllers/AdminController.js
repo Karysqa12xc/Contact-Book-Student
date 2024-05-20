@@ -193,8 +193,13 @@ class AdminController {
       let endTimeValue = parseInt(start_time) + 1; 
       let end_time;
       if(endTimeValue < 12){
-        end_time = endTimeValue + ":45";
-      }else{
+        if(endTimeValue == 11){
+          end_time = endTimeValue + ":30";
+        }else{
+          end_time = endTimeValue + ":45";
+        }
+      }
+      else{
         end_time = endTimeValue + ":30";
       }
       let courseRename = `${course_name} - (${start_time}, ${end_time})`;
@@ -235,15 +240,13 @@ class AdminController {
         res.redirect("/");
       } else {
         const IdAndNameOfClass = await Class.getAll();
-        const IdAndNameOfCourse = await Course.getAll();
+        const IdAndNameOfCourse = await Course.getDataOuterTable();
         const SemesterInfo = await Semester.getAll();
         const TimeTableInfo = await CourseDetails.getAllValueJoinOtherTable();
-        const days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
         res.render("../../resources/admin/timetable_management.hbs", {
           Classes: IdAndNameOfClass,
           Courses: IdAndNameOfCourse,
           SemesterInfo: SemesterInfo,
-          days: days,
           TimeTableInfo: TimeTableInfo,
           account: req.session.account,
           logged: req.session.isLoggedIn,

@@ -14,5 +14,25 @@ module.exports = {
         left join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
         left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
 		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan`;
+    },
+    queryGetValueJoinOtherTableWithIdClass: function(value){
+        return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
+        Lop.*, HocKi.*, MonHoc.*, TaiKhoan.* 
+        FROM MonHocChiTiet 
+        left join HocKi on MonHocChiTiet.MaHocKi = HocKi.MaHocKi
+        left join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
+        left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
+		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan
+		Where Lop.MaLop = ${value}`;
+    },
+    queryGetValueJoinOtherTableWithIdAccount: function(value){
+        return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
+        Lop.*, HocKi.*, MonHoc.*, TaiKhoan.* 
+        FROM MonHocChiTiet 
+        left join HocKi on MonHocChiTiet.MaHocKi = HocKi.MaHocKi
+        left join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
+        left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
+		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan
+		Where TaiKhoan.MaTaiKhoan = '${value}' `;
     }
 }

@@ -23,13 +23,15 @@ module.exports = {
       Where MaVaiTro = '01GV'`;
   },
   queryGetByOuterTableTaiKhoan: function (tableName, tableJoin) {
-    return `SELECT MaTaiKhoan, TenTaiKhoan, 
+    return `SELECT ${tableName}.MaTaiKhoan, TenTaiKhoan, 
       MatKhau, HoVaTen, SoDienThoai, 
       DiaChi, NamSinh, GioiTinh, KhoaTaiKhoan, 
       ${tableName}.MaVaiTro, ${tableName}.MaLop, 
-      Ten${tableJoin}
+      Ten${tableJoin}, TenLop, TenMonHoc
       FROM ${tableName} JOIN ${tableJoin} 
-      ON ${tableName}.Ma${tableJoin} = ${tableJoin}.Ma${tableJoin}`;
+      ON ${tableName}.Ma${tableJoin} = ${tableJoin}.Ma${tableJoin}
+      LEFT JOIN Lop on ${tableName}.MaLop = Lop.MaLop
+      LEFT JOIN MonHoc on ${tableName}.MaTaiKhoan = MonHoc.MaTaiKhoan`;
   },
   queryGetDataAccountRefClassAndRole: function (
     tableName,
