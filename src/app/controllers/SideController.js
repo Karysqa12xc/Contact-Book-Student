@@ -108,48 +108,28 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
-
-  async checkPhoneNumber(req, res) {
-    try {
-      const {phone} = req.body;
-      const AccountInfo = await Account.getAll();
-      for (let i = 0; i < AccountInfo.length; i++) {
-        let element = AccountInfo[i];
-        if (element.SoDienThoai == phone) {
-          res.send("Co ton tai so dien thoai");
-          break;
-        } else {
-          res.redirect("back");
-          break;
-        }
-      }
-    } catch (error) {
-      res.status(500).json({message: `Internal server error + ${error}`});
-    }
-  }
   async CheckPhoneNumber(req, res) {
     try {
       const {phone} = req.body;
+      let dontFound = false;
       const accountinfo = await Account.getAll();
-
       for (let i = 0; i < accountinfo.length; i++) {
         let Element = accountinfo[i];
-
-        console.log(phone);
-        if (Element.SoDienThoai == phone) {
+        if (Element.SoDienThoai === phone) {
           const accountPhone = await Account.GetDataWithPhone(
             Element.SoDienThoai
           );
-          console.log(accountPhone);
-          res.render("../../resources/views/getpass.hbs", {
-            account: accountPhone,
-          });
-
-          break;
-        } else {
-          res.redirect("back");
+          if(accountPhone){
+            res.render("../../resources/views/getpass.hbs", {
+              account: accountPhone,
+            });
+          }
+          dontFound = true;
           break;
         }
+      }
+      if(!dontFound){
+        res.redirect("back");
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
@@ -159,7 +139,7 @@ class SideController {
     try {
       const {password, id} = req.body;
       await Account.UpdatePassAccount(password, id);
-      res.render("../../resources/views/login.hbs");
+      res.redirect("/login");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
