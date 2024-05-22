@@ -1,6 +1,10 @@
 <div class="container mt-5">
         <h1 class="mb-4">Danh sách học sinh và điểm danh</h1>
+<<<<<<< HEAD
         <form action="/students" method="get" class="mb-4">
+=======
+        <form action="/teacher/teacher" method="get" class="mb-4">
+>>>>>>> main
             <div class="form-group">
                 <label for="classDropdown">Chọn lớp:</label>
                 <select class="form-control" id="classDropdown" name="class">
@@ -13,7 +17,11 @@
             <button type="submit" class="btn btn-primary">Hiển thị danh sách</button>
         </form>
         {{#if students}}
+<<<<<<< HEAD
         <form action="/attendance" method="post">
+=======
+        <form action="/teacher/attendance" method="post">
+>>>>>>> main
             <input type="hidden" name="classId" value="{{selectedClassId}}">
             <table class="table table-striped">
                 <thead class="thead-dark">
@@ -29,7 +37,11 @@
                     <tr>
                         <th scope="row">{{@index}}</th>
                         <td>{{this.HoTen}}</td>
+<<<<<<< HEAD
                         <td>{{formatDate this.NgaySinh}}</td>
+=======
+                        <td>{{ this.NgaySinh}}</td>
+>>>>>>> main
                         <td>
                             <input type="checkbox" name="attendance[{{this.MaHocSinh}}]" value="1" {{#if this.TrangThai}}checked{{/if}}>
                         </td>

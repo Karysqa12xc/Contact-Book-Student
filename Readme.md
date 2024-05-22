@@ -65,6 +65,7 @@ TenYeuCau nvarchar(255) NOT NULL,
 NoiDung nvarchar(255) NOT NULL,
 MaTaiKhoanGui varchar(255), 
 MaTaiKhoanNhan varchar(255),
+DaDoc bit DEFAULT 0,
 FOREIGN KEY(MaTaiKhoanGui) 
 REFERENCES TaiKhoan(MaTaiKhoan), 
 FOREIGN KEY(MaTaiKhoanNhan) 

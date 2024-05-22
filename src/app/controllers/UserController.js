@@ -1,8 +1,21 @@
 
 const account = require("../models/Account");
 class userController {
+  async UserInfo(req, res) {
+    
+    try {
+        if (!req.session.isLoggedIn) {
+            res.redirect("/");
+          } else {
+            res.render('../../resources/user/userinfo.hbs', { account: req.session.account,
+                logged: req.session.isLoggedIn,});
+          }
+      
+    } catch (error) {
+      res.status(500).send('Error retrieving student information');
+    }
+  }
     async renderEditForm(req, res) {
-        const MaTaiKhoan = req.params.id;
         try {
             if (!req.session.isLoggedIn) {
                 res.redirect("/");
