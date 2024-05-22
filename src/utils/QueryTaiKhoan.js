@@ -90,5 +90,16 @@ module.exports = {
       DiaChi = N'${DiaChi}',
       MatKhau = '${MatKhau}'
     WHERE MaTaiKhoan = '${MaTaiKhoan}'`
+  },
+  queryUpdatePassAccount: function(tableName,MatKhau,MaTaiKhoan){
+    return ` UPDATE ${tableName}
+    SET
+      MatKhau = '${MatKhau}'
+    WHERE MaTaiKhoan = '${MaTaiKhoan}'`
+  },
+  querryGetDataWithPhone: function(tableName,SoDienThoai){
+    return `Select MaTaiKhoan from ${tableName}
+    where SoDienThoai = '${SoDienThoai}'`
   }
-};
+
+}

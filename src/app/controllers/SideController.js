@@ -31,7 +31,8 @@ class SideController {
       } else {
         const requestInfo = await Request.getRequestIsRead(0);
         const requestInfoUltra = await Request.GetRequestByIdNguoiGuiOrNhan(
-          "MaTaiKhoanGui", 0
+          "MaTaiKhoanGui",
+          0
         );
         res.render("../../resources/user/request.hbs", {
           requestInfo: requestInfo,
@@ -50,17 +51,18 @@ class SideController {
       if (!req.session.isLoggedIn) {
         return res.redirect("login");
       } else {
-      const requestInfo = await Request.getRequestIsRead(1);
-      const requestInfoUltra = await Request.GetRequestByIdNguoiGuiOrNhan(
-        "MaTaiKhoanGui", 1
-      );
-      res.render("../../resources/admin/request_was_read.hbs", {
-        requestInfo: requestInfo,
-        requestInfoUltra: requestInfoUltra,
-        account: req.session.account,
-        logged: req.session.isLoggedIn,
-      });
-    }
+        const requestInfo = await Request.getRequestIsRead(1);
+        const requestInfoUltra = await Request.GetRequestByIdNguoiGuiOrNhan(
+          "MaTaiKhoanGui",
+          1
+        );
+        res.render("../../resources/admin/request_was_read.hbs", {
+          requestInfo: requestInfo,
+          requestInfoUltra: requestInfoUltra,
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+        });
+      }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
@@ -106,21 +108,38 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
-  
-  async checkPhoneNumber(req, res){
+  async CheckPhoneNumber(req, res) {
     try {
-      const { phone } = req.body;
-      const AccountInfo = await Account.getAll();
-      for(let i = 0; i < AccountInfo.length; i++){
-        let element = AccountInfo[i];
-        if(element.SoDienThoai == phone){
-          res.send("Co ton tai so dien thoai");
-          break;
-        }else{
-          res.redirect("back");
+      const {phone} = req.body;
+      let dontFound = false;
+      const accountinfo = await Account.getAll();
+      for (let i = 0; i < accountinfo.length; i++) {
+        let Element = accountinfo[i];
+        if (Element.SoDienThoai === phone) {
+          const accountPhone = await Account.GetDataWithPhone(
+            Element.SoDienThoai
+          );
+          if(accountPhone){
+            res.render("../../resources/views/getpass.hbs", {
+              account: accountPhone,
+            });
+          }
+          dontFound = true;
           break;
         }
-      } 
+      }
+      if(!dontFound){
+        res.redirect("back");
+      }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  async GetPass(req, res) {
+    try {
+      const {password, id} = req.body;
+      await Account.UpdatePassAccount(password, id);
+      res.redirect("/login");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
