@@ -11,7 +11,6 @@ class StudentController {
         const result = await ViewFee.getByMaTaiKhoan(
           req.session.account.MaTaiKhoan
         );
-        //res.json(result);
         res.render("../../resources/user/student/money.hbs", {
           account: account,
           FeeInfor: result,
@@ -31,7 +30,8 @@ class StudentController {
       } else {
         const account = req.session.account;
         const SemesterInfo = await Semester.getAll();
-        const TimeTableInfo = await CourseDetails.GetValueJoinOtherTableWithIdClass(account.MaLop);
+        const TimeTableInfo =
+          await CourseDetails.GetValueJoinOtherTableWithIdClass(account.MaLop);
         const days = [
           "Thứ 2",
           "Thứ 3",
@@ -55,20 +55,6 @@ class StudentController {
         .json({message: `Internal server error: ${error.message}`});
     }
   }
-  // async viewFeeByMaTaiKhoan(req, res) {
-  //   try {
-  //     const MaTaiKhoan = req.params.MaTaiKhoan;
-  //     const result = await ViewFee.getByMaTaiKhoan(MaTaiKhoan);
-  //     if (!result || !Array.isArray(result)) {
-  //       throw new Error("Invalid data received from database");
-  //     }
-  //     res.render("../../resources/user/student/money.hbs", { FeeInfor: result
-  //     });
-  //   } catch (error) {
-  //     console.error("Error in viewFeeByMaTaiKhoan:", error);
-  //     res.status(500).json({ message: `Internal server error: ${error.message}` });
-  //   }
-  // }
 }
 
 module.exports = new StudentController();

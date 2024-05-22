@@ -34,5 +34,47 @@ module.exports = {
         left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
 		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan
 		Where TaiKhoan.MaTaiKhoan = '${value}' `;
+    },
+    queryGetDataToAddHocPhi: function(value){
+        return `SELECT 
+        MonHocChiTiet.MaHocKi,
+        MonHoc.MaMonHoc, 
+        MonHoc.TenMonHoc,
+        TaiKhoan.MaTaiKhoan,
+        MonHocChiTiet.isExport,
+        SUM(MonHoc.SoTien) AS TongSoTien,
+        HocKi.ThoiGianKetThuc
+    FROM 
+        TaiKhoan 
+        JOIN Lop ON TaiKhoan.MaLop = Lop.MaLop
+        JOIN MonHocChiTiet ON Lop.MaLop = MonHocChiTiet.MaLop 
+        JOIN MonHoc ON MonHoc.MaMonHoc = MonHocChiTiet.MaMonHoc
+        JOIN HocKi ON HocKi.MaHocKi = MonHocChiTiet.MaHocKi
+    WHERE 
+        TaiKhoan.MaTaiKhoan = '${value}' and MonHocChiTiet.isExport = 0
+    GROUP BY 
+        MonHocChiTiet.MaHocKi, 
+        MonHoc.TenMonHoc,
+        MonHocChiTiet.isExport,
+        MonHoc.MaMonHoc,
+        TaiKhoan.MaTaiKhoan,
+        HocKi.ThoiGianKetThuc;`
+    },
+    queryGetDataToAddScore: function(value){
+        return `SELECT MonHocChiTiet.MaMonHoc,
+        MonHoc.TenMonHoc, Lop.MaLop,Lop.TenLop, 
+        MonHocChiTiet.Diem, TaiKhoan.MaTaiKhoan
+        From MonHocChiTiet 
+        join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
+        join TaiKhoan on TaiKhoan.MaTaiKhoan = MonHoc.MaTaiKhoan
+        join Lop on MonHocChiTiet.MaLop = Lop.MaLop
+        WHERE 
+        TaiKhoan.MaTaiKhoan = '${value}'
+        GROUP BY
+        MonHocChiTiet.MaMonHoc,
+        MonHoc.TenMonHoc, MonHocChiTiet.Diem,
+        TaiKhoan.MaTaiKhoan,
+        Lop.TenLop,
+        Lop.MaLop`;
     }
 }

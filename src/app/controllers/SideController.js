@@ -1,4 +1,5 @@
 const Request = require("../models/Request");
+const Account = require("../models/Account");
 class SideController {
   //[GET] /home or /
   async index(req, res) {
@@ -101,7 +102,28 @@ class SideController {
   async forgetPass(req, res) {
     try {
       res.render("forget");
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  
+  async checkPhoneNumber(req, res){
+    try {
+      const { phone } = req.body;
+      const AccountInfo = await Account.getAll();
+      for(let i = 0; i < AccountInfo.length; i++){
+        let element = AccountInfo[i];
+        if(element.SoDienThoai == phone){
+          res.send("Co ton tai so dien thoai");
+          break;
+        }else{
+          res.redirect("back");
+          break;
+        }
+      } 
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
   }
 }
 

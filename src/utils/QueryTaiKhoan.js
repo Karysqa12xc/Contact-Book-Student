@@ -5,7 +5,7 @@ module.exports = {
     WHERE MaTaiKhoan = '${idTaiKhoan}'`;
   },
   queryUpdateClassOfAccount: function (tableName, value, idTaiKhoan) {
-    return `UPDATE TaiKhoan 
+    return `UPDATE ${tableName} 
         SET MaLop = ${value}
         WHERE MaTaiKhoan = '${idTaiKhoan}'`;
   },
@@ -16,6 +16,11 @@ module.exports = {
     return `SELECT * 
       FROM ${tableName} 
       Where MaLop IS NULL AND MaVaiTro = '01HS'`;
+  },
+  queryGetDataNotNullMaLopInTaiKhoan: function (tableName) {
+    return `SELECT * 
+      FROM ${tableName} 
+      Where MaLop IS NOT NULL AND MaVaiTro = '01HS'`;
   },
   queryGetTeacherInTaiKhoan: function (tableName) {
     return `SELECT * 

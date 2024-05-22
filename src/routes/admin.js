@@ -12,6 +12,8 @@ router.get("/management-timetable", adminController.viewTKB)
 router.post("/create-time-table", adminController.courseTimeTable);
 router.post("/create-semester", adminController.createSemester);
 router.get("/course", adminController.course_view);
+router.get("/export-cost", adminController.exportCourseCost)
+router.post("/export-cost", adminController.exportNewCostCourse);
 router.post("/:id/class-details", adminController.class_details);
 router.get("/class-management", adminController.class_management_view);
 router.post("/class-management", adminController.class_management_post);

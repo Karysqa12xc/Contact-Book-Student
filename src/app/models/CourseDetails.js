@@ -5,6 +5,8 @@ const {
   queryGetAllValueJoinOtherTable,
   queryGetValueJoinOtherTableWithIdClass,
   queryGetValueJoinOtherTableWithIdAccount,
+  queryGetDataToAddHocPhi,
+  queryGetDataToAddScore
 } = require("../../utils/QueryCourseDetails");
 const Role = require("./Role");
 const Course = require("./Course");
@@ -70,6 +72,24 @@ class CourseDetailsModel {
         "Failed to get data with id account join other course details:",
         error
       );
+      throw error;
+    }
+  }
+  async GetDataToAddHocPhi(value){
+    try {
+      const result = await db.connectAndQuerying(queryGetDataToAddHocPhi(value));
+      return result;
+    } catch (error) {
+      console.log("Failed to get data fee to add:", error);
+      throw error;
+    }
+  }
+  async GetDataToAddScore(value){
+    try {
+      const result = await db.connectAndQuerying(queryGetDataToAddScore(value));
+      return result;
+    } catch (error) {
+      console.log("Failed to get data to add score:", error);
       throw error;
     }
   }
