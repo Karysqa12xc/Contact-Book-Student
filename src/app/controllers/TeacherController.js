@@ -28,6 +28,16 @@ class TeacherController {
   }
   async  getStudents(req, res) {
     try {
+<<<<<<< HEAD
+      if (!req.session.isLoggedIn) {
+        // console.log("adadfd");
+        return res.redirect("/");
+      } else {
+        res.render("../../resources/user/teacher/attendance.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn});
+      }
+=======
         if (!req.session.isLoggedIn) {
             return res.redirect("/");
         }
@@ -47,6 +57,7 @@ class TeacherController {
             students,
             selectedClassId
         });
+>>>>>>> main
     } catch (error) {
         res.status(500).json({ message: `Internal server error: ${error}` });
     }
