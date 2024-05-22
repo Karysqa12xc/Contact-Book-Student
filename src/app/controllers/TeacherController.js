@@ -1,11 +1,26 @@
+
 const attendanceModel = require("../models/Attendance")
+const Semester = require("../models/Semester");
+const CourseDetails = require("../models/CourseDetails");
+const Account = require("../models/Account");
 class TeacherController {
+  //[GET] /teacher/NhapDiem
   async enterScore(req, res) {
     try {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
       } else {
-        res.render("../../resources/user/teacher/enterscore.hbs");
+        const classOfTeacher = await CourseDetails.GetDataToAddScore(req.session.account.MaTaiKhoan);
+        let accountInfo;
+        if(req.query.idClass != null){
+          accountInfo = await Account.getByIdClass(req.query.idClass);
+        }
+        res.render("../../resources/user/teacher/enterscore.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+          accountInfo: accountInfo,
+          classOfTeacher: classOfTeacher,
+        });
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});

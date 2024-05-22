@@ -106,14 +106,17 @@ GO`
 GO`
 * Bảng Môn học chi tiết:
 
-`   CREATE TABLE MonHocChiTiet( 
-	MaMonHoc INT, MaLop INT, MaHocKi varchar(255), 
-ThoiGian nvarchar(30), Diem float(10), 
-PRIMARY KEY(MaMonHoc, MaLop, MaHocKi,ThoiGian), 
-FOREIGN KEY(MaLop) REFERENCES Lop(MaLop), 
+`CREATE TABLE MonHocChiTiet( 
+MaMonHocChiTiet int IDENTITY(1,1),
+MaMonHoc INT, 
+MaLop INT, 
+MaHocKi varchar(255), 
+ThoiGian nvarchar(30), 
+Diem float(10), 
+PRIMARY KEY(MaMonHocChiTiet, MaMonHoc, MaLop, MaHocKi,ThoiGian), 
+FOREIGN KEY(MaLop) REFERENCES Lop(MaLop),
 FOREIGN KEY(MaMonHoc) REFERENCES MonHoc(MaMonHoc), 
-FOREIGN KEY(MaHocKi) REFERENCES HocKi(MaHocKi), 
-);`
+FOREIGN KEY(MaHocKi) REFERENCES HocKi(MaHocKi), );`
 * Bảng Điểm danh:
 
 `   CREATE TABLE DiemDanh (

@@ -88,11 +88,7 @@ class SideController {
       const requestInfoSuperUltra = await Request.GetOuterDataTableYeuCau(
         idRequest
       );
-      const checkBox = req.query.DaDoc;
-      let wasRead ;
-      if(checkBox){
-        wasRead = 1
-      }
+      let wasRead = 1;
       await Request.requestWasRead(idRequest, wasRead);
       res.render("../../resources/admin/read_request.hbs", {
         requestInfoSuperUltra: requestInfoSuperUltra,
@@ -106,7 +102,28 @@ class SideController {
   async forgetPass(req, res) {
     try {
       res.render("forget");
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  
+  async checkPhoneNumber(req, res){
+    try {
+      const { phone } = req.body;
+      const AccountInfo = await Account.getAll();
+      for(let i = 0; i < AccountInfo.length; i++){
+        let element = AccountInfo[i];
+        if(element.SoDienThoai == phone){
+          res.send("Co ton tai so dien thoai");
+          break;
+        }else{
+          res.redirect("back");
+          break;
+        }
+      } 
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
   }
   async CheckPhoneNumber(req,res){
     try{

@@ -11,4 +11,5 @@ router.post("/forget", sideController.CheckPhoneNumber);
 router.post("/getpass", sideController.GetPass);
 router.get("/about", sideController.about);
 router.get("/", sideController.index);
+
 module.exports = router;
