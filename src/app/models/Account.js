@@ -15,6 +15,8 @@ const {
   queryUpdateLockedOfAccount,
   queryGetTeacherInTaiKhoan,
   queryUpdateAccount,
+  querryGetDataWithPhone,
+  queryUpdatePassAccount,
 } = require("../../utils/QueryTaiKhoan");
 const tableName = "TaiKhoan";
 const tableJoinRole = "VaiTro";
@@ -186,5 +188,25 @@ class AccountModel {
       throw error;
     }
   }
+ 
+  async UpdatePassAccount(MatKhau,MaTaiKhoan){
+    try {
+      const result = await db.connectAndQuerying(queryUpdatePassAccount(tableName,MatKhau,MaTaiKhoan));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account have id teacher:", error);
+      throw error;
+    }
+  }
+  async GetDataWithPhone(SoDienThoai) {
+    try {
+      const result = await db.connectAndQuerying(querryGetDataWithPhone(tableName,SoDienThoai));
+      return result;
+    } catch (error) {
+      console.log("Failed to get account have id teacher:", error);
+      throw error;
+    }
+  }
+  
 }
 module.exports = new AccountModel();

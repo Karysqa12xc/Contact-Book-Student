@@ -1,4 +1,5 @@
 const Request = require("../models/Request");
+const Account = require("../models/Account")
 class SideController {
   //[GET] /home or /
   async index(req, res) {
@@ -106,6 +107,47 @@ class SideController {
     try {
       res.render("forget");
     } catch (error) {}
+  }
+  async CheckPhoneNumber(req,res){
+    try{
+        const  {phone} = req.body;
+        const accountinfo = await Account.getAll();
+        
+        for(let i = 0; i< accountinfo.length;i++){
+          let Element=accountinfo[i];
+
+          console.log(phone);
+          if(Element.SoDienThoai == phone){
+            const accountPhone = await Account.GetDataWithPhone(Element.SoDienThoai);
+              console.log(accountPhone);
+            res.render("../../resources/views/getpass.hbs",{account: accountPhone});
+
+            break;
+          }else{
+            
+            res.redirect("back");
+            break;
+          }
+        }
+    }
+    catch (error){
+      
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  async GetPass (req,res){
+try{
+  const {
+    password,id
+} = req.body;
+await Account.UpdatePassAccount(password,id);
+res.render("../../resources/views/login.hbs");
+}
+
+catch (error){
+      
+  res.status(500).json({message: `Internal server error + ${error}`});
+}
   }
 }
 
