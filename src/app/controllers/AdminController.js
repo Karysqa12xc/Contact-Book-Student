@@ -4,6 +4,7 @@ const Role = require("../models/Role");
 const Course = require("../models/Course");
 const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
+const Fee = require("../models/ViewFee");
 const {uuid} = require("uuidv4");
 class AdminController {
   //[GET] /admin/account-management
@@ -189,7 +190,18 @@ class AdminController {
   //[POST] /admin/course-create
   async course_create(req, res) {
     try {
-      const {course_name, start_time, end_time, money_course} = req.body;
+      const {course_name, start_time, money_course} = req.body;
+      let endTimeValue = parseInt(start_time) + 1;
+      let end_time;
+      if (endTimeValue < 12) {
+        if (endTimeValue == 11) {
+          end_time = endTimeValue + ":30";
+        } else {
+          end_time = endTimeValue + ":45";
+        }
+      } else {
+        end_time = endTimeValue + ":30";
+      }
       let courseRename = `${course_name} - (${start_time}, ${end_time})`;
       await Course.addNewData(courseRename, start_time, end_time, money_course);
       res.redirect("back");
@@ -228,17 +240,13 @@ class AdminController {
         res.redirect("/");
       } else {
         const IdAndNameOfClass = await Class.getAll();
-        const IdAndNameOfCourse = await Course.getAll();
+        const IdAndNameOfCourse = await Course.getDataOuterTable();
         const SemesterInfo = await Semester.getAll();
         const TimeTableInfo = await CourseDetails.getAllValueJoinOtherTable();
-        const periods =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        const days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
         res.render("../../resources/admin/timetable_management.hbs", {
           Classes: IdAndNameOfClass,
           Courses: IdAndNameOfCourse,
           SemesterInfo: SemesterInfo,
-          periods: periods,
-          days: days,
           TimeTableInfo: TimeTableInfo,
           account: req.session.account,
           logged: req.session.isLoggedIn,
@@ -274,6 +282,43 @@ class AdminController {
         idCourse,
         dayValue
       );
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[GET] /admin/export-cost
+  async exportCourseCost(req, res) {
+    try {
+      if (!req.session.isLoggedIn) {
+        res.redirect("/");
+      } else {
+        const idStudent = req.query.idClass;
+        const accountInfo = await Account.getDataNotNullMaLopInTaiKhoan();
+        const accountStudentPersonal = await Account.getById(idStudent);
+        const CourseDetailsToFee = await CourseDetails.GetDataToAddHocPhi(
+          idStudent
+        );
+        res.render("../../resources/admin/export_cost_course.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+          CourseDetailsToFee: CourseDetailsToFee,
+          accountInfo: accountInfo,
+          accountStudentPersonal: accountStudentPersonal,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[POST] /admin/export-cost
+  async exportNewCostCourse(req, res) {
+    try {
+      const {idSemester, IdCourse, SumCourse, IdAccount, EndTime, isExport} =
+        req.body;
+      let EndCostTime = new Date(EndTime);  
+      EndCostTime.setMonth(EndCostTime.getMonth() + 3);
+      Fee.AddNewDataFee(IdAccount, SumCourse, idSemester, EndCostTime)
       res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});

@@ -1,6 +1,9 @@
 const db = require("../../config/database");
-const { queryDocHocPHi } = require("../../utils/QueryFee");
-const { queryGetAll, queryGetById} = require("../../utils/QueryCommon");
+const {
+  queryDocHocPHi,
+  queryAddNewDataFee,
+} = require("../../utils/QueryFee");
+const {queryGetAll, queryGetById} = require("../../utils/QueryCommon");
 const tableName = "HocPhi";
 
 class ViewFeeModel {
@@ -25,10 +28,21 @@ class ViewFeeModel {
 
   async getByMaTaiKhoan(MaTaiKhoan) {
     try {
-      const result = await db.connectAndQuerying(queryDocHocPHi(tableName, MaTaiKhoan));
+      const result = await db.connectAndQuerying(
+        queryDocHocPHi(tableName, MaTaiKhoan)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get fee info by MaTaiKhoan:", error);
+      throw error;
+    }
+  }
+  async AddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong){
+    try {
+      const result = await db.connectAndQuerying(queryAddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong));
+      return result;
+    } catch (error) {
+      console.log("Failed to add data to fee:", error);
       throw error;
     }
   }

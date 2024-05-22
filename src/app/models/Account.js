@@ -17,6 +17,7 @@ const {
   queryUpdateAccount,
   querryGetDataWithPhone,
   queryUpdatePassAccount,
+  queryGetDataNotNullMaLopInTaiKhoan
 } = require("../../utils/QueryTaiKhoan");
 const tableName = "TaiKhoan";
 const tableJoinRole = "VaiTro";
@@ -120,6 +121,18 @@ class AccountModel {
       throw error;
     }
   }
+  async getDataNotNullMaLopInTaiKhoan() {
+    try {
+      const result = await db.connectAndQuerying(
+        queryGetDataNotNullMaLopInTaiKhoan(tableName)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to get account id class null:", error);
+      throw error;
+    }
+  }
+  
   async updateDataIdClass(value, idAccount) {
     try {
       const result = await db.connectAndQuerying(

@@ -59,6 +59,9 @@ app.engine(
           return subjectName;
         }
       },
+      json: function (context) {
+        return JSON.stringify(context);
+      },
       renderWeeks(startDate, endDate) {
         var weeks = [];
         var currentDate = new Date(startDate);
