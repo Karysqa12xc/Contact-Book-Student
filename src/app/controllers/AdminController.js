@@ -314,12 +314,40 @@ class AdminController {
   //[POST] /admin/export-cost
   async exportNewCostCourse(req, res) {
     try {
-      const {idSemester, IdCourse, SumCourse, IdAccount, EndTime, isExport} =
-        req.body;
-      let EndCostTime = new Date(EndTime);  
+      const {
+        idSemester,
+        IdClass,
+        IdCourse,
+        SumCourse,
+        IdAccount,
+        EndTime,
+        isExport,
+      } = req.body;
+      let exportCheck;
+      if (isExport === "false" || isExport === false) {
+        exportCheck = 1;
+      }
+      let EndCostTime = new Date(EndTime);
       EndCostTime.setMonth(EndCostTime.getMonth() + 3);
-      Fee.AddNewDataFee(IdAccount, SumCourse, idSemester, EndCostTime)
-      res.redirect("back");
+      await Fee.AddNewDataFee(IdAccount, SumCourse, idSemester, EndCostTime);
+      res.render("../../resources/admin/notice_add_course.hbs", {
+        account: req.session.account,
+        logged: req.session.isLoggedIn,
+        idSemester: idSemester,
+        IdClass: IdClass,
+        IdCourse: IdCourse,
+        Export: exportCheck,
+      });
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[PUT] /admin/update-export-cost
+  async update_export_cost(req, res) {
+    try {
+      const {idSemester, IdClass, IdCourse, Export} = req.body;
+      await CourseDetails.UpdateIsExport(Export, IdClass, IdCourse, idSemester);
+      res.redirect("/admin/export-cost");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }

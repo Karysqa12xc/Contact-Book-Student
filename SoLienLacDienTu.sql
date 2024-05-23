@@ -1,0 +1,218 @@
+
+/****** Object:  Table [dbo].[DiemDanh]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DiemDanh](
+	[MaDiemDanh] [int] IDENTITY(1,1) NOT NULL,
+	[MaHocKi] [varchar](255) NULL,
+	[MaLop] [int] NULL,
+	[MaMonHoc] [int] NULL,
+	[ThoiGian] [timestamp] NOT NULL,
+	[TaiKhoanMaTaiKhoanHocSinh] [varchar](255) NULL,
+	[TrangThai] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaDiemDanh] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HocKi]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HocKi](
+	[MaHocKi] [varchar](255) NOT NULL,
+	[TenHocKi] [nvarchar](255) NOT NULL,
+	[ThoiGianBatDau] [date] NULL,
+	[ThoiGianKetThuc] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaHocKi] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HocPhi]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HocPhi](
+	[MaHocPhi] [int] IDENTITY(1,1) NOT NULL,
+	[TongTien] [real] NOT NULL,
+	[MaTaiKhoan] [varchar](255) NULL,
+	[MaHocKi] [varchar](255) NULL,
+	[HanDong] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaHocPhi] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Lop]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Lop](
+	[MaLop] [int] IDENTITY(1,1) NOT NULL,
+	[TenLop] [nvarchar](255) NOT NULL,
+	[SiSo] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaLop] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [unique_tenlop] UNIQUE NONCLUSTERED 
+(
+	[TenLop] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MonHoc]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MonHoc](
+	[MaMonHoc] [int] IDENTITY(1,1) NOT NULL,
+	[TenMonHoc] [nvarchar](255) NOT NULL,
+	[SoTien] [real] NOT NULL,
+	[MaTaiKhoan] [varchar](255) NULL,
+	[ThoiGianBatDauMonHoc] [varchar](5) NULL,
+	[ThoiGianKetThucMonHoc] [varchar](5) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaMonHoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [uc_tenmonhoc] UNIQUE NONCLUSTERED 
+(
+	[TenMonHoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MonHocChiTiet]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MonHocChiTiet](
+	[MaMonHocChiTiet] [int] IDENTITY(1,1) NOT NULL,
+	[MaMonHoc] [int] NOT NULL,
+	[MaLop] [int] NOT NULL,
+	[MaHocKi] [varchar](255) NOT NULL,
+	[ThoiGian] [nvarchar](30) NOT NULL,
+	[Diem] [real] NULL,
+	[isExport] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaMonHocChiTiet] ASC,
+	[MaMonHoc] ASC,
+	[MaLop] ASC,
+	[MaHocKi] ASC,
+	[ThoiGian] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TaiKhoan]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TaiKhoan](
+	[MaTaiKhoan] [varchar](255) NOT NULL,
+	[TenTaiKhoan] [varchar](255) NOT NULL,
+	[MatKhau] [varchar](255) NOT NULL,
+	[HoVaTen] [nvarchar](255) NOT NULL,
+	[SoDienThoai] [varchar](11) NULL,
+	[DiaChi] [nvarchar](255) NOT NULL,
+	[NamSinh] [date] NULL,
+	[GioiTinh] [bit] NOT NULL,
+	[KhoaTaiKhoan] [bit] NULL,
+	[MaLop] [int] NULL,
+	[MaVaiTro] [varchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[TenTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[VaiTro]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VaiTro](
+	[MaVaiTro] [varchar](255) NOT NULL,
+	[TenVaiTro] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaVaiTro] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Yeu_Cau]    Script Date: 5/23/2024 9:59:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Yeu_Cau](
+	[MaYeuCau] [int] IDENTITY(1,1) NOT NULL,
+	[TenYeuCau] [nvarchar](255) NOT NULL,
+	[NoiDung] [nvarchar](255) NOT NULL,
+	[MaTaiKhoanGui] [varchar](255) NULL,
+	[MaTaiKhoanNhan] [varchar](255) NULL,
+	[DaDoc] [bit] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MonHocChiTiet] ADD  DEFAULT ((0)) FOR [isExport]
+GO
+ALTER TABLE [dbo].[Yeu_Cau] ADD  DEFAULT ((0)) FOR [DaDoc]
+GO
+ALTER TABLE [dbo].[DiemDanh]  WITH CHECK ADD FOREIGN KEY([MaHocKi])
+REFERENCES [dbo].[HocKi] ([MaHocKi])
+GO
+ALTER TABLE [dbo].[DiemDanh]  WITH CHECK ADD FOREIGN KEY([MaLop])
+REFERENCES [dbo].[Lop] ([MaLop])
+GO
+ALTER TABLE [dbo].[DiemDanh]  WITH CHECK ADD FOREIGN KEY([MaMonHoc])
+REFERENCES [dbo].[MonHoc] ([MaMonHoc])
+GO
+ALTER TABLE [dbo].[DiemDanh]  WITH CHECK ADD FOREIGN KEY([TaiKhoanMaTaiKhoanHocSinh])
+REFERENCES [dbo].[TaiKhoan] ([MaTaiKhoan])
+GO
+ALTER TABLE [dbo].[HocPhi]  WITH CHECK ADD FOREIGN KEY([MaHocKi])
+REFERENCES [dbo].[HocKi] ([MaHocKi])
+GO
+ALTER TABLE [dbo].[HocPhi]  WITH CHECK ADD FOREIGN KEY([MaTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([MaTaiKhoan])
+GO
+ALTER TABLE [dbo].[MonHoc]  WITH CHECK ADD FOREIGN KEY([MaTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([MaTaiKhoan])
+GO
+ALTER TABLE [dbo].[MonHocChiTiet]  WITH CHECK ADD FOREIGN KEY([MaHocKi])
+REFERENCES [dbo].[HocKi] ([MaHocKi])
+GO
+ALTER TABLE [dbo].[MonHocChiTiet]  WITH CHECK ADD FOREIGN KEY([MaLop])
+REFERENCES [dbo].[Lop] ([MaLop])
+GO
+ALTER TABLE [dbo].[MonHocChiTiet]  WITH CHECK ADD FOREIGN KEY([MaMonHoc])
+REFERENCES [dbo].[MonHoc] ([MaMonHoc])
+GO
+ALTER TABLE [dbo].[TaiKhoan]  WITH CHECK ADD FOREIGN KEY([MaLop])
+REFERENCES [dbo].[Lop] ([MaLop])
+GO
+ALTER TABLE [dbo].[TaiKhoan]  WITH CHECK ADD FOREIGN KEY([MaVaiTro])
+REFERENCES [dbo].[VaiTro] ([MaVaiTro])
+GO
+ALTER TABLE [dbo].[Yeu_Cau]  WITH CHECK ADD FOREIGN KEY([MaTaiKhoanGui])
+REFERENCES [dbo].[TaiKhoan] ([MaTaiKhoan])
+GO
+ALTER TABLE [dbo].[Yeu_Cau]  WITH CHECK ADD FOREIGN KEY([MaTaiKhoanNhan])
+REFERENCES [dbo].[TaiKhoan] ([MaTaiKhoan])
+GO

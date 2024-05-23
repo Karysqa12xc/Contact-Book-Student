@@ -3,7 +3,9 @@
   width: 28px;
   border-radius: 50%;
 }
-
+.mt-10{
+  margin-top: 100px;
+}
 /*end reset*/
 body{
 background: url(../imgs/back.webp) no-repeat;

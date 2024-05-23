@@ -6,10 +6,10 @@ const {
   queryGetValueJoinOtherTableWithIdClass,
   queryGetValueJoinOtherTableWithIdAccount,
   queryGetDataToAddHocPhi,
-  queryGetDataToAddScore
+  queryGetDataToAddScore,
+  queryUpdateIsExport
 } = require("../../utils/QueryCourseDetails");
-const Role = require("./Role");
-const Course = require("./Course");
+
 const tableName = "MonHocChiTiet";
 class CourseDetailsModel {
   async getAll() {
@@ -90,6 +90,15 @@ class CourseDetailsModel {
       return result;
     } catch (error) {
       console.log("Failed to get data to add score:", error);
+      throw error;
+    }
+  }
+  async UpdateIsExport(isExport, idClass, idCourse, idSemester){
+    try {
+      const results = await db.connectAndQuerying(queryUpdateIsExport(isExport, idClass, idCourse, idSemester));
+      return results;
+    } catch (error) {
+      console.log("Failed to update data in course details:", error);
       throw error;
     }
   }

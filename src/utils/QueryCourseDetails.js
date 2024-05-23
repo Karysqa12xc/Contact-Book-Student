@@ -40,6 +40,7 @@ module.exports = {
         MonHocChiTiet.MaHocKi,
         MonHoc.MaMonHoc, 
         MonHoc.TenMonHoc,
+        Lop.MaLop,
         TaiKhoan.MaTaiKhoan,
         MonHocChiTiet.isExport,
         SUM(MonHoc.SoTien) AS TongSoTien,
@@ -58,6 +59,7 @@ module.exports = {
         MonHocChiTiet.isExport,
         MonHoc.MaMonHoc,
         TaiKhoan.MaTaiKhoan,
+        Lop.MaLop,
         HocKi.ThoiGianKetThuc;`
     },
     queryGetDataToAddScore: function(value){
@@ -76,5 +78,17 @@ module.exports = {
         TaiKhoan.MaTaiKhoan,
         Lop.TenLop,
         Lop.MaLop`;
-    }
+    },
+    queryUpdateIsExport: function(isExport, idClass, idCourse, idSemester){
+        return `UPDATE MonHocChiTiet
+        SET isExport = ${isExport}
+        WHERE MaLop IN (
+        SELECT Lop.MaLop FROM TaiKhoan 
+        JOIN Lop on TaiKhoan.MaLop = Lop.MaLop
+        WHERE Lop.MaLop = ${idClass}
+        )
+        AND 
+        MonHocChiTiet.MaMonHoc = ${idCourse}
+        AND MaHocKi = '${idSemester}'`;
+    },
 }
