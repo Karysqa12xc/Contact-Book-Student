@@ -13,7 +13,7 @@
             <button type="submit" class="btn btn-primary">Hiển thị danh sách</button>
         </form>
         {{#if students}}
-        <form action="/attendance" method="post">
+        <form action="/teacher/attendance" method="post">
             <input type="hidden" name="classId" value="{{selectedClassId}}">
             <table class="table table-striped">
                 <thead class="thead-dark">
