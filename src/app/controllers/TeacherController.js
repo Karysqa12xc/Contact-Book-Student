@@ -3,6 +3,7 @@ const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
 const Account = require("../models/Account");
 class TeacherController {
+  //[]
   async enterScore(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -13,7 +14,7 @@ class TeacherController {
         );
         let accountInfo;
         if (req.query.idClass != null) {
-          accountInfo = await Account.getByIdClass(req.query.idClass);
+          accountInfo = await CourseDetails.GetValueJoinOtherTableWithIdClassOfStudent(req.query.idClass);
         }
         res.render("../../resources/user/teacher/enterscore.hbs",
           {
@@ -28,6 +29,7 @@ class TeacherController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[]
   async getStudents(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -53,7 +55,7 @@ class TeacherController {
       res.status(500).json({message: `Internal server error: ${error}`});
     }
   }
-
+  //[]
   async postAttendance(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -74,6 +76,7 @@ class TeacherController {
       res.status(500).json({message: `Internal server error: ${error}`});
     }
   }
+  //[]
   async scheduleClass(req, res){
     try {
       if (!req.session.isLoggedIn) {
@@ -103,6 +106,16 @@ class TeacherController {
           logged: req.session.isLoggedIn,
         });
       }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[]
+  async updateScore(req, res){
+    try {
+      const {IdClass, IdCourse, IdSemester, Score} = req.body;
+      await CourseDetails.UpdateScore(IdClass, IdCourse, IdSemester, Score);
+      res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }

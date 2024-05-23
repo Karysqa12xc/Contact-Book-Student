@@ -3,11 +3,14 @@ const {queryGetAll} = require("../../utils/QueryCommon");
 const {
   queryAddNewDataToCourseDetails,
   queryGetAllValueJoinOtherTable,
-  queryGetValueJoinOtherTableWithIdClass,
+  queryGetValueJoinOtherTableWithIdClassOfTeacher,
   queryGetValueJoinOtherTableWithIdAccount,
   queryGetDataToAddHocPhi,
   queryGetDataToAddScore,
-  queryUpdateIsExport
+  queryUpdateIsExport,
+  queryGetValueJoinOtherTableWithIdClassOfStudent,
+  queryGetDataForViewScore,
+  queryUpdateScore,
 } = require("../../utils/QueryCourseDetails");
 
 const tableName = "MonHocChiTiet";
@@ -49,10 +52,36 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async GetValueJoinOtherTableWithIdClass(value) {
+  async GetValueJoinOtherTableWithIdClassOfTeacher(value) {
     try {
       const results = await db.connectAndQuerying(
-        queryGetValueJoinOtherTableWithIdClass(value)
+        queryGetValueJoinOtherTableWithIdClassOfTeacher(value)
+      );
+      return results;
+    } catch (error) {
+      console.log(
+        "Failed to get data with id class join other course details:",
+        error
+      );
+      throw error;
+    }
+  }
+  async GetDataForViewScore(MaLop) {
+    try {
+      const results = await db.connectAndQuerying(queryGetDataForViewScore(MaLop));
+      return results;
+    } catch (error) {
+      console.log(
+        "Failed to get data with id account join other course details:",
+        error
+      );
+      throw error;
+    }
+  }
+  async GetValueJoinOtherTableWithIdClassOfStudent(value) {
+    try {
+      const results = await db.connectAndQuerying(
+        queryGetValueJoinOtherTableWithIdClassOfStudent(value)
       );
       return results;
     } catch (error) {
@@ -65,7 +94,9 @@ class CourseDetailsModel {
   }
   async GetValueJoinOtherTableWithIdAccount(value) {
     try {
-      const results = await db.connectAndQuerying(queryGetValueJoinOtherTableWithIdAccount(value));
+      const results = await db.connectAndQuerying(
+        queryGetValueJoinOtherTableWithIdAccount(value)
+      );
       return results;
     } catch (error) {
       console.log(
@@ -75,16 +106,18 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async GetDataToAddHocPhi(value){
+  async GetDataToAddHocPhi(value) {
     try {
-      const result = await db.connectAndQuerying(queryGetDataToAddHocPhi(value));
+      const result = await db.connectAndQuerying(
+        queryGetDataToAddHocPhi(value)
+      );
       return result;
     } catch (error) {
       console.log("Failed to get data fee to add:", error);
       throw error;
     }
   }
-  async GetDataToAddScore(value){
+  async GetDataToAddScore(value) {
     try {
       const result = await db.connectAndQuerying(queryGetDataToAddScore(value));
       return result;
@@ -93,10 +126,23 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async UpdateIsExport(isExport, idClass, idCourse, idSemester){
+  async UpdateIsExport(isExport, idClass, idCourse, idSemester) {
     try {
-      const results = await db.connectAndQuerying(queryUpdateIsExport(isExport, idClass, idCourse, idSemester));
+      const results = await db.connectAndQuerying(
+        queryUpdateIsExport(isExport, idClass, idCourse, idSemester)
+      );
       return results;
+    } catch (error) {
+      console.log("Failed to update data in course details:", error);
+      throw error;
+    }
+  }
+  async UpdateScore(IdClass, IdCourse, IdSemester, Score) {
+    try {
+      const result = await db.connectAndQuerying(
+        queryUpdateScore(IdClass, IdCourse, IdSemester, Score)
+      );
+      return result;
     } catch (error) {
       console.log("Failed to update data in course details:", error);
       throw error;

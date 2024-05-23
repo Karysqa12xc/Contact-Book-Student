@@ -1,7 +1,9 @@
 const ViewFee = require("../models/ViewFee");
 const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
+const Account = require("../models/Account");
 class StudentController {
+  //[]
   async viewFee(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -25,6 +27,7 @@ class StudentController {
         .json({message: `Internal server error: ${error.message}`});
     }
   }
+  //[]
   async viewTimeTableStudent(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -49,6 +52,27 @@ class StudentController {
           TimeTableInfo: TimeTableInfo,
           account: account,
           logged: req.session.isLoggedIn,
+        });
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({message: `Internal server error: ${error.message}`});
+    }
+  }
+  //[GET] /student/view-score
+  async viewScore(req, res) {
+    try {
+      if (!req.session.isLoggedIn) {
+        res.redirect("/");
+      } else {
+        const semesterInfo = await Semester.getAll();
+        const ScoreOfStudent = await CourseDetails.GetDataForViewScore(req.session.account.MaLop);
+        res.render("../../resources/user/student/score.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+          semesterInfo: semesterInfo,
+          ScoreOfStudent: ScoreOfStudent,
         });
       }
     } catch (error) {
