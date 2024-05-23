@@ -155,6 +155,17 @@ class AccountModel {
       throw error;
     }
   }
+  async getByIdClass(id) {
+    try {
+      const result = await db.connectAndQuerying(
+        queryGetTaiKhoanByMaLop(tableName, id)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to get account by id class:", error);
+      throw error;
+    }
+  }
   async getDataAccountRefRoleAndClass() {
     try {
       const result = await db.connectAndQuerying(

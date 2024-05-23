@@ -35,11 +35,11 @@ class TeacherController {
         return res.redirect("/");
       } else {
 
-      const classes = await attendanceModel.getClasses();
+      const classes = await attendanceModel.getClasses(req.session.account.MaLop);
       const selectedClassId = req.query.class || null;
       let students = [];
       if (selectedClassId) {
-        students = await attendanceModel.getStudentsByClass(selectedClassId);
+        students = await Account.getStudentsByClass(selectedClassId);
       }
         res.render("../../resources/user/teacher/attendance.hbs", {
           account: req.session.account,
@@ -59,21 +59,31 @@ class TeacherController {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
       }
-
+  
       const classId = req.body.classId;
-      const attendance = Object.keys(req.body.attendance || {}).map(
-        (studentId) => ({
-          MaHocSinh: parseInt(studentId, 10),
-          TrangThai: 1,
-        })
-      );
-
+      const attendanceData = req.body.attendance || {};
+      
+      // Transform attendance data into the required format for saving
+      const attendance = Object.keys(attendanceData).map(studentId => ({
+        MaHocSinh: parseInt(studentId, 10),
+        TrangThai: attendanceData[studentId] === '1' ? 1 : 0, 
+      }));
+  
       await attendanceModel.saveAttendance(classId, attendance);
       res.redirect(`/students?class=${classId}`);
     } catch (error) {
-      res.status(500).json({message: `Internal server error: ${error}`});
+      res.status(500).json({ message: `Internal server error: ${error}` });
     }
   }
+  // async postAttendance(req, res){
+  //   try {
+  //     const {classId,attendanceDate, attendance} = req.body;
+  //     await attendanceModel.saveAttendance(classId,attendanceDate, attendance);
+  //     res.redirect("back");
+  //   } catch (error) {
+  //     res.status(500).json({message: `Internal server error + ${error}`});
+  //   }
+  // }
   async scheduleClass(req, res){
     try {
       if (!req.session.isLoggedIn) {
