@@ -101,7 +101,7 @@
 						<a href="/forget"> Quên mật khẩu </a>
 					</div>
 					<div class="col-12">
-						<button class="btn btn-primary" type="submit" name="signin">Login</button>
+						<button id="btdangnhap" class="btn btn-primary" type="submit" name="signin">Login</button>
 					</div>
 				</div>
 			</form>
@@ -140,9 +140,11 @@
 							var errorMessage = rules.test(inputElement.value);
 							if (errorMessage) {
 								errorElement.innerHTML = errorMessage;
+								$('#btdangnhap').addClass('disabled');
 							}
 							else {
 								errorElement.innerHTML = "";
+								$('#btdangnhap').removeClass('disabled')
 							}
 
 						}

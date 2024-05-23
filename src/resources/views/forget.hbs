@@ -1,13 +1,78 @@
  <div class="col-md-9 m-auto" >
   <div class="card">
    <div class="card-header bg-info"> QUÊN MẬT KHẨU</div>
-   <div class="card-body">
-     <form class="form-horizontal" method="POST" action="/forget" >
-         <p>  <label class="control-label">Số điện thoại:</label>            
-              <input class="form-control" name="phone" >     
+   <div id="sdt" class="card-body">
+     <form id="forget" class="form-horizontal" method="POST" action="/forget" >
+         <p>  <label  class="control-label">Số điện thoại:</label>            
+              <input  id="phone" class="form-control" name="phone" > 
+               <span class="form-message"></span>    
          </p>       
-         <p><button type="submit" class="btn btn-warning" >Gửi số điện thoại</button></p>
+         <p><button id="btphone" type="submit" class="btn btn-warning" >Gửi số điện thoại</button></p>
      </form>
    </div>
  </div>
  </div>   
+<script>
+      document.addEventListener('DOMContentLoaded', function(){
+function Validator(options) {
+			var formElement = document.querySelector(options.form);
+			if (formElement) {
+				options.rules.forEach(function (rules) {
+					var inputElement = formElement.querySelector(rules.selector);
+
+					if (inputElement) {
+					var errorElement = inputElement.closest("#sdt").querySelector(".form-message");
+						console.log(errorElement);
+						inputElement.onblur = function () {
+							var errorMessage = rules.test(inputElement.value);
+							if (errorMessage) {
+								errorElement.innerHTML = errorMessage;
+					$('#btphone').addClass('disabled');
+							}
+							else {
+								errorElement.innerHTML = "";
+							$('#btphone').removeClass('disabled');
+							}
+
+						}
+					}
+
+				});
+			}
+		}
+		Validator.isRequired = function (selector) {
+			return {
+				selector: selector,
+				test: function (value) {
+					return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
+				}
+			};
+		};
+		Validator.minLength = function (selector, min) {
+			return {
+				selector: selector,
+				test: function (value) {
+					return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+				}
+			};
+		}
+Validator.checkpass = function ( selectorconfirm) {
+			return {
+				selector: selectorconfirm,
+				test: function (value) {
+					return value == $('#password').val() ? undefined : `mât khẩu sai`;
+				}
+			};
+		}
+
+
+		Validator({
+			form: "#forget",
+			rules: [
+				Validator.isRequired('#phone'),
+                
+			]
+
+		});
+        });
+</script>
