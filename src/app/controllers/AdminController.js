@@ -202,8 +202,7 @@ class AdminController {
       } else {
         end_time = endTimeValue + ":30";
       }
-      let courseRename = `${course_name} - (${start_time}, ${end_time})`;
-      await Course.addNewData(courseRename, start_time, end_time, money_course);
+      await Course.addNewData(course_name, start_time, end_time, money_course);
       res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});

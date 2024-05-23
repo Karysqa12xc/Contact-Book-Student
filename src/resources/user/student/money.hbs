@@ -1,19 +1,54 @@
 <div class="container">
     <h1>Xem Học Phí</h1>
-    <table class="table table-dark" style="text-align: center;">
+    <form action="" class="mb-3 pt-3">
+        <select class="form-select" name="" id="semesterSelect">
+            <option value="">Chọn tất cả</option>
+            {{#each semester}}
+            <option value="{{MaHocKi}}">{{MaHocKi}}-{{TenHocKi}}</option>
+            {{/each}}
+        </select>
+    </form>
+    <table class="table table-dark table-bordered " style="text-align: center;">
         <thead>
             <th>Học kỳ</th>
+            <th>Tên môn học</th>
             <th>Hạn đóng</th>
             <th>Tổng tiền</th>
         </thead>
         <tbody>
             {{#each FeeInfor}}
-            <tr>
+            <tr class="fee-row" data-mahocki="{{this.MaHocKi}}">
                 <td>{{this.MaHocKi}}</td>
-                <td>{{format_date  this.HanDong}}</td>
+                <td>{{this.TenMonHoc}}</td>
+                <td>{{format_date this.HanDong}}</td>
                 <td>{{this.TongTien}}</td>
             </tr>
             {{/each}}
+            <tr>
+                <td class="fs-5" colspan="3">Tổng tiền</td>
+                <td class="fs-5" id="totalAmount"></td>
+
+            </tr>
         </tbody>
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#semesterSelect').change(function () {
+            var selectedSemester = $(this).val();
+            console.log(selectedSemester);
+            var totalAmount = 0;
+            $('.fee-row').each(function () {
+                var rowSemester = $(this).data('mahocki');
+                if (selectedSemester === "" || rowSemester == selectedSemester) {
+                    $(this).show();
+                    totalAmount += parseFloat($(this).find('td:last').text());
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            $('#totalAmount').text(totalAmount.toFixed(2));
+        });
+    })
+</script>

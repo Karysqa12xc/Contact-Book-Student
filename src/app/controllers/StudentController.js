@@ -11,9 +11,11 @@ class StudentController {
         const result = await ViewFee.getByMaTaiKhoan(
           req.session.account.MaTaiKhoan
         );
+        const semester = await Semester.getAll();
         res.render("../../resources/user/student/money.hbs", {
           account: account,
           FeeInfor: result,
+          semester: semester,
           logged: req.session.isLoggedIn,
         });
       }

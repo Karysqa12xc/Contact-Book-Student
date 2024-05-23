@@ -20,6 +20,7 @@
                     <option value="">Chọn môn học</option>
                     {{#each Courses}}
                     <option value="{{MaMonHoc}}">{{TenMonHoc}} - 
+                        ({{ThoiGianBatDauMonHoc}} - {{ThoiGianKetThucMonHoc}}) -
                         {{#if (eq HoVaTen null)}}
                         Chưa có giáo viên
                         {{else}}
@@ -148,7 +149,7 @@
                             <td>{{sum @index 1}}</td>
                             <td>{{TenLop}}</td>
                             <td>{{TenTaiKhoan}}</td>
-                            <td>{{formatNameCourse TenMonHoc}}</td>
+                            <td>{{TenMonHoc}}</td>
                             <td>{{ThoiGian}}</td>
                             <td>{{ThoiGianBatDauMonHoc}}</td>
                             <td>{{ThoiGianKetThucMonHoc}}</td>
@@ -199,7 +200,7 @@
             var value = $(this).val();
             var date = new Date(value);
             date.setMonth(date.getMonth() + 3);
-            date.setDate(date.getDay() + 8);
+            //date.setDate(date.getDay() + 8);
             endTimeSemester.val(date.toISOString().slice(0, 10));
         });
         semesterSelectId.change(function () {
