@@ -36,15 +36,6 @@ class TeacherController {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
       } else {
-<<<<<<< HEAD
-
-      const classes = await attendanceModel.getClasses(req.session.account.MaLop);
-      const selectedClassId = req.query.class || null;
-      let students = [];
-      if (selectedClassId) {
-        students = await Account.getStudentsByClass(selectedClassId);
-      }
-=======
         const classOfTeacher = await CourseDetails.GetDataToAddScore(
           req.session.account.MaTaiKhoan
         );
@@ -58,7 +49,6 @@ class TeacherController {
           );
           CourseDetailsTime = await CourseDetails.GetOnlyThoiGianInCourseDetails(req.query.idSemester);
         }
->>>>>>> da4ae27dd044ca01cf84dcf3c7427fb652153516
         res.render("../../resources/user/teacher/attendance.hbs", {
           account: req.session.account,
           logged: req.session.isLoggedIn,
@@ -102,40 +92,12 @@ class TeacherController {
         }
         res.redirect("back");
       }
-<<<<<<< HEAD
-  
-      const classId = req.body.classId;
-      const attendanceData = req.body.attendance || {};
-      
-      // Transform attendance data into the required format for saving
-      const attendance = Object.keys(attendanceData).map(studentId => ({
-        MaHocSinh: parseInt(studentId, 10),
-        TrangThai: attendanceData[studentId] === '1' ? 1 : 0, 
-      }));
-  
-      await attendanceModel.saveAttendance(classId, attendance);
-      res.redirect(`/students?class=${classId}`);
-=======
->>>>>>> da4ae27dd044ca01cf84dcf3c7427fb652153516
     } catch (error) {
       res.status(500).json({ message: `Internal server error: ${error}` });
     }
   }
-<<<<<<< HEAD
-  // async postAttendance(req, res){
-  //   try {
-  //     const {classId,attendanceDate, attendance} = req.body;
-  //     await attendanceModel.saveAttendance(classId,attendanceDate, attendance);
-  //     res.redirect("back");
-  //   } catch (error) {
-  //     res.status(500).json({message: `Internal server error + ${error}`});
-  //   }
-  // }
-  async scheduleClass(req, res){
-=======
   //[]
   async scheduleClass(req, res) {
->>>>>>> da4ae27dd044ca01cf84dcf3c7427fb652153516
     try {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
