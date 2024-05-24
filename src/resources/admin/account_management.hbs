@@ -13,7 +13,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
+                    <form method="post" id="taotk">
                         <div class="mb-3">
                             <label class="form-label h4">Vai trò:</label>
                             <select class="form-select" name="role">
@@ -25,20 +25,24 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Tên tài khoản: </label>
-                            <input type="text" name="username" class="form-control">
+                            <input type="text" id="username" name="username" class="form-control">
+                                                        <span class="form-message"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Mật khẩu: </label>
-                            <input type="password" name="password" class="form-control">
+                            <input type="password" id="password" name="password" class="form-control">
+                            <span class="form-message"></span>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label h4">Nhập lại mật khẩu: </label>
-                            <input type="password" class="form-control">
+                            <input type="password" id="password_confirmation" class="form-control">
+                                                        <span class="form-message"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Họ và Tên: </label>
-                            <input type="text" name="fNameAndlName" class="form-control">
+                            <input type="text" id="fullname" name="fNameAndlName" class="form-control">
+                            <span class="form-message"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Số điện thoại</label>
@@ -65,7 +69,7 @@
                                 <label class="form-check-label" for="inlineRadio1">Nữ</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Tạo</button>
+                        <button id="bttao" type="submit" class="btn btn-primary">Tạo</button>
                     </form>
                 </div>
             </div>
@@ -142,6 +146,72 @@
 {{/if}}
 <script>
     document.addEventListener('DOMContentLoaded', function(){
-        
+function Validator(options) {
+			var formElement = document.querySelector(options.form);
+			if (formElement) {
+				options.rules.forEach(function (rules) {
+					var inputElement = formElement.querySelector(rules.selector);
+
+					if (inputElement) {
+						var errorElement = inputElement.parentElement.querySelector(".form-message");
+						console.log(errorElement);
+						inputElement.onblur = function () {
+							var errorMessage = rules.test(inputElement.value);
+							if (errorMessage) {
+								errorElement.innerHTML = errorMessage;
+								$('#bttao').addClass('disabled');
+							}
+							else {
+								errorElement.innerHTML = "";
+								$('#bttao').removeClass('disabled');
+							}
+
+						}
+					}
+
+				});
+			}
+		}
+		Validator.isRequired = function (selector) {
+			return {
+				selector: selector,
+				test: function (value) {
+					return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
+				}
+			};
+		};
+		Validator.minLength = function (selector, min) {
+			return {
+				selector: selector,
+				test: function (value) {
+					return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+				}
+			};
+		}
+Validator.checkpass = function ( selectorconfirm) {
+			return {
+				selector: selectorconfirm,
+				test: function (value) {
+					return value == $('#password').val() ? undefined : `mât khẩu sai`;
+				}
+			};
+		}
+
+
+		Validator({
+			form: "#taotk",
+			rules: [
+				Validator.isRequired('#username'),
+                Validator.isRequired('#fullname'),
+				Validator.minLength('#password', 6),
+                Validator.checkpass('#password_confirmation'),
+                
+			]
+
+		});
+		
+
+  
+
     });
 </script>
