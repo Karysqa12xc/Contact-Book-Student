@@ -66,14 +66,21 @@ app.engine(
         var weeks = [];
         var currentDate = new Date(startDate);
         while (currentDate <= endDate) {
-          var weekStartDate = new Date(currentDate);
-          var weekEndDate = new Date(currentDate);
-          weekEndDate.setDate(weekEndDate.getDate() + 5);
-          weeks.push({
-            start: weekStartDate,
-            end: weekEndDate,
-          });
-          currentDate.setDate(currentDate.getDate() + 7);
+            var weekStartDate = new Date(currentDate);
+            var weekEndDate = new Date(currentDate);
+            weekEndDate.setDate(weekEndDate.getDate() + 6); // Đặt là 6 ngày sau đó, tạo thành 1 tuần 7 ngày
+    
+            // Nếu tuần kết thúc vượt quá endDate thì đặt lại tuần kết thúc bằng endDate
+            if (weekEndDate > endDate) {
+                weekEndDate = new Date(endDate);
+            }
+    
+            weeks.push({
+                start: weekStartDate,
+                end: weekEndDate,
+            });
+    
+            currentDate.setDate(currentDate.getDate() + 7);
         }
         return weeks;
       },

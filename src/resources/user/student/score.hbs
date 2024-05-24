@@ -1,0 +1,32 @@
+<div class="container">
+    <select class="form-select mb-3" name="" id="">
+        <option value="">Chọn học kì</option>
+        {{#each semesterInfo}}
+        <option value="{{MaHocKi}}">{{TenHocKi}}</option>
+        {{/each}}
+    </select>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless table-primary align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Tên Môn Học</th>
+                    <th>Giáo Viên</th>
+                    <th>Điểm số</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {{#each ScoreOfStudent}}
+                <tr class="table-primary">
+                    <td>{{TenMonHoc}}</td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{Diem}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+    </div>
+
+</div>

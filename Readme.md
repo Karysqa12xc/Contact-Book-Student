@@ -74,16 +74,16 @@ REFERENCES TaiKhoan(MaTaiKhoan),
 * Bảng Môn học:
 
 `  CREATE TABLE MonHoc (
-	MaMonHoc INT IDENTITY(1,1),
-	TenMonHoc nvarchar(255) NOT NULL UNIQUE,
-	ThoiGianBatDau TIME,
-	ThoiGianKetThuc TIME,
-	SoTien float(10) NOT NULL,
-	MaTaiKhoan varchar(255),
-	PRIMARY KEY(MaMonHoc),
-	FOREIGN KEY(MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan)
-); 
-GO`
+    MaMonHoc INT IDENTITY(1,1), 
+    TenMonHoc nvarchar(255) NOT NULL, 
+    ThoiGianBatDauMonHoc VARCHAR(5), 
+    ThoiGianKetThucMonHoc VARCHAR(5), 
+    SoTien float(10) NOT NULL, 
+    MaTaiKhoan varchar(255), 
+    PRIMARY KEY(MaMonHoc), 
+    FOREIGN KEY(MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
+    CONSTRAINT UC_TenMonHoc_ThoiGian UNIQUE (TenMonHoc, ThoiGianBatDauMonHoc, ThoiGianKetThucMonHoc)
+);`
 * Bảng Học kì:
 
 `   CREATE TABlE HocKi(

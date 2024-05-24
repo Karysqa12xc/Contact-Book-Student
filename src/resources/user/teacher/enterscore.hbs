@@ -16,22 +16,41 @@
         </div>
     </form>
     <div class="table-responsive mt-3">
+
         <table class="table table-primary">
             <thead>
                 <tr>
                     <th scope="col">Tên học sinh</th>
+                    <th>Mã học kì</th>
+                    <th>Học kì</th>
                     <th scope="col">Nhập điểm</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each accountInfo}}
                 <tr class="">
-                        <td>{{HoVaTen}}</td>
-                        <td></td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{MaHocKi}}</td>
+                    <td>{{TenHocKi}}</td>
+
+                    <td>
+                        <form method="post" action="/teacher/enter-score?_method=PUT">
+                            <input hidden type="text" value="{{MaLop}}" name="IdClass" id="">
+                            <input hidden type="text" value="{{MaMonHoc}}" name="IdCourse" id="">
+                            <input hidden type="text" value="{{MaHocKi}}" name="IdSemester" id="">
+                            <div class="d-flex">
+                                <input class="flex-fill" type="number" min="0"  max="10" name="Score" id="">
+                                <input type="submit" class=" ms-3 btn btn-primary" value="Thêm điểm" name="" id="">
+                            </div>
+                        </form>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+
+
     </div>
 
 </div>
+

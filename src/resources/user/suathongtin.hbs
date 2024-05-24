@@ -1,9 +1,10 @@
 <div class="container">
     <h2>Sửa thông tin học sinh</h2>
-    <form id="update-form" method="post" action="/user/edit/">
+    <form id="update-form" method="post" action="/user/edit">
         <div class="mb-3">
             <label for="name" class="form-label">Họ tên:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{account.HoVaTen}}">
+            <span class="form-message"></span>
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">Điện thoại:</label>
@@ -13,10 +14,144 @@
             <label for="address" class="form-label">Địa chỉ:</label>
             <input type="text" class="form-control" id="address" name="address" value="{{account.DiaChi}}">
         </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">Mật khẩu:</label>
-            <input type="text" class="form-control" id="address" name="password" value="{{account.MatKhau}}">
+        <div class="mb-3"> <label for="address" class="form-label">Mật khẩu:</label>
+
+
+            <div class="input-group"><input type="password" class="form-control" id="pass" name="password"
+                    value="{{account.MatKhau}}">
+
+                <span class="input-group-text">
+                    <i class="fas fa-eye d-none" id="show_eye"></i>
+                    <i class="fas fa-eye-slash " id="hide_eye"></i>
+                </span>
+            </div>
+            <span class="form-message"></span>
+
         </div>
-        <button type="submit" class="btn btn-primary">Lưu</button>
+
+
+        <div class="mb-3 "> <label for="address" class="form-label">Nhập lại mật khẩu:</label>
+            <div class="input-group mb-3">
+
+                <input type="password" class="form-control" id="cfpass" name="password" value="{{account.MatKhau}}">
+
+                <span class="input-group-text">
+                    <i class="fas fa-eye d-none" id="show_eye1"></i>
+                    <i class="fas fa-eye-slash " id="hide_eye1"></i>
+                </span>
+
+            </div>
+            <span class="form-message"></span>
+        </div>
+
+
+        <button id="bttao" type="submit" class="btn btn-primary">Lưu</button>
     </form>
 </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var openeye = $('#show_eye');
+        var closeeye = $('#hide_eye');
+        let password = document.getElementById('pass');
+
+        var openeye1 = $('#show_eye1');
+        var closeeye1 = $('#hide_eye1');
+        let password1 = document.getElementById('cfpass');
+
+        openeye.click(function () {
+            openeye.addClass("d-none");
+            closeeye.removeClass('d-none');
+            password.type = 'password';
+
+        });
+        closeeye.click(function () {
+            closeeye.addClass("d-none");
+            openeye.removeClass('d-none');
+            password.type = 'text';
+        });
+
+
+        openeye1.click(function () {
+            openeye1.addClass("d-none");
+            closeeye1.removeClass('d-none');
+            password1.type = 'password';
+
+        });
+        closeeye1.click(function () {
+            closeeye1.addClass("d-none");
+            openeye1.removeClass('d-none');
+            password1.type = 'text';
+        });
+
+        function Validator(options) {
+
+            var formElement = document.querySelector(options.form);
+            if (formElement) {
+                options.rules.forEach(function (rules) {
+                    var inputElement = formElement.querySelector(rules.selector);
+
+                    if (inputElement) {
+                        var errorElement = inputElement.parentElement.querySelector(".form-message");
+                        console.log(errorElement);
+                        inputElement.onblur = function () {
+                            var errorMessage = rules.test(inputElement.value);
+                            if (errorMessage) {
+                                errorElement.innerHTML = errorMessage;
+                                $('#bttao').addClass('disabled');
+                            }
+                            else {
+                                errorElement.innerHTML = "";
+                                $('#bttao').removeClass('disabled');
+                            }
+
+                        }
+                    }
+
+                });
+            }
+        }
+        Validator.isRequired = function (selector) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
+                }
+            };
+        };
+        Validator.minLength = function (selector, min) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+                }
+            };
+        }
+        Validator.checkpass = function (selectorconfirm) {
+            return {
+                selector: selectorconfirm,
+                test: function (value) {
+                    return value == $('#pass').val() ? undefined : `mât khẩu sai`;
+                }
+            };
+        }
+
+
+        Validator({
+            form: "#update-form",
+            rules: [
+                Validator.isRequired('#name'),
+                Validator.minLength('#pass', 6),
+                Validator.checkpass('#cfpass'),
+
+            ]
+
+        });
+
+
+
+
+    });
+</script>

@@ -29,14 +29,14 @@ class userController {
         }
       }
     
-    
+      //[POST] /user/edit
       async updateUserInfor(req, res) {
         try {
             const {
-                name, phone,address,password
+                name, phone, address, password
             } = req.body;
             await account.updateDataAccount(name, phone,address, password, req.session.account.MaTaiKhoan);
-            res.redirect("back");
+            res.redirect("/user");
         } catch (error) {
           res.status(500).send('Failed to update student information');
         }

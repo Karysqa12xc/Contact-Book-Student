@@ -1,53 +1,93 @@
 <div class="container mt-5">
-    <h1 class="mb-4">Danh sách học sinh và điểm danh</h1>
+    <h1 class="mb-4">Danh sách học sinh của giáo viên {{account.HoVaTen}}</h1>
     <form action="/teacher/teacher" method="get" class="mb-4">
-        <div class="form-group">
-            <label for="classDropdown">Chọn lớp:</label>
-            <select class="form-control" id="classDropdown" name="class">
-                <option value="">Chọn lớp</option>
-                {{#each classes}}
-                    <option value="{{this.MaLop}}" {{#if (eq ../selectedClassId this.MaLop)}}selected{{/if}}>{{this.TenLop}}</option>
-                {{/each}}
-            </select>
+        <div class="form-group d-flex">
+            <div class="flex-fill">
+                <select class="form-control" id="classDropdown" name="idClass">
+                    <option value="">Chọn lớp</option>
+                    {{#each classOfTeacher}}
+                    <option value="{{this.MaLop}}">
+                        {{this.TenLop}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="flex-fill">
+                <select class="form-select" name="idSemester" id="">
+                    <option value="">
+                        Chọn học kì
+                    </option>
+                    {{#each semesterInfo}}
+                    <option value="{{this.MaHocKi}}">
+                        {{this.MaHocKi}}-{{this.TenHocKi}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="flex-fill">
+                <select class="form-select">
+                    <option value="">
+                        Chọn thời gian trong học kì
+                    </option>
+                    {{#each CourseDetailsTime}}
+                    <option value="{{this.ThoiGian}}">
+                        {{this.ThoiGian}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="ms-3">
+                <button type="submit" class="btn btn-primary">Hiển thị danh sách</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Hiển thị danh sách</button>
     </form>
-    {{#if students}}
-    <form action="/teacher/attendance" method="post">
-        <input type="hidden" name="classId" value="{{selectedClassId}}">
-        <div class="form-group">
-            <label for="attendanceDate">Chọn ngày:</label>
-            <input type="date" class="form-control" id="attendanceDate" name="attendanceDate" required>
-        </div>
+    <form id="attendance-form" action="/teacher/attendance" method="post">
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Họ tên</th>
-                    <th scope="col">Ngày sinh</th>
+                    <th scope="col">Tên lớp</th>
+                    <th scope="col">Tên môn học</th>
+                    <th scope="col">Thời gian</th>
                     <th scope="col">Điểm danh</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each students}}
+                {{#each accountInfo}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
+                    <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.HoVaTen}}</td>
-                    <td>{{ this.NamSinh}}</td>
+                    <td>{{this.TenLop}}</td>
+                    <td>{{this.TenMonHoc}}</td>
+                    <td>{{this.ThoiGian}}</td>
                     <td>
-                        <input type="checkbox" name="attendance[{{this.MaHocSinh}}]" value="1" {{#if this.TrangThai}}checked{{/if}}>
+                        <div hidden>
+                            <input type="text" value="{{this.MaHocKi}}" name="IdSemester[]" id="">
+                            <input type="text" value="{{this.MaLop}}" name="IdClass[]" id="">
+                            <input type="text" value="{{this.MaMonHoc}}" name="IdCourse[]" id="">
+                            <input type="text" value="{{this.MaTaiKhoan}}" name="IdAccount[]" id="">
+                            <input type="text" value="{{this.ThoiGian}}" name="ThoiGian[]" id="">
+                        </div>
+
+                        <input type="checkbox" name="attendance[{{this.MaTaiKhoan}}]" value="true">
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
-        <button type="submit" class="btn btn-success">Lưu điểm danh</button>
+        <button id="btnSaveAttendance" type="submit" class="btn btn-success">Lưu điểm danh</button>
     </form>
-    {{else}}
-    <p>Chọn lớp để hiển thị danh sách học sinh</p>
-    {{/if}}
+
 </div>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#attendance-form').submit(function (event) {
+            $('input[type="checkbox"]').each(function () {
+                if (!$(this).is(':checked')) {
+                    $(this).attr('value', 'false').prop('checked', true);
+                }
+            });
+        });
+    });
+</script>

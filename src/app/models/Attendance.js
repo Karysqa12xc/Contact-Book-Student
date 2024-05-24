@@ -1,45 +1,38 @@
 const db = require("../../config/database");
-const account = require("../../utils/QueryTaiKhoan")
 const {queryGetAll} = require("../../utils/QueryCommon");
-const attendance = require("../../utils/QueryAttendence")
-const {
-  queryAddNewDataToCourseDetails,
-  queryGetAllValueJoinOtherTable,
-  queryGetValueJoinOtherTableWithIdClassOfTeacher,
-  queryGetValueJoinOtherTableWithIdAccount,
-  queryGetDataToAddHocPhi,
-  queryGetDataToAddScore,
-  queryUpdateIsExport,
-  queryGetValueJoinOtherTableWithIdClassOfStudent,
-  queryGetDataForViewScore,
-  queryUpdateScore,
-} = require("../../utils/QueryCourseDetails");
-const table = "TaiKhoan";
-const tableName = "MonHocChiTiet";
-async function getClasses(table, idClass) {
+const {queryAddNewDataAttendance} = require("../../utils/QueryAttendance");
+class AttendanceModel {
+  async getAll() {
     try {
-      const results = await db.connectAndQuerying(
-        account.queryGetTaiKhoanByMaLop(idClass)
-      );
+      const results = await db.connectAndQuerying(queryGetAll(tableName));
       return results;
     } catch (error) {
-      console.log("Failed to get all data join other course details:", error);
+      console.log("Failed to get all account:", error);
       throw error;
     }
   }
-// Save attendance records
-async function saveAttendance(classId, attendance) {
+  async saveAttendance(
+    IdSemester,
+    IdClass,
+    IdCourse,
+    IdAccount,
+    ThoiGian,
+    attendance
+  ) {
     try {
       const result = await db.connectAndQuerying(
-        queryAddNewDataAttendance(classId,attendanceDate, attendance)
+        queryAddNewDataAttendance(
+          IdSemester,
+          IdClass,
+          IdCourse,
+          IdAccount,
+          ThoiGian,
+          attendance
+        )
       );
       return result;
-    } catch (error) {
-      console.log("Failed to update data in course details:", error);
-      throw error;
-    }
+    } catch (error) {}
   }
-module.exports = {
-    getClasses,
-    saveAttendance
-};
+}
+
+module.exports = new AttendanceModel();

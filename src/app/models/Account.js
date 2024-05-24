@@ -205,10 +205,10 @@ class AccountModel {
   }
   async updateDataAccount(HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan) {
     try {
-      const result = await db.connectAndQuerying(queryUpdateAccount(tableName,HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan));
+      const result = await db.connectAndQuerying(queryUpdateAccount(tableName, HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan));
       return result;
     } catch (error) {
-      console.log("Failed to get account have id teacher:", error);
+      console.log("Failed to update :", error);
       throw error;
     }
   }

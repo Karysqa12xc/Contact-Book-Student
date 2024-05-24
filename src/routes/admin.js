@@ -14,6 +14,7 @@ router.post("/create-semester", adminController.createSemester);
 router.get("/course", adminController.course_view);
 router.get("/export-cost", adminController.exportCourseCost)
 router.post("/export-cost", adminController.exportNewCostCourse);
+router.put("/update-export-cost", adminController.update_export_cost);
 router.post("/:id/class-details", adminController.class_details);
 router.get("/class-management", adminController.class_management_view);
 router.post("/class-management", adminController.class_management_post);

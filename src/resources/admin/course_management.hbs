@@ -76,7 +76,8 @@
                                 {{#each course}}
                                 {{#if (eq MaTaiKhoan null)}}
                                 <option value="{{MaMonHoc}}">
-                                    {{TenMonHoc}}
+                                    {{TenMonHoc}} - ({{ThoiGianBatDauMonHoc}} 
+                                    - {{ThoiGianKetThucMonHoc}})
                                 </option>
                                 {{/if}}
                                 {{/each}}
@@ -126,7 +127,7 @@
                 <tr>
                     <td>
                         <input type="checkbox" name="IdCourse[]" value="{{MaMonHoc}}"></td>
-                    <td>{{formatNameCourse TenMonHoc}}</td>
+                    <td>{{TenMonHoc}}</td>
                     <td>
                         {{ThoiGianBatDauMonHoc}}
                     </td>
