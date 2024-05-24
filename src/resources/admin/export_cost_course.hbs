@@ -26,7 +26,7 @@
                         <th>Tên môn học</th>
                         <th>Số tiền</th>
                         <th>Thời gian kết thúc của môn học</th>
-                        <th></th>
+                        <th>Lựa chọn</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -38,12 +38,17 @@
                         <td>{{TongSoTien}}</td>
                         <td>{{format_date ThoiGianKetThuc}}</td>
                         <td>
-                            <input type="text" value="{{MaHocKi}}" name="idSemester">
-                            <input type="text" value="{{MaMonHoc}}" name="IdCourse">
-                            <input type="text" value="{{TongSoTien}}" name="SumCourse">
-                            <input type="text" value="{{MaTaiKhoan}}" name="IdAccount">
-                            <input type="text" value="{{ThoiGianKetThuc}}" name="EndTime">
-                            <input type="checkbox" value="{{isExport}}" name="isExport">
+                            <div hidden>
+                                <input type="text" value="{{MaHocKi}}" name="idSemester">
+                                <input type="text" value="{{MaMonHoc}}" name="IdCourse">
+                                <input type="text" value="{{TongSoTien}}" name="SumCourse">
+                                <input type="text" value="{{MaTaiKhoan}}" name="IdAccount">
+                                <input type="text" value="{{MaLop}}" name="IdClass">
+                                <input type="text" value="{{ThoiGianKetThuc}}" name="EndTime">
+                                <input type="checkbox" value="{{isExport}}" name="isExport" checked>
+                            </div>
+
+
                             <button class="btn btn-primary">Xuất</button>
                         </td>
                     </tr>

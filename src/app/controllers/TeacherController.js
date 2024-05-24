@@ -1,8 +1,9 @@
-const attendanceModel = require("../models/Attendance");
+const Attendance = require("../models/Attendance");
 const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
 const Account = require("../models/Account");
 class TeacherController {
+  //[]
   async enterScore(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -13,68 +14,90 @@ class TeacherController {
         );
         let accountInfo;
         if (req.query.idClass != null) {
-          accountInfo = await Account.getByIdClass(req.query.idClass);
+          accountInfo =
+            await CourseDetails.GetValueJoinOtherTableWithIdClassOfStudent(
+              req.query.idClass
+            );
         }
-        res.render("../../resources/user/teacher/enterscore.hbs",
-          {
-            account: req.session.account,
-            logged: req.session.isLoggedIn,
-            classOfTeacher:classOfTeacher,
-            accountInfo: accountInfo
-          }
-        );
+        res.render("../../resources/user/teacher/enterscore.hbs", {
+          account: req.session.account,
+          logged: req.session.isLoggedIn,
+          classOfTeacher: classOfTeacher,
+          accountInfo: accountInfo,
+        });
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[]
   async getStudents(req, res) {
     try {
       if (!req.session.isLoggedIn) {
-        // console.log("adadfd");
         return res.redirect("/");
       } else {
-
-      const classes = await attendanceModel.getClasses();
-      const selectedClassId = req.query.class || null;
-      let students = [];
-      if (selectedClassId) {
-        students = await attendanceModel.getStudentsByClass(selectedClassId);
-      }
+        const classOfTeacher = await CourseDetails.GetDataToAddScore(
+          req.session.account.MaTaiKhoan
+        );
+        const semesterInfo = await Semester.getAll();
+        let accountInfo;
+        let CourseDetailsTime;
+        if (req.query.idClass != null && req.query.idSemester) {
+          accountInfo = await CourseDetails.GetDataToAddAttendance(
+            req.query.idClass,
+            req.query.idSemester
+          );
+          CourseDetailsTime = await CourseDetails.GetOnlyThoiGianInCourseDetails(req.query.idSemester);
+        }
         res.render("../../resources/user/teacher/attendance.hbs", {
           account: req.session.account,
           logged: req.session.isLoggedIn,
-          classes,
-          students,
-          selectedClassId,
+          classOfTeacher: classOfTeacher,
+          accountInfo: accountInfo,
+          CourseDetailsTime: CourseDetailsTime,
+          semesterInfo: semesterInfo,
         });
       }
     } catch (error) {
       res.status(500).json({message: `Internal server error: ${error}`});
     }
   }
-
+  //[POST] /teacher/attendance
   async postAttendance(req, res) {
     try {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
+      } else {
+        const {IdSemester, IdClass, IdAccount, IdCourse, ThoiGian, attendance} = req.body;
+        const data = {
+          IdSemester: Array.isArray(IdSemester) ? IdSemester : [IdSemester],
+          IdClass: Array.isArray(IdClass) ? IdClass : [IdClass],
+          IdCourse: Array.isArray(IdCourse) ? IdCourse : [IdCourse],
+          IdAccount: Array.isArray(IdAccount) ? IdAccount : [IdAccount],
+          ThoiGian: Array.isArray(ThoiGian) ? ThoiGian : [ThoiGian],
+          attendance: attendance || {},
+        };
+        for(let i = 0; i < data.IdAccount.length; i++){
+          let idSemester = data.IdSemester[i];
+          let idClass = data.IdClass[i];
+          let idCourse = data.IdCourse[i];
+          let idAccount = data.IdAccount[i];
+          let Time = data.ThoiGian[i];
+          let DiemDanh = data.attendance[idAccount] === "true" ? 1 : 0 ;
+          await Attendance.saveAttendance(idSemester, idClass, 
+            idCourse, 
+            idAccount, 
+            Time, 
+            DiemDanh);
+        }
+        res.redirect("back");
       }
-
-      const classId = req.body.classId;
-      const attendance = Object.keys(req.body.attendance || {}).map(
-        (studentId) => ({
-          MaHocSinh: parseInt(studentId, 10),
-          TrangThai: 1,
-        })
-      );
-
-      await attendanceModel.saveAttendance(classId, attendance);
-      res.redirect(`/students?class=${classId}`);
     } catch (error) {
       res.status(500).json({message: `Internal server error: ${error}`});
     }
   }
-  async scheduleClass(req, res){
+  //[]
+  async scheduleClass(req, res) {
     try {
       if (!req.session.isLoggedIn) {
         return res.redirect("/");
@@ -103,6 +126,16 @@ class TeacherController {
           logged: req.session.isLoggedIn,
         });
       }
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
+  //[]
+  async updateScore(req, res) {
+    try {
+      const {IdClass, IdCourse, IdSemester, Score} = req.body;
+      await CourseDetails.UpdateScore(IdClass, IdCourse, IdSemester, Score);
+      res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }

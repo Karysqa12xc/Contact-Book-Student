@@ -108,6 +108,7 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[POST]
   async CheckPhoneNumber(req, res) {
     try {
       const {phone} = req.body;

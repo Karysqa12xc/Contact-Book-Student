@@ -6,5 +6,5 @@ module.exports = {
         '${ThoiGianBatDau}',
         '${ThoiGianKetThuc}'
         )`;
-    }
+    },
 }
