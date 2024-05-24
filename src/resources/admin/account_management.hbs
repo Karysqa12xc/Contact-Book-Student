@@ -26,7 +26,7 @@
                         <div class="mb-3">
                             <label class="form-label h4">Tên tài khoản: </label>
                             <input type="text" id="username" name="username" class="form-control">
-                                                        <span class="form-message"></span>
+                            <span class="form-message"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Mật khẩu: </label>
@@ -37,7 +37,7 @@
                         <div class="mb-3">
                             <label class="form-label h4">Nhập lại mật khẩu: </label>
                             <input type="password" id="password_confirmation" class="form-control">
-                                                        <span class="form-message"></span>
+                            <span class="form-message"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label h4">Họ và Tên: </label>
@@ -77,9 +77,8 @@
     </div>
 
     <div class="table-responsive mt-3">
-       
-        <table class="table table-hover w-auto table-dark" 
-        style="text-align: center;">
+
+        <table class="table table-hover w-auto table-dark" style="text-align: center;">
             <thead>
                 <th>Mã tài khoản</th>
                 <th>Tên tài khoản</th>
@@ -94,7 +93,7 @@
                 <th>Lựa chọn</th>
             </thead>
             <tbody>
-                 {{#each accountInfo}}
+                {{#each accountInfo}}
                 <tr>
                     <td>{{MaTaiKhoan}}</td>
                     <td>{{TenTaiKhoan}}</td>
@@ -108,21 +107,21 @@
                     <td>Nữ</td>
                     {{/if}}
                     {{#if KhoaTaiKhoan}}
-                        <td>Đang bị khoá</td>
+                    <td>Đang bị khoá</td>
                     {{else}}
-                        <td>Bình thường</td>
+                    <td>Bình thường</td>
                     {{/if}}
                     {{#if (eq MaLop null)}}
-                        <td>Chưa phân lớp</td>       
-                    {{else}}     
-                        <td>{{TenLop}}</td>
+                    <td>Chưa phân lớp</td>
+                    {{else}}
+                    <td>{{TenLop}}</td>
                     {{/if}}
                     <td>{{TenVaiTro}}</td>
                     <td>
                         <form method="post" action="/admin/{{MaTaiKhoan}}/lock-account?_method=PUT">
                             <input type="hidden" name="idAccount" value="{{MaTaiKhoan}}">
                             <input type="hidden" name="isLocked" value="{{KhoaTaiKhoan}}">
-                        {{#if KhoaTaiKhoan}}
+                            {{#if KhoaTaiKhoan}}
                             <button type="submit" class="btn btn-success">
                                 Mở khoá
                             </button>
@@ -130,88 +129,88 @@
                             <button type="submit" class="btn btn-danger">
                                 Khoá tải khoản
                             </button>
-                        {{/if}}
+                            {{/if}}
                         </form>
                     </td>
-                    
+
                 </tr>
                 {{/each}}
             </tbody>
         </table>
-        
+
     </div>
 </div>
 {{else}}
 <h1 style="color: red;">Bạn không có quyền truy cập!!!!</h1>
 {{/if}}
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
-function Validator(options) {
-			var formElement = document.querySelector(options.form);
-			if (formElement) {
-				options.rules.forEach(function (rules) {
-					var inputElement = formElement.querySelector(rules.selector);
+    document.addEventListener('DOMContentLoaded', function () {
+        function Validator(options) {
+            var formElement = document.querySelector(options.form);
+            if (formElement) {
+                options.rules.forEach(function (rules) {
+                    var inputElement = formElement.querySelector(rules.selector);
 
-					if (inputElement) {
-						var errorElement = inputElement.parentElement.querySelector(".form-message");
-						console.log(errorElement);
-						inputElement.onblur = function () {
-							var errorMessage = rules.test(inputElement.value);
-							if (errorMessage) {
-								errorElement.innerHTML = errorMessage;
-								$('#bttao').addClass('disabled');
-							}
-							else {
-								errorElement.innerHTML = "";
-								$('#bttao').removeClass('disabled');
-							}
+                    if (inputElement) {
+                        var errorElement = inputElement.parentElement.querySelector(".form-message");
+                        console.log(errorElement);
+                        inputElement.onblur = function () {
+                            var errorMessage = rules.test(inputElement.value);
+                            if (errorMessage) {
+                                errorElement.innerHTML = errorMessage;
+                                $('#bttao').addClass('disabled');
+                            }
+                            else {
+                                errorElement.innerHTML = "";
+                                $('#bttao').removeClass('disabled');
+                            }
 
-						}
-					}
+                        }
+                    }
 
-				});
-			}
-		}
-		Validator.isRequired = function (selector) {
-			return {
-				selector: selector,
-				test: function (value) {
-					return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
-				}
-			};
-		};
-		Validator.minLength = function (selector, min) {
-			return {
-				selector: selector,
-				test: function (value) {
-					return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
-				}
-			};
-		}
-Validator.checkpass = function ( selectorconfirm) {
-			return {
-				selector: selectorconfirm,
-				test: function (value) {
-					return value == $('#password').val() ? undefined : `mât khẩu sai`;
-				}
-			};
-		}
+                });
+            }
+        }
+        Validator.isRequired = function (selector) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
+                }
+            };
+        };
+        Validator.minLength = function (selector, min) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+                }
+            };
+        }
+        Validator.checkpass = function (selectorconfirm) {
+            return {
+                selector: selectorconfirm,
+                test: function (value) {
+                    return value == $('#password').val() ? undefined : `mât khẩu sai`;
+                }
+            };
+        }
 
 
-		Validator({
-			form: "#taotk",
-			rules: [
-				Validator.isRequired('#username'),
+        Validator({
+            form: "#taotk",
+            rules: [
+                Validator.isRequired('#username'),
                 Validator.isRequired('#fullname'),
-				Validator.minLength('#password', 6),
+                Validator.minLength('#password', 6),
                 Validator.checkpass('#password_confirmation'),
-                
-			]
 
-		});
-		
+            ]
 
-  
+        });
+
+
+
 
     });
 </script>

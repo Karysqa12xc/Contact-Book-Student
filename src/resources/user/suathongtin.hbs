@@ -3,8 +3,11 @@
     <form id="update-form" method="post" action="/user/edit">
         <div class="mb-3">
             <label for="name" class="form-label">Họ tên:</label>
+            <input type="text" class="form-control" name="userName" value="{{account.TenTaiKhoan}}">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ tên:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{account.HoVaTen}}">
-            <span class="form-message"></span>
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">Điện thoại:</label>
@@ -14,35 +17,33 @@
             <label for="address" class="form-label">Địa chỉ:</label>
             <input type="text" class="form-control" id="address" name="address" value="{{account.DiaChi}}">
         </div>
-        <div class="mb-3"> <label for="address" class="form-label">Mật khẩu:</label>
-
-
-            <div class="input-group"><input type="password" class="form-control" id="pass" name="password"
-                    value="{{account.MatKhau}}">
-
+        <div class="mb-3">
+            <label for="address" class="form-label">Mật khẩu:</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="pass" name="password" value="{{account.MatKhau}}">
                 <span class="input-group-text">
                     <i class="fas fa-eye d-none" id="show_eye"></i>
                     <i class="fas fa-eye-slash " id="hide_eye"></i>
                 </span>
             </div>
-            <span class="form-message"></span>
-
+            <div>
+                <span class="form-message"></span>
+            </div>
         </div>
-
-
-        <div class="mb-3 "> <label for="address" class="form-label">Nhập lại mật khẩu:</label>
-            <div class="input-group mb-3">
-
-                <input type="password" class="form-control" id="cfpass" name="password" value="{{account.MatKhau}}">
-
+        <div class="mb-3">
+            <label for="address" class="form-label">Nhập lại mật khẩu:</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="cfpass" value="{{account.MatKhau}}">
                 <span class="input-group-text">
                     <i class="fas fa-eye d-none" id="show_eye1"></i>
                     <i class="fas fa-eye-slash " id="hide_eye1"></i>
                 </span>
-
             </div>
-            <span class="form-message"></span>
+            <div>
+                <span class="form-message"></span>
+            </div>
         </div>
+
 
 
         <button id="bttao" type="submit" class="btn btn-primary">Lưu</button>
@@ -52,7 +53,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    $(document).ready(function () {
         var openeye = $('#show_eye');
         var closeeye = $('#hide_eye');
         let password = document.getElementById('pass');
@@ -65,21 +66,20 @@
             openeye.addClass("d-none");
             closeeye.removeClass('d-none');
             password.type = 'password';
-
         });
+
         closeeye.click(function () {
             closeeye.addClass("d-none");
             openeye.removeClass('d-none');
             password.type = 'text';
         });
 
-
         openeye1.click(function () {
             openeye1.addClass("d-none");
             closeeye1.removeClass('d-none');
             password1.type = 'password';
-
         });
+
         closeeye1.click(function () {
             closeeye1.addClass("d-none");
             openeye1.removeClass('d-none');
@@ -87,40 +87,75 @@
         });
 
         function Validator(options) {
-
             var formElement = document.querySelector(options.form);
+            var selectorRules = {};
+
+            function validate(inputElement, rule) {
+                var errorElement = inputElement.closest(".mb-3").querySelector(".form-message");
+                var errorMessage;
+                var rules = selectorRules[rule.selector];
+                for (var i = 0; i < rules.length; i++) {
+                    errorMessage = rules[i](inputElement.value);
+                    if (errorMessage) break;
+                }
+
+                if (errorMessage) {
+                    errorElement.innerHTML = errorMessage;
+                    $('#bttao').addClass('disabled');
+                } else {
+                    errorElement.innerHTML = "";
+                    $('#bttao').removeClass('disabled');
+                }
+
+                return !errorMessage;
+            }
+
             if (formElement) {
-                options.rules.forEach(function (rules) {
-                    var inputElement = formElement.querySelector(rules.selector);
+                formElement.onsubmit = function (e) {
+                    var isFormValid = true;
 
-                    if (inputElement) {
-                        var errorElement = inputElement.parentElement.querySelector(".form-message");
-                        console.log(errorElement);
-                        inputElement.onblur = function () {
-                            var errorMessage = rules.test(inputElement.value);
-                            if (errorMessage) {
-                                errorElement.innerHTML = errorMessage;
-                                $('#bttao').addClass('disabled');
-                            }
-                            else {
-                                errorElement.innerHTML = "";
-                                $('#bttao').removeClass('disabled');
-                            }
-
+                    options.rules.forEach(function (rule) {
+                        var inputElement = formElement.querySelector(rule.selector);
+                        var isValid = validate(inputElement, rule);
+                        if (!isValid) {
+                            isFormValid = false;
                         }
+                    });
+
+                    if (!isFormValid) {
+                        e.preventDefault();
+                    }
+                }
+
+                options.rules.forEach(function (rule) {
+                    var inputElement = formElement.querySelector(rule.selector);
+
+                    if (Array.isArray(selectorRules[rule.selector])) {
+                        selectorRules[rule.selector].push(rule.test);
+                    } else {
+                        selectorRules[rule.selector] = [rule.test];
                     }
 
+                    if (inputElement) {
+                        var errorElement = inputElement.closest(".mb-3").querySelector(".form-message");
+
+                        inputElement.onblur = function () {
+                            validate(inputElement, rule);
+                        }
+                    }
                 });
             }
         }
+
         Validator.isRequired = function (selector) {
             return {
                 selector: selector,
                 test: function (value) {
-                    return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
+                    return value ? undefined : 'Vui lòng nhập trường này';
                 }
             };
         };
+
         Validator.minLength = function (selector, min) {
             return {
                 selector: selector,
@@ -128,30 +163,25 @@
                     return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
                 }
             };
-        }
+        };
+
         Validator.checkpass = function (selectorconfirm) {
             return {
                 selector: selectorconfirm,
                 test: function (value) {
-                    return value == $('#pass').val() ? undefined : `mât khẩu sai`;
+                    return value == $('#pass').val() ? undefined : 'Mật khẩu không khớp';
                 }
             };
-        }
-
+        };
 
         Validator({
             form: "#update-form",
             rules: [
                 Validator.isRequired('#name'),
                 Validator.minLength('#pass', 6),
-                Validator.checkpass('#cfpass'),
-
+                Validator.checkpass('#cfpass')
             ]
-
         });
-
-
-
-
     });
+
 </script>

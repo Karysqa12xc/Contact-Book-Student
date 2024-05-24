@@ -192,9 +192,9 @@ class AccountModel {
       throw error;
     }
   }
-  async updateDataAccount(HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan) {
+  async updateDataAccount(HoVaTen, SoDienThoai, DiaChi, MatKhau, TenTaiKhoan, MaTaiKhoan) {
     try {
-      const result = await db.connectAndQuerying(queryUpdateAccount(tableName, HoVaTen, SoDienThoai, DiaChi, MatKhau, MaTaiKhoan));
+      const result = await db.connectAndQuerying(queryUpdateAccount(tableName, HoVaTen, SoDienThoai, DiaChi, MatKhau, TenTaiKhoan, MaTaiKhoan));
       return result;
     } catch (error) {
       console.log("Failed to update :", error);

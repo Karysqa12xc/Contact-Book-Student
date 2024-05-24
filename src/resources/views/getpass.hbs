@@ -20,8 +20,9 @@
 							</span>
 
 						</div>
+
 						<span class="form-message"></span>
-						
+
 					</div>
 					<div class="col-12">
 						<div class="input-group mb-3">
@@ -36,13 +37,14 @@
 							</span>
 
 						</div>
-						<span class="form-message"></span>
-					
+
+
+					<span class="form-message"></span>
 					</div>
 
-                         <div class="d-grid gap-2 col-6 mx-auto">
-  <button id="btreset" type="submit" class="btn btn-primary"  >Reset Password</button>
-</div>
+					<div class="d-grid gap-2 col-6 mx-auto">
+						<button id="btreset" type="submit" class="btn btn-primary">Reset Password</button>
+					</div>
 
 				</div>
 			</form>
@@ -51,110 +53,134 @@
 </div>
 
 <script>
-        document.addEventListener('DOMContentLoaded', function(){
-        var openeye = $('#show_eye');
-		var closeeye = $('#hide_eye');
-		let password = document.getElementById('password');
-    
-     	var openeye1 = $('#show_eye1');
-		var closeeye1 = $('#hide_eye1');
-		let password1 = document.getElementById('confirmPassword');
+	document.addEventListener('DOMContentLoaded', function () {
+    var openeye = $('#show_eye');
+    var closeeye = $('#hide_eye');
+    let password = document.getElementById('password');
 
-		openeye.click(function () {
-			openeye.addClass("d-none");
-			closeeye.removeClass('d-none');
-			password.type = 'password';
+    var openeye1 = $('#show_eye1');
+    var closeeye1 = $('#hide_eye1');
+    let password1 = document.getElementById('confirmPassword');
 
-		});
-		closeeye.click(function () {
-			closeeye.addClass("d-none");
-			openeye.removeClass('d-none');
-			password.type = 'text';
-		});
-        
-
-        	openeye1.click(function () {
-			openeye1.addClass("d-none");
-			closeeye1.removeClass('d-none');
-			confirmPassword.type = 'password';
-
-		});
-		closeeye1.click(function () {
-			closeeye1.addClass("d-none");
-			openeye1.removeClass('d-none');
-			confirmPassword.type = 'text';
-		});
-        
-        
-function Validator(options) {
-			var formElement = document.querySelector(options.form);
-			if (formElement) {
-				options.rules.forEach(function (rules) {
-					var inputElement = formElement.querySelector(rules.selector);
-
-					if (inputElement) {
-						var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
-						console.log(errorElement);
-						inputElement.onblur = function () {
-							var errorMessage = rules.test(inputElement.value);
-							if (errorMessage) {
-								errorElement.innerHTML = errorMessage;
-								$('#btreset').addClass('disabled');
-							}
-							else {
-								errorElement.innerHTML = "";
-								$('#btreset').removeClass('disabled');
-							}
-
-						}
-					}
-
-				});
-			}
-		}
-		Validator.isRequired = function (selector) {
-			return {
-				selector: selector,
-				test: function (value) {
-					return value ? undefined : 'Vui lòng nhập trường này' || 'chính xác'
-				}
-			};
-		};
-		Validator.minLength = function (selector, min) {
-			return {
-				selector: selector,
-				test: function (value) {
-					return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
-				}
-			};
-		}
-Validator.checkpass = function ( selectorconfirm) {
-			return {
-				selector: selectorconfirm,
-				test: function (value) {
-					return value == $('#password').val() ? undefined : `mât khẩu sai`;
-				}
-			};
-		}
-
-
-		Validator({
-			form: "#resetPasswordForm",
-			rules: [
-				Validator.minLength('#password', 6),
-               Validator.minLength('#confirmPassword', 6),
-                Validator.checkpass('#confirmPassword'),
-                
-			]
-
-		});
-		
-
-  
-
+    openeye.click(function () {
+        openeye.addClass("d-none");
+        closeeye.removeClass('d-none');
+        password.type = 'password';
     });
+
+    closeeye.click(function () {
+        closeeye.addClass("d-none");
+        openeye.removeClass('d-none');
+        password.type = 'text';
+    });
+
+    openeye1.click(function () {
+        openeye1.addClass("d-none");
+        closeeye1.removeClass('d-none');
+        confirmPassword.type = 'password';
+    });
+
+    closeeye1.click(function () {
+        closeeye1.addClass("d-none");
+        openeye1.removeClass('d-none');
+        confirmPassword.type = 'text';
+    });
+
+    function Validator(options) {
+        var formElement = document.querySelector(options.form);
+        var selectorRules = {};
+
+        function validate(inputElement, rule) {
+            var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
+            var errorMessage;
+            var rules = selectorRules[rule.selector];
+            for (var i = 0; i < rules.length; i++) {
+                errorMessage = rules[i](inputElement.value);
+                if (errorMessage) break;
+            }
+
+            if (errorMessage) {
+                errorElement.innerHTML = errorMessage;
+                $('#btreset').addClass('disabled');
+            } else {
+                errorElement.innerHTML = "";
+                $('#btreset').removeClass('disabled');
+            }
+
+            return !errorMessage;
+        }
+
+        if (formElement) {
+            formElement.onsubmit = function (e) {
+                var isFormValid = true;
+
+                options.rules.forEach(function (rule) {
+                    var inputElement = formElement.querySelector(rule.selector);
+                    var isValid = validate(inputElement, rule);
+                    if (!isValid) {
+                        isFormValid = false;
+                    }
+                });
+
+                if (!isFormValid) {
+                    e.preventDefault();
+                }
+            }
+
+            options.rules.forEach(function (rule) {
+                var inputElement = formElement.querySelector(rule.selector);
+                
+                if (Array.isArray(selectorRules[rule.selector])) {
+                    selectorRules[rule.selector].push(rule.test);
+                } else {
+                    selectorRules[rule.selector] = [rule.test];
+                }
+
+                if (inputElement) {
+                    inputElement.onblur = function () {
+                        validate(inputElement, rule);
+                    }
+                }
+            });
+        }
+    }
+
+    Validator.isRequired = function (selector) {
+        return {
+            selector: selector,
+            test: function (value) {
+                return value ? undefined : 'Vui lòng nhập trường này';
+            }
+        };
+    };
+
+    Validator.minLength = function (selector, min) {
+        return {
+            selector: selector,
+            test: function (value) {
+                return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+            }
+        };
+    };
+
+    Validator.checkpass = function (selector) {
+        return {
+            selector: selector,
+            test: function (value) {
+                return value == $('#password').val() ? undefined : 'Mật khẩu không khớp';
+            }
+        };
+    };
+
+    Validator({
+        form: "#resetPasswordForm",
+        rules: [
+            Validator.isRequired("#password"),
+            Validator.minLength("#password", 6),
+            Validator.isRequired('#confirmPassword'),
+            Validator.checkpass("#confirmPassword")
+        ]
+    });
+});
+
 </script>
-
-
-
-                       

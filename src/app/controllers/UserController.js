@@ -33,8 +33,13 @@ class userController {
       async updateUserInfor(req, res) {
         try {
             const {
-                name, phone, address, password
+                name, phone, address, password, userName
             } = req.body;
+            req.session.account.TenTaiKhoan = userName;
+            req.session.account.HoVaTen = name;
+            req.session.account.SoDienThoai = phone;
+            req.session.account.DiaChi = address;
+            req.session.account.MatKhau = password;
             await account.updateDataAccount(name, phone,address, password, req.session.account.MaTaiKhoan);
             res.redirect("/user");
         } catch (error) {
