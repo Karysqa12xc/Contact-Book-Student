@@ -12,6 +12,10 @@ module.exports = {
         ${idClass}, 
         ${idCourse}, N'${dayValue}')`;
   },
+  queryGetOnlyThoiGianInCourseDetails: function (value) {
+    return `SELECT ThoiGian FROM MonHocChiTiet 
+    WHERE MaHocKi = '${value}'`;
+  },
   queryGetAllValueJoinOtherTable: function () {
     return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
         Lop.*, HocKi.*, MonHoc.*, TaiKhoan.* 
@@ -29,7 +33,7 @@ module.exports = {
         left join Lop on MonHocChiTiet.MaLop = Lop.MaLop 
         left join MonHoc on MonHocChiTiet.MaMonHoc = MonHoc.MaMonHoc
 		left join TaiKhoan on MonHoc.MaTaiKhoan = TaiKhoan.MaTaiKhoan
-		Where Lop.MaLop = ${value} And Diem IS NULL`;
+		Where Lop.MaLop = ${value} AND MonHocChiTiet.Diem IS NULL`;
   },
   queryGetValueJoinOtherTableWithIdClassOfStudent: function (value) {
     return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
@@ -42,7 +46,6 @@ module.exports = {
     Where Lop.MaLop = ${value} and MaVaiTro = '01HS'
     and MonHocChiTiet.Diem IS NULL`;
   },
-
   queryGetValueJoinOtherTableWithIdAccount: function (value) {
     return `SELECT MonHocChiTiet.Diem, MonHocChiTiet.ThoiGian, 
         Lop.*, HocKi.*, MonHoc.*, TaiKhoan.* 
@@ -79,6 +82,36 @@ module.exports = {
         TaiKhoan.MaTaiKhoan,
         Lop.MaLop,
         HocKi.ThoiGianKetThuc;`;
+  },
+  queryGetDataToAddAttendance: function (IdClass, IdSemester) {
+    return `SELECT 
+        MonHoc.MaMonHoc, 
+        MonHoc.TenMonHoc,
+        Lop.MaLop,Lop.TenLop,
+        TaiKhoan.MaTaiKhoan,
+        TaiKhoan.HoVaTen,
+		MonHocChiTiet.ThoiGian,
+		HocKi.MaHocKi
+    FROM 
+        TaiKhoan 
+        LEFT JOIN Lop ON TaiKhoan.MaLop = Lop.MaLop
+        LEFT JOIN MonHocChiTiet ON Lop.MaLop = MonHocChiTiet.MaLop 
+        LEFT JOIN MonHoc ON MonHoc.MaMonHoc = MonHocChiTiet.MaMonHoc
+        LEFT JOIN HocKi ON HocKi.MaHocKi = MonHocChiTiet.MaHocKi
+    WHERE 
+        Lop.MaLop = ${IdClass} AND HocKi.MaHocKi = '${IdSemester}' 
+        AND MonHocChiTiet.ThoiGian 
+		    NOT IN (SELECT ThoiGianDiemDanh FROM DiemDanh)
+    GROUP BY  
+        MonHoc.TenMonHoc,
+        MonHocChiTiet.isExport,
+        MonHoc.MaMonHoc,
+        TaiKhoan.MaTaiKhoan,
+        Lop.MaLop,
+        TaiKhoan.HoVaTen,
+		MonHocChiTiet.ThoiGian,
+    Lop.TenLop,
+		HocKi.MaHocKi`;
   },
   queryGetDataToAddScore: function (value) {
     return `SELECT MonHocChiTiet.MaMonHoc,

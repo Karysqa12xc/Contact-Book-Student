@@ -11,6 +11,8 @@ const {
   queryGetValueJoinOtherTableWithIdClassOfStudent,
   queryGetDataForViewScore,
   queryUpdateScore,
+  queryGetDataToAddAttendance,
+  queryGetOnlyThoiGianInCourseDetails
 } = require("../../utils/QueryCourseDetails");
 
 const tableName = "MonHocChiTiet";
@@ -106,11 +108,29 @@ class CourseDetailsModel {
       throw error;
     }
   }
+  async GetOnlyThoiGianInCourseDetails(value){
+    try {
+      const result = await db.connectAndQuerying(queryGetOnlyThoiGianInCourseDetails(value));
+      return result;
+    } catch (error) {
+      console.log("Failed to get data:", error);
+      throw error;
+    }
+  }
   async GetDataToAddHocPhi(value) {
     try {
       const result = await db.connectAndQuerying(
         queryGetDataToAddHocPhi(value)
       );
+      return result;
+    } catch (error) {
+      console.log("Failed to get data fee to add:", error);
+      throw error;
+    }
+  }
+  async GetDataToAddAttendance(IdClass, IdSemester){
+    try {
+      const result = await db.connectAndQuerying(queryGetDataToAddAttendance(IdClass, IdSemester));
       return result;
     } catch (error) {
       console.log("Failed to get data fee to add:", error);

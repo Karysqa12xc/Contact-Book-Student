@@ -36,7 +36,7 @@ class StudentController {
         const account = req.session.account;
         const SemesterInfo = await Semester.getAll();
         const TimeTableInfo =
-          await CourseDetails.GetValueJoinOtherTableWithIdClass(account.MaLop);
+          await CourseDetails.GetValueJoinOtherTableWithIdClassOfTeacher(account.MaLop);
         const days = [
           "Thứ 2",
           "Thứ 3",
