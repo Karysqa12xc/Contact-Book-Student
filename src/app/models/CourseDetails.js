@@ -7,12 +7,13 @@ const {
   queryGetValueJoinOtherTableWithIdAccount,
   queryGetDataToAddHocPhi,
   queryGetDataToAddScore,
-  queryUpdateIsExport,
   queryGetValueJoinOtherTableWithIdClassOfStudent,
   queryGetDataForViewScore,
   queryUpdateScore,
   queryGetDataToAddAttendance,
-  queryGetOnlyThoiGianInCourseDetails
+  queryGetDataClassOfTeacher,
+  queryGetOnlyThoiGianInCourseDetails,
+  queryDeleteScore,
 } = require("../../utils/QueryCourseDetails");
 
 const tableName = "MonHocChiTiet";
@@ -51,6 +52,17 @@ class CourseDetailsModel {
       return results;
     } catch (error) {
       console.log("Failed to get all data join other course details:", error);
+      throw error;
+    }
+  }
+  async GetDataClassOfTeacher(value){
+    try {
+      const results = await db.connectAndQuerying(
+        queryGetDataClassOfTeacher(value)
+      );
+      return results;
+    } catch (error) {
+      console.log("Failed to get data join other course details:", error);
       throw error;
     }
   }
@@ -146,17 +158,6 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async UpdateIsExport(isExport, idClass, idCourse, idSemester) {
-    try {
-      const results = await db.connectAndQuerying(
-        queryUpdateIsExport(isExport, idClass, idCourse, idSemester)
-      );
-      return results;
-    } catch (error) {
-      console.log("Failed to update data in course details:", error);
-      throw error;
-    }
-  }
   async UpdateScore(IdClass, IdCourse, IdSemester, Score) {
     try {
       const result = await db.connectAndQuerying(
@@ -165,6 +166,17 @@ class CourseDetailsModel {
       return result;
     } catch (error) {
       console.log("Failed to update data in course details:", error);
+      throw error;
+    }
+  }
+  async DeleteCourseDetails(id){
+    try {
+      const result = await db.connectAndQuerying(
+        queryDeleteScore(id)
+      );
+      return result;
+    } catch (error) {
+      console.log("Failed to delete data in course details:", error);
       throw error;
     }
   }

@@ -35,6 +35,7 @@ class AuthController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[DELETE] /login/logout
   logout(req, res) {
     req.session.isLoggedIn = false;
     delete req.session.account;

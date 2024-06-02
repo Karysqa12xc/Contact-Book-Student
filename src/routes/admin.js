@@ -8,6 +8,7 @@ router.put("/:id/lock-account", adminController.lock_account);
 router.post("/course-create", adminController.course_create);
 router.put("/course-update-teacher", adminController.course_update_teacher);
 router.delete("/delete-course", adminController.delete_course);
+router.delete("/delete-time-table-admin", adminController.delete_time_table_admin)
 router.get("/management-timetable", adminController.viewTKB)
 router.post("/create-time-table", adminController.courseTimeTable);
 router.post("/create-semester", adminController.createSemester);

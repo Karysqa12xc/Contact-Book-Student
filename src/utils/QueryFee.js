@@ -14,8 +14,8 @@ module.exports = {
          MonHoc.TenMonHoc,
          HocPhi.TongTien`; 
     },
-    queryAddNewDataFee: function(MaTaiKhoan, SoTien, MaHocKi, HanDong){
-        return `INSERT INTO HocPhi(MaTaiKhoan, MaHocKi, TongTien, HanDong)
-        VALUES('${MaTaiKhoan}', '${MaHocKi}', ${SoTien}, '${HanDong}');`;
+    queryAddNewDataFee: function(MaTaiKhoan, SoTien, MaHocKi, HanDong, IsExport){
+        return `INSERT INTO HocPhi(MaTaiKhoan, MaHocKi, TongTien, HanDong, IsExport)
+        VALUES('${MaTaiKhoan}', '${MaHocKi}', ${SoTien}, '${HanDong}', ${IsExport});`;
     }
 };

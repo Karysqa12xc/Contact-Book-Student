@@ -101,6 +101,7 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[GET] /forget
   async forgetPass(req, res) {
     try {
       res.render("forget");
@@ -108,7 +109,7 @@ class SideController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
-  //[POST]
+  //[POST] /forget
   async CheckPhoneNumber(req, res) {
     try {
       const {phone} = req.body;

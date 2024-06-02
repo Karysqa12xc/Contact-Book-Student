@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-light">Quản lý thời khoá biểu
+    <h1>Quản lý thời khoá biểu
     </h1>
     <div class="mt-3">
         <form method="post" id="formTimeTable" action="/admin/create-time-table">
@@ -19,7 +19,7 @@
                 <select name="idCourse" class="form-select me-3">
                     <option value="">Chọn môn học</option>
                     {{#each Courses}}
-                    <option value="{{MaMonHoc}}">{{TenMonHoc}} - 
+                    <option value="{{MaMonHoc}}">{{TenMonHoc}} -
                         ({{ThoiGianBatDauMonHoc}} - {{ThoiGianKetThucMonHoc}}) -
                         {{#if (eq HoVaTen null)}}
                         Chưa có giáo viên
@@ -117,7 +117,7 @@
                             <h2>Khi bạn xoá thì tất cả thông tin sẽ bị xoá vĩnh viễn.</h2>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger">Chắc chắn</button>
+                            <button type="submit" id="buttonDeleteCourseDetailsAllow" class="btn btn-danger">Chắc chắn</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -127,10 +127,10 @@
         <div class="mt-3">
             <div class="mb-3 d-flex align-items-center">
                 <input type="checkbox" id="checkAll">
-                <div class="ms-3 text-light">Chọn tất cả</div>
+                <div class="ms-3">Chọn tất cả</div>
             </div>
-            <form action="">
-                <table class="table table-info border-primary table-bordered">
+            <form method="post" id="deleteTimeTableAdminForm" action="/admin/delete-time-table-admin?_method=DELETE">
+                <table class="table table-info text-center border-primary table-bordered">
                     <thead>
                         <th></th>
                         <th>#</th>
@@ -145,21 +145,27 @@
                     <tbody>
                         {{#each TimeTableInfo}}
                         <tr>
-                            <td><input type="checkbox" name="CourseDetails[]" id=""> </td>
+                            {{#if (eq Diem null)}}
+                                <td><input type="checkbox" value="{{MaMonHocChiTiet}}" name="courseDetails[]"> </td>
+                                {{else}}
+                                <td>Môn học đã lên điểm</td>
+                            {{/if}}
                             <td>{{sum @index 1}}</td>
-                            <td>{{TenLop}}</td>
+                            <td>
+                                {{TenLop}}
+                            </td>
                             <td>{{TenTaiKhoan}}</td>
                             <td>{{TenMonHoc}}</td>
                             <td>{{ThoiGian}}</td>
                             <td>{{ThoiGianBatDauMonHoc}}</td>
                             <td>{{ThoiGianKetThucMonHoc}}</td>
                             <td>{{TenHocKi}}</td>
+
                         </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </form>
-
         </div>
     </div>
 </div>
@@ -177,11 +183,11 @@
         var daysFollowWeek = $(".days");
         var checkAll = $("#checkAll");
         var buttonDelete = $("#buttonDeleteCourseDetails");
-        var checkBoxCourseDetailsToDelete = $("input[name = 'CourseDetails[]']");
+        var buttonDeleteConfirm = $("#buttonDeleteCourseDetailsAllow");
+        var checkBoxCourseDetailsToDelete = $("input[name = 'courseDetails[]']");
         var buttonSaveTimeTable = $("#buttonSaveTimeTable");
         var formTimeTable = $("#formTimeTable");
-        console.log(checkAll);
-        console.log(checkBoxCourseDetailsToDelete);
+        var deleteTimeTableAdminForm = $("#deleteTimeTableAdminForm");
         checkAll.change(function () {
             var isCheckAll = $(this).prop("checked");
             checkBoxCourseDetailsToDelete.prop("checked", isCheckAll);
@@ -189,10 +195,13 @@
         });
         checkBoxCourseDetailsToDelete.change(function () {
             var isCheckedAll = checkBoxCourseDetailsToDelete.length ===
-                $("input[name = 'CourseDetails[]']:checked").length;
+                $("input[name = 'courseDetails[]']:checked").length;
             checkAll.prop("checked", isCheckedAll);
             renderButtonSubmit();
         });
+        buttonDeleteConfirm.click(function () {
+            deleteTimeTableAdminForm.submit();
+        })
         buttonSaveTimeTable.click(function () {
             formTimeTable.submit();
         });
@@ -225,7 +234,7 @@
         });
         //Các hàm mở rộng để xử lý
         function renderButtonSubmit() {
-            var checkedCount = $("input[name = 'CourseDetails[]']:checked").length
+            var checkedCount = $("input[name = 'courseDetails[]']:checked").length
             if (checkedCount > 0) {
                 buttonDelete.removeClass("disabled");
             } else {

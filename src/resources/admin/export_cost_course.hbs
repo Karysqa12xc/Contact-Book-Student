@@ -1,62 +1,70 @@
 <div class="container">
-    <form class="form" method="get" action="/admin/export-cost">
+    <form class="form" method="get">
         <div class="d-flex">
             <div class="flex-fill">
-                <select class="form-select" name="idClass">
-                    {{#each accountInfo}}
-                    <option value="{{MaTaiKhoan}}">
-                        {{HoVaTen}}
+                <select class="form-select" id="classOption" name="idClass">
+                    {{#each classInfo}}
+                    <option value="{{MaLop}}">
+                        {{TenLop}}
                     </option>
                     {{/each }}
                 </select>
             </div>
             <div class="ms-3">
-                <button class="btn btn-primary">Xem các môn học</button>
+                <button type="submit" class="btn btn-primary">Xem các môn học</button>
             </div>
         </div>
     </form>
-    <h3 class="text-center mt-3">Các môn học có của {{accountStudentPersonal.[0].HoVaTen}}</h3>
-    <form class="mt-3" method="post" action="/admin/export-cost">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover table-borderless table-primary align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th></th>
-                        <th>Mã học kì</th>
-                        <th>Tên môn học</th>
-                        <th>Số tiền</th>
-                        <th>Thời gian kết thúc của môn học</th>
-                        <th>Lựa chọn</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    {{#each CourseDetailsToFee}}
-                    <tr class="table-primary">
-                        <td>{{MaMonHocChiTiet}}</td>
-                        <td>{{MaHocKi}}</td>
-                        <td>{{TenMonHoc}}</td>
-                        <td>{{TongSoTien}}</td>
-                        <td>{{format_date ThoiGianKetThuc}}</td>
-                        <td>
-                            <div hidden>
-                                <input type="text" value="{{MaHocKi}}" name="idSemester">
-                                <input type="text" value="{{MaMonHoc}}" name="IdCourse">
-                                <input type="text" value="{{TongSoTien}}" name="SumCourse">
-                                <input type="text" value="{{MaTaiKhoan}}" name="IdAccount">
-                                <input type="text" value="{{MaLop}}" name="IdClass">
-                                <input type="text" value="{{ThoiGianKetThuc}}" name="EndTime">
-                                <input type="checkbox" value="{{isExport}}" name="isExport" checked>
-                            </div>
+    <h3 class="text-center mt-3 mb-3">Danh sách các học phí trong lớp {{ClassById.[0].TenLop}}</h3>
+    <div class="table-responsive">
 
+        <table id="FeeTableExport"
+            class="text-center table table-striped table-hover table-borderless table-primary align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th>Mã học kì</th>
+                    <th>Tên lớp</th>
+                    <th>Tên môn học</th>
+                    <th>Họ và tên học sinh</th>
+                    <th>Số tiền</th>
+                    <th>Thời gian kết thúc của môn học</th>
+                    <th>Lựa chọn</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {{#each CourseDetailsToFee}}
+                <tr class="table-primary">
+                    <td>{{MaMonHocChiTiet}}</td>
+                    <td>{{MaHocKi}}</td>
+                    <td>{{TenLop}}</td>
+                    <td>{{TenMonHoc}}</td>
+                    <td>{{HoVaTen}}</td>
+                    <td>{{TongSoTien}}</td>
+                    <td>{{format_date ThoiGianKetThuc}}</td>
+                    <form class="mt-3" method="post" action="/admin/export-cost">
+                    <td>
+                        <div hidden>
+                            <input type="text" value="{{MaHocKi}}" name="idSemester">
+                            <input type="text" value="{{MaMonHoc}}" name="IdCourse">
+                            <input type="text" value="{{TongSoTien}}" name="SumCourse">
+                            <input type="text" value="{{MaTaiKhoan}}" name="IdAccount">
+                            <input type="text" value="{{MaLop}}" name="IdClass">
+                            <input type="text" value="{{ThoiGianKetThuc}}" name="EndTime">
+                            <input type="checkbox" value="false" name="isExport" checked>
+                        </div>
+                        {{#if (eq IsExport null)}}
+                            <input type="submit" class="btn btn-primary" value="Xuất">
+                        {{else}}
+                            <input type="submit" class="btn btn-secondary" value="Đã xuất">
+                        {{/if}}
+                    </form>
+                    </td>
+                    
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
 
-                            <button class="btn btn-primary">Xuất</button>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-
-
-    </form>
+    </div>
 </div>

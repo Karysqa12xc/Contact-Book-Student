@@ -275,6 +275,58 @@ class AdminController {
   async courseTimeTable(req, res) {
     try {
       const {idSemesTer, idClass, idCourse, dayValue} = req.body;
+      const CourseDetailsInfo = await CourseDetails.getAll();
+      let isExactDuplicate = CourseDetailsInfo.some((course) => {
+        return (
+          course.MaHocKi === idSemesTer.trim() &&
+          course.MaLop.toString() === idClass.trim() &&
+          course.MaMonHoc.toString() === idCourse.trim() &&
+          course.ThoiGian === dayValue.trim()
+        );
+      });
+
+      if (isExactDuplicate) {
+        return res
+          .status(400)
+          .json({message: "Thông tin bị trùng lặp, không thể thêm mới"});
+      }
+      let isTimeConflict = false;
+      const currentCourse = await Course.getById(idCourse);
+      const currentCourseStartTime = currentCourse[0]["ThoiGianBatDauMonHoc"];
+
+      for (let course of CourseDetailsInfo) {
+        if (course.MaLop.toString() === idClass.trim()) {
+          let courseById = await Course.getById(course.MaMonHoc);
+          let courseTimeStart = courseById[0]["ThoiGianBatDauMonHoc"];
+
+          console.log("Checking Course:", {
+            MaHocKi: course.MaHocKi,
+            MaLop: course.MaLop,
+            MaMonHoc: course.MaMonHoc,
+            ThoiGian: course.ThoiGian,
+            Course: req.body,
+            CourseById: courseById,
+            CourseTimeStart: courseTimeStart,
+            CourseStartTimeCurrent: currentCourseStartTime,
+          });
+
+          if (
+            course.MaHocKi === idSemesTer.trim() &&
+            course.ThoiGian === dayValue.trim() &&
+            courseTimeStart === currentCourseStartTime
+          ) {
+            isTimeConflict = true;
+            break;
+          }
+        }
+      }
+
+      if (isTimeConflict) {
+        return res.status(400).json({
+          message: "Thời gian môn học bị trùng lặp, không thể thêm mới",
+        });
+      }
+
       await CourseDetails.addNewDataToCourseDetails(
         idSemesTer,
         idClass,
@@ -286,24 +338,39 @@ class AdminController {
       res.status(500).json({message: `Internal server error + ${error}`});
     }
   }
+  //[DELETE] /admin/delete-time-table-admin
+  async delete_time_table_admin(req, res) {
+    try {
+      const {courseDetails} = req.body;
+      for (let index = 0; index < courseDetails.length; index++) {
+        const element = courseDetails[index];
+        await CourseDetails.DeleteCourseDetails(element);
+      }
+      res.redirect("back");
+    } catch (error) {
+      res.status(500).json({message: `Internal server error + ${error}`});
+    }
+  }
   //[GET] /admin/export-cost
   async exportCourseCost(req, res) {
     try {
       if (!req.session.isLoggedIn) {
         res.redirect("/");
       } else {
-        const idStudent = req.query.idClass;
-        const accountInfo = await Account.getDataNotNullMaLopInTaiKhoan();
-        const accountStudentPersonal = await Account.getById(idStudent);
-        const CourseDetailsToFee = await CourseDetails.GetDataToAddHocPhi(
-          idStudent
-        );
+        const idClass = req.query.idClass;
+        const classInfo = await Class.getAllReverse();
+        let CourseDetailsToFee;
+        let ClassById;
+        if (idClass != null) {
+          CourseDetailsToFee = await CourseDetails.GetDataToAddHocPhi(idClass);
+          ClassById = await Class.getById(idClass);
+        }
         res.render("../../resources/admin/export_cost_course.hbs", {
           account: req.session.account,
           logged: req.session.isLoggedIn,
           CourseDetailsToFee: CourseDetailsToFee,
-          accountInfo: accountInfo,
-          accountStudentPersonal: accountStudentPersonal,
+          classInfo: classInfo,
+          ClassById: ClassById,
         });
       }
     } catch (error) {
@@ -322,13 +389,20 @@ class AdminController {
         EndTime,
         isExport,
       } = req.body;
+
       let exportCheck;
       if (isExport === "false" || isExport === false) {
         exportCheck = 1;
       }
       let EndCostTime = new Date(EndTime);
       EndCostTime.setMonth(EndCostTime.getMonth() + 3);
-      await Fee.AddNewDataFee(IdAccount, SumCourse, idSemester, EndCostTime);
+      await Fee.AddNewDataFee(
+        IdAccount,
+        SumCourse,
+        idSemester,
+        EndCostTime,
+        exportCheck
+      );
       res.render("../../resources/admin/notice_add_course.hbs", {
         account: req.session.account,
         logged: req.session.isLoggedIn,
@@ -344,9 +418,7 @@ class AdminController {
   //[PUT] /admin/update-export-cost
   async update_export_cost(req, res) {
     try {
-      const {idSemester, IdClass, IdCourse, Export} = req.body;
-      await CourseDetails.UpdateIsExport(Export, IdClass, IdCourse, idSemester);
-      res.redirect("/admin/export-cost");
+      res.redirect("back");
     } catch (error) {
       res.status(500).json({message: `Internal server error + ${error}`});
     }

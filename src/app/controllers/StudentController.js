@@ -3,7 +3,7 @@ const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
 const Account = require("../models/Account");
 class StudentController {
-  //[]
+  //[GET] /student/fee-info
   async viewFee(req, res) {
     try {
       if (!req.session.isLoggedIn) {
@@ -27,7 +27,7 @@ class StudentController {
         .json({message: `Internal server error: ${error.message}`});
     }
   }
-  //[]
+  //[GET] /student/timetable
   async viewTimeTableStudent(req, res) {
     try {
       if (!req.session.isLoggedIn) {

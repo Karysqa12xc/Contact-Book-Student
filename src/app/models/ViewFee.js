@@ -37,9 +37,9 @@ class ViewFeeModel {
       throw error;
     }
   }
-  async AddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong){
+  async AddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong, IsExport){
     try {
-      const result = await db.connectAndQuerying(queryAddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong));
+      const result = await db.connectAndQuerying(queryAddNewDataFee(MaTaiKhoan, SoTien, MaHocKi, HanDong, IsExport));
       return result;
     } catch (error) {
       console.log("Failed to add data to fee:", error);

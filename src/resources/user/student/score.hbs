@@ -1,14 +1,15 @@
 <div class="container">
-    <select class="form-select mb-3" name="" id="">
-        <option value="">Chọn học kì</option>
+    <select class="form-select mb-3" name="" id="selectSemesterScore">
+        <option value="none">Chọn học kì</option>
         {{#each semesterInfo}}
-        <option value="{{MaHocKi}}">{{TenHocKi}}</option>
+        <option value="{{TenHocKi}}">{{TenHocKi}}</option>
         {{/each}}
     </select>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-borderless table-primary align-middle">
+    <div id="tableScore" class="table-responsive">
+        <table class="table text-center table-striped table-hover table-borderless table-primary align-middle">
             <thead class="table-light">
                 <tr>
+                    <th>Học kì</th>
                     <th>Tên Môn Học</th>
                     <th>Giáo Viên</th>
                     <th>Điểm số</th>
@@ -16,10 +17,17 @@
             </thead>
             <tbody class="table-group-divider">
                 {{#each ScoreOfStudent}}
-                <tr class="table-primary">
+                <tr class="table-primary score-row" data-tenhocki="{{TenHocKi}}">
+                    <td>{{TenHocKi}}</td>
                     <td>{{TenMonHoc}}</td>
                     <td>{{HoVaTen}}</td>
+                    {{#if (eq Diem null)}}
+                    <td>
+                        <span class="text-danger">X</span>
+                    </td>
+                    {{else}}
                     <td>{{Diem}}</td>
+                    {{/if}}
                 </tr>
                 {{/each}}
             </tbody>
@@ -30,3 +38,27 @@
     </div>
 
 </div>
+<script>
+    $(document).ready(function () {
+        var tableScore = $("#tableScore");
+        var selectSemesterScore = $("#selectSemesterScore");
+        var scoreRow = $(".score-row");
+        tableScore.hide();
+        selectSemesterScore.change(function () {
+            let val = $(this).val();
+            if (val === "none") {
+                tableScore.hide();
+            } else {
+                tableScore.show();
+            }
+            scoreRow.each(function(){
+                let rowNameSemester = $(this).data("tenhocki");
+                if(rowNameSemester === val){
+                    $(this).show();
+                }else{
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>

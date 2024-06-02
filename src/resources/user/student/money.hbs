@@ -2,13 +2,14 @@
     <h1>Xem Học Phí</h1>
     <form action="" class="mb-3 pt-3">
         <select class="form-select" name="" id="semesterSelect">
+            <option value="none">--------</option>
             <option value="">Chọn tất cả</option>
             {{#each semester}}
             <option value="{{MaHocKi}}">{{MaHocKi}}-{{TenHocKi}}</option>
             {{/each}}
         </select>
     </form>
-    <table class="table table-dark table-bordered " style="text-align: center;">
+    <table id="MoneyOfStudent" class="table table-dark table-bordered " style="text-align: center;">
         <thead>
             <th>Học kỳ</th>
             <th>Tên môn học</th>
@@ -34,21 +35,26 @@
 </div>
 <script>
     $(document).ready(function () {
+        $("#MoneyOfStudent").hide();
         $('#semesterSelect').change(function () {
             var selectedSemester = $(this).val();
-            console.log(selectedSemester);
+            if(selectedSemester === 'none'){
+                $("#MoneyOfStudent").hide();
+            }else{
+                 $("#MoneyOfStudent").show();
+            }
             var totalAmount = 0;
             $('.fee-row').each(function () {
                 var rowSemester = $(this).data('mahocki');
                 if (selectedSemester === "" || rowSemester == selectedSemester) {
                     $(this).show();
-                    totalAmount += parseFloat($(this).find('td:last').text());
+                    totalAmount += parseInt($(this).find('td:last').text());
                 } else {
                     $(this).hide();
                 }
             });
 
-            $('#totalAmount').text(totalAmount.toFixed(2));
+            $('#totalAmount').text(totalAmount);
         });
     })
 </script>

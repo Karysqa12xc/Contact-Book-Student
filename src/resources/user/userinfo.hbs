@@ -1,73 +1,71 @@
 <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-6 mb-4 mb-lg-0">
-        <div class="card mb-3" style="border-radius: .5rem;">
-          <div class="row g-0">
-         
-            <div class="p-3 mb-2 bg-warning text-dark text-center text-black"
-             >
-              
-              <h5 ><b>{{account.HoVaTen}}</b></h5>
-              <p><b>{{account.TenVaiTro}}</b></p>
-            
-            </div>
-            
-            <div class="col-md-8">
-              <div class="card-body p-4">
-                <h6>Thông Tin</h6>
-                
-                <hr class="mt-0 mb-4">
-                  <div class="col-7 mb-3">
-                    <h6>Tên Tài Khoản:</h6>
-                    <p class="text-muted"> {{account.TenTaiKhoan}}</p>
-                  </div> 
-               <div class="col-6 mb-3">
-                                 
-                    <h6>Lớp:</h6>
-                      {{#if (eq account.MaLop null) }} 
-                    <p>Chưa Phân Lớp</p>
-                    {{else}}
-                    <p>{{account.MaLop}}</p>
-                    {{/if }}
-                  </div>
-                 <div class="col-6 mb-3">
-                    <h6>Giới tính:</h6>
-                    {{#if account.GioiTinh }} 
-                    <p>Nam</p>
-                    {{else}}
-                    <p>Nữ</p>
-                    {{/if }}
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col col-lg-6 mb-4 mb-lg-0">
+      <div class="card mb-3" style="border-radius: .5rem;">
+        <div class="row g-0">
 
-                  </div>
-                                      <div class="col-6 mb-3">
-                    <h6>Ngày sinh:</h6>
-                    <p class="text-muted">{{format_date account.NamSinh }}</p>
-                  </div>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Số điện thoại:</h6>
-                    <p class="text-muted">{{account.SoDienThoai}}</p>
-                  </div>
-                  <div class="col-7 mb-3">
-                    <h6>Địa Chỉ:</h6>
-                    <p class="text-muted"> {{account.DiaChi}}</p>
-                  </div>
-                 <div style="text-align: right; ">
-                   <a href="/user/edit" >
-                 <button class="btn btn-primary"   >Sửa thông tin</button>
-                 </a>
-                 </div>
-                    
-                  
-                
-                 
+          <div class="p-3 mb-2 bg-primary text-light text-center">
+
+            <h5><b>{{account.HoVaTen}}</b></h5>
+            <p><b>{{account.TenVaiTro}}</b></p>
+
+          </div>
+
+          <div class="col-md-8">
+            <div class="card-body p-4">
+              <h3>Thông Tin</h3>
+
+              <hr class="mt-0 mb-4">
+              <div class="col-7 mb-3">
+                <h5>Tên Tài Khoản:</h5>
+                <p class="fs-3 fw-3 text-primary"> {{account.TenTaiKhoan}}</p>
+              </div>
+              <div class="col-6 mb-3">
+
+                <h4>Lớp:</h4>
+                {{#if (eq account.MaLop null) }}
+                <p class="fs-3 fw-3 text-primary">Chưa Phân</p>
+                {{else}}
+                <p class="fs-3 fw-3 text-primary">{{account.TenLop}}</p>
+                {{/if }}
+              </div>
+              <div class="col-6 mb-3">
+                <h4>Giới tính:</h4>
+                {{#if account.GioiTinh }}
+                <p class="fs-3 fw-3 text-primary">Nam</p>
+                {{else}}
+                <p class="fs-3 fw-3 text-primary">Nữ</p>
+                {{/if }}
+              </div>
+              <div class="col-6 mb-3">
+                <h4>Ngày sinh:</h4>
+                <p class="fs-3 fw-3 text-primary">{{format_date account.NamSinh }}</p>
+              </div>
+              <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <h4>Số điện thoại:</h4>
+                  <p class="fs-3 fw-3 text-primary">{{account.SoDienThoai}}</p>
                 </div>
-       
+                <div class="col-7 mb-3">
+                  <h4>Địa Chỉ:</h4>
+                  <p class="fs-3 fw-3 text-primary"> {{account.DiaChi}}</p>
+                </div>
+                <div style="text-align: right; ">
+                  <a href="/user/edit">
+                    <button class="btn btn-primary">Sửa thông tin</button>
+                  </a>
+                </div>
+
+
+
 
               </div>
+
+
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

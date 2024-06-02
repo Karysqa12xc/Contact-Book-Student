@@ -19,6 +19,6 @@ module.exports = {
                 WHERE Ma${tableName} = ${condition}`;
     },
     queryDeleteCourse: function(tableName, id){
-        return `DELETE FROM ${tableName} WHERE Ma${tableName} = ${id}; `
+        return `DELETE FROM ${tableName} WHERE Ma${tableName} = ${id};`
     }
 }
