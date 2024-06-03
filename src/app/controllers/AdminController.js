@@ -299,17 +299,6 @@ class AdminController {
           let courseById = await Course.getById(course.MaMonHoc);
           let courseTimeStart = courseById[0]["ThoiGianBatDauMonHoc"];
 
-          console.log("Checking Course:", {
-            MaHocKi: course.MaHocKi,
-            MaLop: course.MaLop,
-            MaMonHoc: course.MaMonHoc,
-            ThoiGian: course.ThoiGian,
-            Course: req.body,
-            CourseById: courseById,
-            CourseTimeStart: courseTimeStart,
-            CourseStartTimeCurrent: currentCourseStartTime,
-          });
-
           if (
             course.MaHocKi === idSemesTer.trim() &&
             course.ThoiGian === dayValue.trim() &&

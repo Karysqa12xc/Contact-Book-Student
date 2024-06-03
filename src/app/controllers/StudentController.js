@@ -10,10 +10,13 @@ class StudentController {
         res.redirect("/");
       } else {
         const account = req.session.account;
+        //Lấy các học phí với mà tài khoản đang đăng nhập
         const result = await ViewFee.getByMaTaiKhoan(
           req.session.account.MaTaiKhoan
         );
+        //Lấy tất cả học kì trong cơ sở dữ liệu
         const semester = await Semester.getAll();
+        
         res.render("../../resources/user/student/money.hbs", {
           account: account,
           FeeInfor: result,

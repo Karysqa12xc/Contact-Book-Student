@@ -82,9 +82,14 @@
 </div>
 <script>
     $(document).ready(function () {
+        //Khi submit form 
         $('#attendance-form').submit(function (event) {
+            //Duyệt các thẻ input có type là checkbox
             $('input[type="checkbox"]').each(function () {
+                //Nếu mà nó chưa được tích vào
                 if (!$(this).is(':checked')) {
+                    //Nếu ma chưa check thì nó sẽ truyền thành false và 
+                    // check vào thì truyền thành true
                     $(this).attr('value', 'false').prop('checked', true);
                 }
             });

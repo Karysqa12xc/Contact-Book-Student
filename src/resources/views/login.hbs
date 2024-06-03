@@ -1,219 +1,175 @@
-{{!-- Code của Nam --}}
-{{!-- <h1>Đăng nhập</h1>
-{{#if error}}
-<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
-{{/if}}
-{{#if lock}}
-<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
-{{/if}}
-<form method="post">
-	<div class="mb-3">
-		<label for="exampleInputEmail1" class="form-label">UserName:</label>
-		<input type="text" class="form-control" name="username">
-	</div>
-	<div class="mb-3">
-		<label for="exampleInputPassword1" class="form-label">Password:</label>
-		<input type="password" class="form-control" name="password">
-	</div>
-	<button type="submit" class="btn btn-primary">Đăng nhập</button>
-</form> --}}
-{{!-- Code của thắng --}}
-{{!--
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
-
-{{!-- <div class="center">
-	<h1>ĐĂNG NHẬP</h1>
-	{{#if error}}
-	<span class="badge rounded-pill bg-danger fs-4">Tài khoản hoặc mật khẩu sai!!!</span>
-	{{/if}}
-	{{#if lock}}
-	<span class="badge rounded-pill bg-danger fs-4">Tài khoản của bạn đã bị khoá!!!</span>
-	{{/if}}
-	<form action="" method="post" id="form-1">
-		<div class="txt_field">
-			<input type="text" required name="username" id="fullname">
-			<label id="user"> <i class="fa fa-user" aria-hidden="true"></i> Tên tài khoản</label>
-			<span class="form-message"></span>
-		</div>
-		<div class="txt_field">
-			<input type="password" required name="password" id="password">
-			<span class="form-message"></span>
-
-
-			<label id="password"> <i class="fa fa-key" aria-hidden="true"></i> Mật khẩu</label>
-
-			<div id="eye" class="">
-				<i id="eye-open" class="fa fa-eye d-none" aria-hidden="true"></i>
-				<i id="eye-close" class="fa fa-eye fa-eye-slash " aria-hidden="true"></i>
-			</div>
-
-		</div>
-		<div class="pass">
-			<a href="forget.hbs" class="pass">Quên mật khẩu</a>
-		</div>
-		<input type="submit" value="Đăng Nhập">
-	</form>
-</div> --}}
-{{!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" /> --}}
 <div class="container-fluid">
-	<div class="row d-flex justify-content-center align-items-center m-0" style="height: 100vh;">
-		<div class="login_oueter">
-			<div class="col-md-12 logo_outer">
+    <div class="row d-flex justify-content-center align-items-center m-0" style="height: 100vh;">
+        <div class="login_oueter">
+            <div class="col-md-12 logo_outer">
 
-			</div>
-			<form action="" method="post" id="login" autocomplete="off" class="bg-light border p-3">
-				<div class="form-row">
-					<h4 class="title my-3">Đăng Nhập</h4>
-					<div class="col-12">
-						<div class="input-group mb-3">
-							<label class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></label>
-							<input name="username" type="text" value="" class=" form-control" id="username"
-								placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+            </div>
+            <form action="" method="post" id="login" autocomplete="off" class="bg-light border p-3">
+                <div class="form-row">
+                    <h4 class="title my-3">Đăng Nhập</h4>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></label>
+                            <input name="username" type="text" value="" class=" form-control" id="username"
+                                placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
 
-						</div>
-						<span class="form-message"></span>
-					</div>
-					<div class="col-12">
-						<div class="input-group mb-3">
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
 
-							<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-							<input name="password" type="password" value="" class=" form-control" id="password"
-								placeholder="password" required="true" aria-label="password"
-								aria-describedby="basic-addon1" />
-							<span class="input-group-text">
-								<i class="fas fa-eye d-none" id="show_eye"></i>
-								<i class="fas fa-eye-slash " id="hide_eye"></i>
-							</span>
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                            <input name="password" type="password" value="" class=" form-control" id="password"
+                                placeholder="password" required="true" aria-label="password"
+                                aria-describedby="basic-addon1" />
+                            <span class="input-group-text">
+                                <i class="fas fa-eye d-none" id="show_eye"></i>
+                                <i class="fas fa-eye-slash " id="hide_eye"></i>
+                            </span>
 
-						</div>
-						<span class="form-message"></span>
-						{{#if error}}
-						<span class="form-message">Tài khoản hoặc mật khẩu sai!!!</span>
-						{{/if}}
-						{{#if lock}}
-						<span class="form-message">Tài khoản của bạn đã bị khoá!!!</span>
-						{{/if}}
-					</div>
+                        </div>
+                        <span class="form-message"></span>
+                        {{#if error}}
+                        <span class="form-message">Tài khoản hoặc mật khẩu sai!!!</span>
+                        {{/if}}
+                        {{#if lock}}
+                        <span class="form-message">Tài khoản của bạn đã bị khoá!!!</span>
+                        {{/if}}
+                    </div>
 
 
-					<div class="col-sm-12 pt-3 text-right">
-						<a href="/forget"> Quên mật khẩu </a>
-					</div>
-					<div class="col-12">
-						<button id="btdangnhap" class="btn btn-primary" type="submit" name="signin">Login</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+                    <div class="col-sm-12 pt-3 text-right">
+                        <a href="/forget"> Quên mật khẩu </a>
+                    </div>
+                    <div class="col-12">
+                        <button id="btdangnhap" class="btn btn-primary" type="submit" name="signin">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-    var openeye = $('#show_eye');
-    var closeeye = $('#hide_eye');
-    let password = document.getElementById('password');
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        //Lấy id show_eye và hide_eye 
+        var openeye = $('#show_eye');
+        var closeeye = $('#hide_eye');
+        //Lấy id của thẻ input có type là password
+        let password = document.getElementById('password');
+        /*Tạo event click cho thẻ có id là show_eye 
+        Khi bấm vào thì sẽ class d-none của bootstrap
+        và xoá class d-none của close_eye và chuyển type
+        thành password
+        */
+        openeye.click(function () {
+            openeye.addClass("d-none");
+            closeeye.removeClass('d-none');
+            password.type = 'password';
+        });
 
-    openeye.click(function () {
-        openeye.addClass("d-none");
-        closeeye.removeClass('d-none');
-        password.type = 'password';
-    });
+        closeeye.click(function () {
+            closeeye.addClass("d-none");
+            openeye.removeClass('d-none');
+            password.type = 'text';
+        });
+        //Tạo validate cho form
+        function Validator(options) {
+            var formElement = document.querySelector(options.form);
+            //Khởi tạo ra object
+            var selectorRules = {};
 
-    closeeye.click(function () {
-        closeeye.addClass("d-none");
-        openeye.removeClass('d-none');
-        password.type = 'text';
-    });
+            function validate(inputElement, rule) {
+                //Lấy các thể span có class là form-message
+                var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
+                var errorMessage;
+                //Thêm dữ liệu vào selectorRules
+                var rules = selectorRules[rule.selector];
+                //Chạy vòng lặp để check lỗi
+                for (var i = 0; i < rules.length; i++) {
+                    errorMessage = rules[i](inputElement.value);
+                    //Nếu gặp lồi thì thoát vòng lặp
+                    if (errorMessage) break;
+                }
 
-    function Validator(options) {
-        var formElement = document.querySelector(options.form);
-        var selectorRules = {};
-
-        function validate(inputElement, rule) {
-            var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
-            var errorMessage;
-            var rules = selectorRules[rule.selector];
-            for (var i = 0; i < rules.length; i++) {
-                errorMessage = rules[i](inputElement.value);
-                if (errorMessage) break;
+                if (errorMessage) {
+                    //In ra message báo lỗi
+                    errorElement.innerHTML = errorMessage;
+                    //Nếu gặp lỗi không cho bấm nút đăng nhập
+                    $('#btdangnhap').addClass('disabled');
+                } else {
+                    errorElement.innerHTML = "";
+                    $('#btdangnhap').removeClass('disabled');
+                }
+                //Trả ra kết quả
+                return !errorMessage;
             }
+            //Nếu mà các formElement nó không null
+            if (formElement) {
+                formElement.onsubmit = function (e) {
+                    var isFormValid = true;
 
-            if (errorMessage) {
-                errorElement.innerHTML = errorMessage;
-                $('#btdangnhap').addClass('disabled');
-            } else {
-                errorElement.innerHTML = "";
-                $('#btdangnhap').removeClass('disabled');
-            }
+                    options.rules.forEach(function (rule) {
+                        var inputElement = formElement.querySelector(rule.selector);
+                        var isValid = validate(inputElement, rule);
+                        if (!isValid) {
+                            isFormValid = false;
+                        }
+                    });
 
-            return !errorMessage;
-        }
-
-        if (formElement) {
-            formElement.onsubmit = function (e) {
-                var isFormValid = true;
+                    if (!isFormValid) {
+                        e.preventDefault();
+                    }
+                }
 
                 options.rules.forEach(function (rule) {
                     var inputElement = formElement.querySelector(rule.selector);
-                    var isValid = validate(inputElement, rule);
-                    if (!isValid) {
-                        isFormValid = false;
+
+                    if (Array.isArray(selectorRules[rule.selector])) {
+                        selectorRules[rule.selector].push(rule.test);
+                    } else {
+                        selectorRules[rule.selector] = [rule.test];
+                    }
+
+                    if (inputElement) {
+                        var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
+
+                        inputElement.onblur = function () {
+                            validate(inputElement, rule);
+                        }
                     }
                 });
-
-                if (!isFormValid) {
-                    e.preventDefault();
-                }
             }
-
-            options.rules.forEach(function (rule) {
-                var inputElement = formElement.querySelector(rule.selector);
-                
-                if (Array.isArray(selectorRules[rule.selector])) {
-                    selectorRules[rule.selector].push(rule.test);
-                } else {
-                    selectorRules[rule.selector] = [rule.test];
-                }
-
-                if (inputElement) {
-                    var errorElement = inputElement.closest(".col-12").querySelector(".form-message");
-                    
-                    inputElement.onblur = function () {
-                        validate(inputElement, rule);
-                    }
-                }
-            });
         }
-    }
 
-    Validator.isRequired = function (selector) {
-        return {
-            selector: selector,
-            test: function (value) {
-                return value ? undefined : 'Vui lòng nhập trường này';
-            }
+        Validator.isRequired = function (selector) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value ? undefined : 'Vui lòng nhập trường này';
+                }
+            };
         };
-    };
 
-    Validator.minLength = function (selector, min) {
-        return {
-            selector: selector,
-            test: function (value) {
-                return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
-            }
+        Validator.minLength = function (selector, min) {
+            return {
+                selector: selector,
+                test: function (value) {
+                    return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
+                }
+            };
         };
-    };
 
-    Validator({
-        form: "#login",
-        rules: [
-            Validator.isRequired('#username'),
-            Validator.minLength('#password', 6)
-        ]
+        Validator({
+            form: "#login",
+            rules: [
+                Validator.isRequired('#username'),
+                Validator.minLength('#password', 6)
+            ]
+        });
     });
-});
 
 
 </script>

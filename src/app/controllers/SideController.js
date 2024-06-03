@@ -71,6 +71,7 @@ class SideController {
   async createRequest(req, res) {
     try {
       const {TieuDe, NoiDung} = req.body;
+      //Thêm dữ liệu mới vào bảng Yeu_Cau
       await Request.addNewData(
         TieuDe,
         NoiDung,
@@ -112,10 +113,15 @@ class SideController {
   //[POST] /forget
   async CheckPhoneNumber(req, res) {
     try {
+      //Lấy dữ liệu thẻ input có name phone từ form
       const {phone} = req.body;
+      //Khai báo biến check phone có trong db
       let dontFound = false;
+      //Lấy tất cả dữ liệu của account
       const accountinfo = await Account.getAll();
+      //
       for (let i = 0; i < accountinfo.length; i++) {
+
         let Element = accountinfo[i];
         if (Element.SoDienThoai === phone) {
           const accountPhone = await Account.GetDataWithPhone(
@@ -139,7 +145,9 @@ class SideController {
   }
   async GetPass(req, res) {
     try {
+      //Lấy dữ liệu từ form
       const {password, id} = req.body;
+      //Cập nhật mật khẩu mới của tải khoản vào db
       await Account.UpdatePassAccount(password, id);
       res.redirect("/login");
     } catch (error) {

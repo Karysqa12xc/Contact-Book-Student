@@ -1,5 +1,3 @@
-# Các phần việc đang dang dơ:
-* Thêm chức năng cập nhập và xoá ở phần quản lý thời khoá biểu của admin
 # **CHÚ Ý:**
 > * Tải xong thì gõ: `npm i --save-dev`
 > * Tạo branch mới mỗi khi làm một chức năng vào giao diện mới, đặt tên branch "tên người làm - tên chức năng".

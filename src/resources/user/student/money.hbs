@@ -28,24 +28,37 @@
             <tr>
                 <td class="fs-5" colspan="3">Tổng tiền</td>
                 <td class="fs-5" id="totalAmount"></td>
-
             </tr>
         </tbody>
     </table>
 </div>
 <script>
     $(document).ready(function () {
+        //Ẩn bảng học phí
         $("#MoneyOfStudent").hide();
+        //Gọi sự kiện change của thẻ select
         $('#semesterSelect').change(function () {
+            //Lấy giá trị của select
             var selectedSemester = $(this).val();
             if(selectedSemester === 'none'){
                 $("#MoneyOfStudent").hide();
             }else{
-                 $("#MoneyOfStudent").show();
+                $("#MoneyOfStudent").show();
             }
+            //Tạo biến tính tổng tiền của các môn học 
+            //trong học kì bất kì
             var totalAmount = 0;
+            //Dùng vòng lặp để lấy tất cả các thẻ tr có class
+            // là fee-row
             $('.fee-row').each(function () {
+                //Gán dữ liệu của mahocki đã gán ở trong thẻ tr 
+                // có class là fee-row
                 var rowSemester = $(this).data('mahocki');
+                //Kiểm tra nếu kết quả của selectedSemester không có giá trị
+                //lấy tất các học kì rồi tính tổng
+                //Hoặc nếu rowSemester bằng selectedSemester
+                //thì nó sẽ tình tổng tiền tương đương với mã học học kì của
+                //selectedSemester
                 if (selectedSemester === "" || rowSemester == selectedSemester) {
                     $(this).show();
                     totalAmount += parseInt($(this).find('td:last').text());
@@ -53,7 +66,7 @@
                     $(this).hide();
                 }
             });
-
+            //In ra kết quả nên giao diện web
             $('#totalAmount').text(totalAmount);
         });
     })
