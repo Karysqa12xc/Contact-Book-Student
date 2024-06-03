@@ -1,59 +1,97 @@
-<div class="container mt-5"> 
-        <div class="row">
-            <div class="col text-center">
-                <h1 class="text-dark">Thông tin về chúng tôi</h1>
-                <p class="lead text-dark">Chào mừng đến với website của chúng tôi~~!! Đây là website sổ liên lạc điện tử</p>
+{{!-- 
+    + container: là vùng chứa chứa cần phần tử
+    nếu 
+    + mt-5: margin top 3rem 
+ --}}
+<div class="container mt-5">
+    {{!-- Dùng để tạo hàng trong grid --}}
+    <div class="row">
+        {{!-- Text-center: căn chữ ở trung tâm --}}
+        <div class="col text-center">
+            {{!-- text-dark: chữ màu đen --}}
+            <h1 class="text-dark">Thông tin về chúng tôi</h1>
+            <p class="text-dark">Chào mừng đến với website của chúng tôi~~!! Đây là website sổ liên lạc điện tử</p>
+        </div>
+    </div>
+    {{!-- 
+        row: chia hàng
+         mt: margin top 3rem
+    --}}
+    <div class="row mt-5">
+        {{!-- col-md-4: Chia cột -> chiếm 4 cột với kích cỡ
+            màn hình ≥768px
+         --}}
+        <div class="col-md-4">
+            {{!-- card:
+                là thẻ có thể chứa nội dung và ảnh
+            --}}
+            <div class="card">
+                {{!-- card-img-top: ảnh sẽ ở trên cùng --}}
+                <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top">
+                {{!-- card-body: phần nội dung của card --}}
+                <div class="card-body">
+                    <h5 class="card-title">Nguyễn Viết Hoàng Nam</h5>
+                    <p class="card-text">2021050461</p>
+                </div>
+            </div>
+        </div>
+        {{!-- 
+            col-md-4: Chia cột -> chiếm 4 cột với kích cỡ
+            màn hình ≥768px
+        --}}
+        <div class="col-md-4">
+            {{!-- card: là thẻ có thể chứa nội dung và ảnh--}}
+            <div class="card">
+                {{!-- card-img-top: đưa ảnh lên trên cùng của card --}}
+                <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top" >
+                {{!-- card-body: phần chứa nội dung của thẻ card --}}
+                <div class="card-body">
+                    {{!-- card-title: phần tiêu đề của card --}}
+                    <h5 class="card-title">Bùi Đức Thắng</h5>
+                    {{!-- card-text: phần nội dung của card --}}
+                    <p class="card-text">2121050756</p>
+                </div>
+            </div>
+        </div>
+        {{!-- col-md-4: chia cột theo tỉ lệ 1/3 --}}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Trần Văn Tuấn</h5>
+                    <p class="card-text">2021050698</p>
+                </div>
+            </div>
+        </div>
+        {{!-- col-md-4: 4 cột   
+            mt-5: margin-top(3rem)
+        --}}
+        <div class="col-md-4 mt-5">
+            {{!-- card: thẻ chứa nội dung --}}
+            <div class="card">
+                {{!--card-img-top: đưa ảnh lên trên cùng của card  --}}
+                <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top">
+                {{!-- card-body: chứa nội dung của card --}}
+                <div class="card-body">
+                    {{!-- card-title: tiêu đề của card --}}
+                    <h5 class="card-title">Nguyễn Việt Anh</h5>
+                    {{!-- card-text: nội dung của card --}}
+                    <p class="card-text">1921050068</p>
+                </div>
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top" alt="Team Member 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Nguyễn Viết Hoàng Nam</h5>
-                        <p class="card-text">2021050461</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="imgs/AvatarAnonymous.png"  style="height: 388px;" class="card-img-top" alt="Team Member 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Bùi Đức Thắng</h5>
-                        <p class="card-text">2121050756</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="imgs/AvatarAnonymous.png"  style="height: 388px;" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Trần Văn Tuấn</h5>
-                        <p class="card-text">2021050698</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-5">
-                <div class="card">
-                    <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Nguyễn Việt Anh</h5>
-                        <p class="card-text">1921050068</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-               
-            </div>
-            <div class="col-md-4 mt-5">
-                 <div class="card">
-                    <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Vũ Đức Hiếu</h5>
-                        <p class="card-text">2021050270</p>
-                    </div>
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4 mt-5">
+            <div class="card">
+                <img src="imgs/AvatarAnonymous.png" style="height: 388px;" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Vũ Đức Hiếu</h5>
+                    <p class="card-text">2021050270</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
