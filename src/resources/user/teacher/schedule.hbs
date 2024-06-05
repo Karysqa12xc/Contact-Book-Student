@@ -68,7 +68,6 @@
                     <th>Tiết 2</th>
                     {{#each days}}
                     {{#if (hasLessonAtTime ../TimeTableInfo this '07:45')}}
-
                     {{#each ../TimeTableInfo}}
                     {{#if (eq ThoiGianBatDauMonHoc '07:45')}}
                     {{#if (eq (sliceTimeOfTimeTable ThoiGian) ../this)}}
