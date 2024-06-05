@@ -2,9 +2,9 @@
     <form method="get" action="/teacher/NhapDiem">
         <div class="d-flex">
             <div class="flex-fill">
-                <select class="form-select" name="idClass" id="">
+                <select class="form-select" name="idClass" id="MaLopVaMaMonHoc">
                     {{#each classOfTeacher}}
-                    <option value="{{MaLop}}">{{TenLop}} - {{TenMonHoc}}</option>
+                    <option value="{{MaLop}} - {{MaMonHoc}}">{{TenLop}} - {{TenMonHoc}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -17,11 +17,13 @@
     </form>
     <div class="table-responsive mt-3">
 
-        <table class="table table-primary">
+        <table class="table table-dark text-center">
             <thead>
                 <tr>
-                    <th scope="col">Tên học sinh</th>
+                    <th>#</th>
+                    <th>Tên học sinh</th>
                     <th>Mã học kì</th>
+                    <th>Tên Môn Học</th>
                     <th>Học kì</th>
                     <th scope="col">Nhập điểm</th>
                 </tr>
@@ -29,19 +31,26 @@
             <tbody>
                 {{#each accountInfo}}
                 <tr class="">
+                    <td>{{sum @index 1}}</td>
                     <td>{{HoVaTen}}</td>
+                    <td>{{TenMonHoc}}</td>
                     <td>{{MaHocKi}}</td>
                     <td>{{TenHocKi}}</td>
-
+                    
                     <td>
-                        <form method="post" action="/teacher/enter-score?_method=PUT">
+                        <form method="post" action="/teacher/enter-score">
                             <input hidden type="text" value="{{MaLop}}" name="IdClass" id="">
                             <input hidden type="text" value="{{MaMonHoc}}" name="IdCourse" id="">
                             <input hidden type="text" value="{{MaHocKi}}" name="IdSemester" id="">
+                            <input hidden type="text" value="{{MaTaiKhoan}}" name="IdAccount" id="">
+                            {{#if (eq Diem null)}} 
                             <div class="d-flex">
                                 <input class="flex-fill" type="number" min="0"  max="10" name="Score" id="">
                                 <input type="submit" class=" ms-3 btn btn-primary" value="Thêm điểm" name="" id="">
                             </div>
+                            {{else}}
+                            {{Diem}}
+                            {{/if}}
                         </form>
                     </td>
                 </tr>
@@ -53,4 +62,12 @@
     </div>
 
 </div>
+<script>
+    $(document).ready(function(){
+        var currentUrl = window.location.search;
+        var urlParams = new URLSearchParams(currentUrl);
+        var MaLopVaMaMonHoc = urlParams.get("idClass");
+        $("#MaLopVaMaMonHoc").val(MaLopVaMaMonHoc);
+    });
+</script>
 

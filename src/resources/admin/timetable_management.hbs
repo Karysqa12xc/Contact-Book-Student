@@ -130,7 +130,7 @@
                 <div class="ms-3">Chọn tất cả</div>
             </div>
             <form method="post" id="deleteTimeTableAdminForm" action="/admin/delete-time-table-admin?_method=DELETE">
-                <table class="table table-info text-center border-primary table-bordered">
+                <table class="table table-dark text-center border-white table-bordered">
                     <thead>
                         <th></th>
                         <th>#</th>
@@ -146,9 +146,9 @@
                         {{#each TimeTableInfo}}
                         <tr>
                             {{#if (eq Diem null)}}
-                                <td><input type="checkbox" value="{{MaMonHocChiTiet}}" name="courseDetails[]"> </td>
-                                {{else}}
                                 <td>Môn học đã lên điểm</td>
+                                {{else}}
+                                <td><input type="checkbox" value="{{MaMonHocChiTiet}}" name="courseDetails[]"> </td>
                             {{/if}}
                             <td>{{sum @index 1}}</td>
                             <td>
@@ -242,7 +242,7 @@
             }
         }
         function getDayInWeekSelected(value) {
-            var options = "<option>Chọn ngày</option>";
+            var options = "<option>Chọn ngày (Thứ ? - dd - mm - yyyy)</option>";
             var fromDateIndex = value.indexOf("Từ ngày") + 7;
             var toDateIndex = value.indexOf("đến ngày") + 8;
             var fromDateStr = convertDateString(value.substring(fromDateIndex, fromDateIndex + 12));

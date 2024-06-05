@@ -8,11 +8,9 @@ const {
   queryGetDataToAddHocPhi,
   queryGetDataToAddScore,
   queryGetValueJoinOtherTableWithIdClassOfStudent,
-  queryGetDataForViewScore,
-  queryUpdateScore,
   queryGetDataToAddAttendance,
   queryGetDataClassOfTeacher,
-  queryGetOnlyThoiGianInCourseDetails,
+  queryGetOnlyThoiGianVaMonHocInCourseDetails,
   queryDeleteScore,
 } = require("../../utils/QueryCourseDetails");
 
@@ -92,10 +90,10 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async GetValueJoinOtherTableWithIdClassOfStudent(value) {
+  async GetValueJoinOtherTableWithIdClassOfStudent(MaLop, MaMonHoc) {
     try {
       const results = await db.connectAndQuerying(
-        queryGetValueJoinOtherTableWithIdClassOfStudent(value)
+        queryGetValueJoinOtherTableWithIdClassOfStudent(MaLop, MaMonHoc)
       );
       return results;
     } catch (error) {
@@ -120,9 +118,9 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async GetOnlyThoiGianInCourseDetails(value){
+  async GetOnlyThoiGianVaMonHocInCourseDetails(value){
     try {
-      const result = await db.connectAndQuerying(queryGetOnlyThoiGianInCourseDetails(value));
+      const result = await db.connectAndQuerying(queryGetOnlyThoiGianVaMonHocInCourseDetails(value));
       return result;
     } catch (error) {
       console.log("Failed to get data:", error);
@@ -140,9 +138,9 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async GetDataToAddAttendance(IdClass, IdSemester){
+  async GetDataToAddAttendance(IdClass, IdSemester, ThoiGian, MonHoc){
     try {
-      const result = await db.connectAndQuerying(queryGetDataToAddAttendance(IdClass, IdSemester));
+      const result = await db.connectAndQuerying(queryGetDataToAddAttendance(IdClass, IdSemester, ThoiGian, MonHoc));
       return result;
     } catch (error) {
       console.log("Failed to get data fee to add:", error);
@@ -158,17 +156,7 @@ class CourseDetailsModel {
       throw error;
     }
   }
-  async UpdateScore(IdClass, IdCourse, IdSemester, Score) {
-    try {
-      const result = await db.connectAndQuerying(
-        queryUpdateScore(IdClass, IdCourse, IdSemester, Score)
-      );
-      return result;
-    } catch (error) {
-      console.log("Failed to update data in course details:", error);
-      throw error;
-    }
-  }
+  
   async DeleteCourseDetails(id){
     try {
       const result = await db.connectAndQuerying(

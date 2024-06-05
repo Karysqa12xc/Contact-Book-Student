@@ -6,8 +6,8 @@
         {{/each}}
     </select>
     <div id="tableScore" class="table-responsive">
-        <table class="table text-center table-striped table-hover table-borderless table-primary align-middle">
-            <thead class="table-light">
+        <table class="table text-center table-hover table-borderless table-dark align-middle">
+            <thead>
                 <tr>
                     <th>Học kì</th>
                     <th>Tên Môn Học</th>
@@ -15,9 +15,9 @@
                     <th>Điểm số</th>
                 </tr>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody>
                 {{#each ScoreOfStudent}}
-                <tr class="table-primary score-row" data-tenhocki="{{TenHocKi}}">
+                <tr class="score-row" data-tenhocki="{{TenHocKi}}">
                     <td>{{TenHocKi}}</td>
                     <td>{{TenMonHoc}}</td>
                     <td>{{HoVaTen}}</td>

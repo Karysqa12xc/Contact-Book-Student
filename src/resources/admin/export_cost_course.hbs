@@ -17,37 +17,33 @@
     </form>
     <h3 class="text-center mt-3 mb-3">Danh sách các học phí trong lớp {{ClassById.[0].TenLop}}</h3>
     <div class="table-responsive">
-
         <table id="FeeTableExport"
-            class="text-center table table-striped table-hover table-borderless table-primary align-middle">
-            <thead class="table-light">
+            class="text-center table table-hover table-dark">
+            <thead>
                 <tr>
                     <th></th>
                     <th>Mã học kì</th>
                     <th>Tên lớp</th>
                     <th>Tên môn học</th>
                     <th>Họ và tên học sinh</th>
-                    <th>Số tiền</th>
                     <th>Thời gian kết thúc của môn học</th>
                     <th>Lựa chọn</th>
                 </tr>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody>
                 {{#each CourseDetailsToFee}}
-                <tr class="table-primary">
+                <tr>
                     <td>{{MaMonHocChiTiet}}</td>
                     <td>{{MaHocKi}}</td>
                     <td>{{TenLop}}</td>
                     <td>{{TenMonHoc}}</td>
                     <td>{{HoVaTen}}</td>
-                    <td>{{TongSoTien}}</td>
                     <td>{{format_date ThoiGianKetThuc}}</td>
                     <form class="mt-3" method="post" action="/admin/export-cost">
                     <td>
                         <div hidden>
                             <input type="text" value="{{MaHocKi}}" name="idSemester">
                             <input type="text" value="{{MaMonHoc}}" name="IdCourse">
-                            <input type="text" value="{{TongSoTien}}" name="SumCourse">
                             <input type="text" value="{{MaTaiKhoan}}" name="IdAccount">
                             <input type="text" value="{{MaLop}}" name="IdClass">
                             <input type="text" value="{{ThoiGianKetThuc}}" name="EndTime">
@@ -56,7 +52,7 @@
                         {{#if (eq IsExport null)}}
                             <input type="submit" class="btn btn-primary" value="Xuất">
                         {{else}}
-                            <input type="submit" class="btn btn-secondary" value="Đã xuất">
+                            <input type="submit" class="btn btn-secondary disabled" value="Đã xuất">
                         {{/if}}
                     </form>
                     </td>
@@ -68,3 +64,12 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        var currentURL = window.location.search;
+        var url_params = new URLSearchParams(currentURL);
+        var idClass = url_params.get("idClass");
+        $("#classOption").val(idClass);
+
+    });
+</script>

@@ -295,7 +295,7 @@ class AdminController {
       const currentCourseStartTime = currentCourse[0]["ThoiGianBatDauMonHoc"];
 
       for (let course of CourseDetailsInfo) {
-        if (course.MaLop.toString() === idClass.trim()) {
+        
           let courseById = await Course.getById(course.MaMonHoc);
           let courseTimeStart = courseById[0]["ThoiGianBatDauMonHoc"];
 
@@ -307,7 +307,6 @@ class AdminController {
             isTimeConflict = true;
             break;
           }
-        }
       }
 
       if (isTimeConflict) {
@@ -373,7 +372,6 @@ class AdminController {
         idSemester,
         IdClass,
         IdCourse,
-        SumCourse,
         IdAccount,
         EndTime,
         isExport,
@@ -387,7 +385,6 @@ class AdminController {
       EndCostTime.setMonth(EndCostTime.getMonth() + 3);
       await Fee.AddNewDataFee(
         IdAccount,
-        SumCourse,
         idSemester,
         EndCostTime,
         exportCheck

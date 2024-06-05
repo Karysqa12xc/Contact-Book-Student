@@ -2,7 +2,8 @@ module.exports = {
     queryDocHocPHi: function(tableName, MaTaiKhoan) {
         return `SELECT HocPhi.MaHocKi, HocPhi.MaTaiKhoan
         ,MonHocChiTiet.MaMonHoc, MonHoc.TenMonHoc,
-        HocPhi.TongTien, HocPhi.HanDong
+        HocPhi.HanDong,
+        MonHoc.SoTien AS TongTien
         FROM ${tableName}
         JOIN MonHocChiTiet 
         on HocPhi.MaHocKi = MonHocChiTiet.MaHocKi
@@ -12,10 +13,10 @@ module.exports = {
          HocPhi.MaHocKi, HocPhi.MaTaiKhoan
         ,HocPhi.HanDong, MonHocChiTiet.MaMonHoc,
          MonHoc.TenMonHoc,
-         HocPhi.TongTien`; 
+         MonHoc.SoTien`; 
     },
-    queryAddNewDataFee: function(MaTaiKhoan, SoTien, MaHocKi, HanDong, IsExport){
-        return `INSERT INTO HocPhi(MaTaiKhoan, MaHocKi, TongTien, HanDong, IsExport)
-        VALUES('${MaTaiKhoan}', '${MaHocKi}', ${SoTien}, '${HanDong}', ${IsExport});`;
+    queryAddNewDataFee: function(MaTaiKhoan, MaHocKi, HanDong, IsExport){
+        return `INSERT INTO HocPhi(MaTaiKhoan, MaHocKi, HanDong, IsExport)
+        VALUES('${MaTaiKhoan}', '${MaHocKi}', '${HanDong}', ${IsExport});`;
     }
 };

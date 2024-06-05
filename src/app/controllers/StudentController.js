@@ -2,6 +2,7 @@ const ViewFee = require("../models/ViewFee");
 const Semester = require("../models/Semester");
 const CourseDetails = require("../models/CourseDetails");
 const Account = require("../models/Account");
+const ScoreCourse = require("../models/ScoreCourse");
 class StudentController {
   //[GET] /student/fee-info
   async viewFee(req, res) {
@@ -70,7 +71,7 @@ class StudentController {
         res.redirect("/");
       } else {
         const semesterInfo = await Semester.getAll();
-        const ScoreOfStudent = await CourseDetails.GetDataForViewScore(req.session.account.MaLop);
+        const ScoreOfStudent = await ScoreCourse.GetDataForViewScore(req.session.account.MaLop, req.session.account.MaTaiKhoan);
         res.render("../../resources/user/student/score.hbs", {
           account: req.session.account,
           logged: req.session.isLoggedIn,

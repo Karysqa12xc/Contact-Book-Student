@@ -29,7 +29,10 @@
             </div>
        
         <div id="semesterId"></div>
-        <h3 class="mt-3 text-center">Lịch trình giảng dạy của giáo viên {{account.HoVaTen}} - {{formatNameCourse account.TenMonHoc}}</h3>
+        <h3 class="mt-3 text-center">Lịch trình giảng dạy của giáo viên {{account.HoVaTen}} - {{formatNameCourse account.TenMonHoc}}
+        </h3>
+        <p class="mt-3 text-center">Định dạng ngày (Thứ ? - dd - mm - yyyy)</p>
+
         <table id="timeTable" class="mt-3 table table-info border-primary table-bordered" style="text-align: center;">
             <thead>
                 <td><button class="btn btn-primary" id="previousWeek">Trước</button></td>
@@ -431,7 +434,6 @@
             });
             $(".lesson-cell").hide();
             days.forEach(function (day) {
-                console.log(day);
                 $(".lesson-cell").each(function () {
                     if ($(this).data('date').trim() === day.trim()) {
                         $(this).show();

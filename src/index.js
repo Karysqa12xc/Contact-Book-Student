@@ -13,12 +13,18 @@ app.use(morgan("combined"));
 app.use(
   session({
     secret: "secret",
+    //Nếu code thay đổi thì session mới được lưu lại
     resave: false,
+    //Nếu chưa đăng nhập thì không lưu dữ liệu vào store
     saveUninitialized: false,
   })
 );
+//middleware cho các tệp tĩnh
 app.use(express.static(path.join(__dirname, "public")));
+//middleware thực hiện cập nhập dữ liệu thông qua form khi 
+// method là post
 app.use(express.urlencoded());
+//Giúp sử dụng các phương thức HTTP khác hư PUT và DELETE
 app.use(methodOverride("_method"));
 app.engine(
   "hbs",
